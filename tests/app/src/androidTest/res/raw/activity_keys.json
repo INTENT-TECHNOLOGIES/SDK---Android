@@ -1,0 +1,17 @@
+{
+  "activities": [
+    "AirHygro",
+    "AirTemp",
+    "Intervention",
+    "GasCons",
+    "WaterCons",
+    "AirPressure",
+    "ElecCons",
+    "ColdWaterCons",
+    "HotWaterCons",
+    "HotWaterProdElecCons",
+    "HeatingElecCons",
+    "LightningElecCons",
+    "OutletCons"
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "announceId": "fdf3ddb0-af61-4935-9de2-b1fa70ff7013",
+    "visibility": "hidden",
+    "category": "cat_baby_sitting",
+    "type": "demand",
+    "description": "J'ai une petite fille de 6 mois à faire garder le semaine du 11 avril.",
+    "creationDate": 1458829166222,
+    "updateDate": 1458829260916,
+    "expirationDate": 1461248366222,
+    "creatorName": "John D.",
+    "responses": [
+      {
+        "name": "John D.",
+        "phone": "",
+        "mail": "g.lett@intent-technologies.eu",
+        "userId": "urn:bd22f84eb9ad4fb6a4db5d3af599915f.homes.demo1.intent:339b35b4-2597-410f-ab44-491b973b4cd4",
+        "responseDate": 1458829260916
+      }
+    ],
+    "creator": true
+  },
+  {
+    "announceId": "acfb15dd-5a2d-48e3-b386-554f97037888",
+    "visibility": "public",
+    "category": "cat_computing",
+    "type": "demand",
+    "description": "Quelqu'un pourrait-il me proposer des cours d'informatique pour utiliser mon iPad ?",
+    "creatorId": "urn:bd22f84eb9ad4fb6a4db5d3af599915f.homes.demo1.intent:339b35b4-2597-410f-ab44-491b973b4cd4",
+    "creationDate": 1458829288502,
+    "updateDate": 1458829303748,
+    "expirationDate": 1461248488502,
+    "creatorName": "Luke S.",
+    "creator": false,
+    "responded": true,
+    "responseDate": 1458829303748
+  },
+  {
+    "announceId": "f0d59b70-4ec6-4f9a-9842-2487279d4f3f",
+    "visibility": "public",
+    "category": "cat_home_help",
+    "type": "offer",
+    "description": "Je peux faire le ménage chez vous en semaine et le samedi.",
+    "creationDate": 1458829195404,
+    "updateDate": 1458829195404,
+    "expirationDate": 1461248395404,
+    "creatorName": "John D.",
+    "creator": true
+  }
+]

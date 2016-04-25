@@ -1,0 +1,30 @@
+[
+  {
+    "id": "HEATING",
+    "label": "Chauffage",
+    "icon": "heat",
+    "activities": [
+      "AggSiteTemp",
+      "AirTemp",
+      "BoilerInboundTemp",
+      "BoilerOutboundTemp",
+      "BoilerTemp",
+      "OutsideAirHygro",
+      "OutsideAirPressure",
+      "OutsideAirTemp",
+      "DJU",
+      "HeatingGasCons",
+      "SiteTempVar"
+    ]
+  },
+  {
+    "id": "LIFT",
+    "label": "Ascenseur",
+    "icon": "lift",
+    "activities": [
+      "BrakeActivationTime",
+      "LiftState",
+      "NbMove"
+    ]
+  }
+]
