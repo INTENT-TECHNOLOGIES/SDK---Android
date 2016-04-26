@@ -25,6 +25,7 @@ public class ITMessageTest {
         assertEquals(3, messageCount.countsByActivityCategory.get("HEATING").nonDefaultStateCount);
         assertEquals(0, messageCount.countsByActivityCategory.get("WATER").nonDefaultStateCount);
     }
+
     @Test
     public void jsonToMessageCountByAsset() {
         String json = TestUtils.readRawFile(InstrumentationRegistry.getContext(), eu.intent.sdktests.test.R.raw.message_count_by_asset);
