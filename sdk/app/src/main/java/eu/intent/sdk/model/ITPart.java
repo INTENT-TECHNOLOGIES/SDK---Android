@@ -44,7 +44,7 @@ public class ITPart implements Parcelable {
     public String label;
     public String owner;
     public ITPortion portion;
-    public String siteRef;
+    public String siteId;
     public List<ITUser> users = new ArrayList<>();
 
     /**
@@ -65,7 +65,7 @@ public class ITPart implements Parcelable {
         owner = in.readString();
         int tmpPortion = in.readInt();
         portion = tmpPortion == -1 ? null : ITPortion.values()[tmpPortion];
-        siteRef = in.readString();
+        siteId = in.readString();
         users = new ArrayList<>();
         in.readList(users, ITUser.class.getClassLoader());
         custom = in.readBundle();
@@ -176,7 +176,7 @@ public class ITPart implements Parcelable {
         dest.writeString(label);
         dest.writeString(owner);
         dest.writeInt(portion == null ? -1 : portion.ordinal());
-        dest.writeString(siteRef);
+        dest.writeString(siteId);
         dest.writeList(users);
         dest.writeBundle(custom);
     }

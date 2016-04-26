@@ -1,0 +1,69 @@
+{
+  "total": 10,
+  "parts": [
+    {
+      "address": {
+        "num": "450",
+        "way": "Route de la Cousinerie",
+        "zip": "76190",
+        "city": "Fréville",
+        "country": "FR",
+        "complement": "Le Clos du mont",
+        "pos": {
+          "lng": 0.8337479,
+          "lat": 49.5809623
+        },
+        "validated": false
+      },
+      "door": "21",
+      "externalRef": "DEMO1-SITE-DEMO-TSH-28 21",
+      "level": "r+2",
+      "owner": "demo1",
+      "portion": "privatePortion",
+      "siteId": "03f8e099-10d5-4521-93ef-c76325641216",
+      "suggestedMerges": {
+        "flag": null,
+        "value": null
+      },
+      "surface": null,
+      "id": "05eaf9cf-5ff6-4a23-b607-02a355d2ea9e",
+      "label": "test",
+      "users": [
+        {
+          "email": "email@test.com",
+          "firstname": "First",
+          "lastname": "Last",
+          "phone": "05 05 05",
+          "mobile": "06 06 06"
+        }
+      ]
+    },
+    {
+      "address": {
+        "num": "450",
+        "way": "Route de la Cousinerie",
+        "zip": "76190",
+        "city": "Fréville",
+        "country": "FR",
+        "complement": "Le Clos du mont",
+        "pos": {
+          "lng": 0.8337479,
+          "lat": 49.5809623
+        },
+        "validated": false
+      },
+      "door": "1",
+      "externalRef": "DEMO1-SITE-DEMO-TSH-28 1",
+      "level": "rdc",
+      "owner": "demo1",
+      "portion": "commonPortion",
+      "siteId": "03f8e099-10d5-4521-93ef-c76325641216",
+      "suggestedMerges": {
+        "flag": null,
+        "value": null
+      },
+      "surface": null,
+      "id": "0a53a368-3d94-4dea-ac61-855b3e5fef0d"
+    }
+  ]
+}
