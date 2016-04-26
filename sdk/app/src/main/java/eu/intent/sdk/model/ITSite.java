@@ -93,12 +93,26 @@ public class ITSite implements Parcelable {
         getServiceInstance(context).get(query, 1, 0, Locale.getDefault().getLanguage()).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Retrieves the IDs of the sites around the given location.
+     *
+     * @param lat         latitude
+     * @param lng         longitude
+     * @param maxDistance search the sites in this maximum distance around the given location, in meters
+     */
     public static void getSiteIdsAroundLocation(Context context, double lat, double lng, int maxDistance, ITApiCallback<List<String>> callback) {
-        getServiceInstance(context).getSiteIdsAroundLocation(lat, lng, maxDistance, true).enqueue(new ProxyCallback<>(callback));
+        getServiceInstance(context).getSiteIdsAroundLocation(lat, lng, maxDistance).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Retrieves the sites around the given location.
+     *
+     * @param lat         latitude
+     * @param lng         longitude
+     * @param maxDistance search the sites in this maximum distance around the given location, in meters
+     */
     public static void getSitesAroundLocation(Context context, double lat, double lng, int maxDistance, ITApiCallback<List<ITSite>> callback) {
-        getServiceInstance(context).getSiteIdsAroundLocation(lat, lng, maxDistance).enqueue(new ProxyCallback<>(callback));
+        getServiceInstance(context).getSitesAroundLocation(lat, lng, maxDistance).enqueue(new ProxyCallback<>(callback));
     }
 
     private static Service getServiceInstance(Context context) {
@@ -126,11 +140,11 @@ public class ITSite implements Parcelable {
     private interface Service {
         int MAX_COUNT = 50;
 
-        @GET("datahub/v1/sites/near")
-        Call<List<String>> getSiteIdsAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance, @Query("onlyIds") boolean onlyIds);
+        @GET("datahub/v1/sites/near?onlyIds=true")
+        Call<List<String>> getSiteIdsAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance);
 
         @GET("datahub/v1/sites/near")
-        Call<List<ITSite>> getSiteIdsAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance);
+        Call<List<ITSite>> getSitesAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance);
 
         @GET("datahub/v1/sites/{externalRef}")
         Call<ITSite> get(@Path("externalRef") String siteRef, @Query("lang") String lang);
