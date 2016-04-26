@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         ITActivityTest.class,
+        ITAddressTest.class,
         ITClassifiedAdTest.class,
         ITContactTest.class,
         ITConversationTest.class,
@@ -13,6 +14,7 @@ import org.junit.runners.Suite;
         ITDeviceTest.class,
         ITEquipmentTest.class,
         ITGreenGestureTest.class,
+        ITLocationTest.class,
         ITMessageTest.class,
         ITNewsTest.class,
         ITOperationTest.class,

@@ -1,0 +1,13 @@
+{
+  "num": "450",
+  "way": "Route de la Cousinerie",
+  "zip": "76190",
+  "city": "Fréville",
+  "country": "FR",
+  "complement": "Le Clos du mont",
+  "pos": {
+    "lng": 0.8337479,
+    "lat": 49.5809623
+  },
+  "validated": false
+}
