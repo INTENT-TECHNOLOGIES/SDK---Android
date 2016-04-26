@@ -1,0 +1,14 @@
+[
+  {
+    "theme": "HEATING",
+    "messageCount": 1,
+    "openReportingCount": 2,
+    "nonDefaultStateCount": 3
+  },
+  {
+    "theme": "WATER",
+    "messageCount": 0,
+    "openReportingCount": 0,
+    "nonDefaultStateCount": 0
+  }
+]
