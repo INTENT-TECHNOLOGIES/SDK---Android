@@ -1,0 +1,74 @@
+{
+  "count": 2,
+  "operations": [
+    {
+      "_id": "54919c61ed1226ff707246c5",
+      "entity": "lmh.intent",
+      "installer": "intentstaff.intent",
+      "entityOrderNumber": null,
+      "installerOrderNumber": null,
+      "label": "ARHLM LMH",
+      "desc": null,
+      "published": true,
+      "active": true,
+      "updated": 1427449271669,
+      "deviceOwner": "lmh.intent",
+      "tasks": {
+        "deviceTypes": {
+          "nke_humiditytempsensor": 33,
+          "nke_rfimpulsesensor": 80,
+          "nke_elecsensor": 16,
+          "nke_airflowsensor": 35,
+          "nke_watersystemsensor": 14,
+          "nke_concentrator": 7,
+          "nke_electrisensor": 2,
+          "nke_caloriesensor": 2
+        },
+        "templates": {
+          "install": 189
+        },
+        "statuses": {
+          "finished": 165,
+          "inProgress": 4,
+          "todo": 20
+        },
+        "tasksTotal": 189,
+        "tasksFinished": 165
+      }
+    },
+    {
+      "_id": "5497cb9d02c9bbc8298abc98",
+      "entity": "partenord.intent",
+      "installer": "intentstaff.intent",
+      "entityOrderNumber": "ARHLM",
+      "installerOrderNumber": null,
+      "label": "ARHLM PARTENORD site ANZIN",
+      "desc": "Monsieur PARMENTIER responsable PARTENORD 0673181536",
+      "published": false,
+      "active": false,
+      "updated": 1419872983010,
+      "deviceOwner": "partenord.intent",
+      "tasks": {
+        "deviceTypes": {
+          "nke_rfimpulsesensor": 31,
+          "nke_humiditytempsensor": 21,
+          "nke_elecsensor": 10,
+          "nke_airflowsensor": 30,
+          "nke_concentrator": 3,
+          "nke_caloriesensor": 10,
+          "nke_watersystemsensor": 1
+        },
+        "templates": {
+          "install": 106
+        },
+        "statuses": {
+          "finished": 103,
+          "todo": 2,
+          "inProgress": 1
+        },
+        "tasksTotal": 106,
+        "tasksFinished": 103
+      }
+    }
+  ]
+}

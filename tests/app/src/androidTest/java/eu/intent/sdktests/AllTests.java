@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
         ITEquipmentTest.class,
         ITGreenGestureTest.class,
         ITMessageTest.class,
-        ITNewsTest.class
+        ITNewsTest.class,
+        ITOperationTest.class
 })
 public class AllTests {
 }
