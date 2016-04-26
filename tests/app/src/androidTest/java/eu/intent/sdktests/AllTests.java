@@ -19,7 +19,9 @@ import org.junit.runners.Suite;
         ITNewsTest.class,
         ITOperationTest.class,
         ITPartTest.class,
-        ITSiteTest.class
+        ITSiteTest.class,
+        ITStateTest.class,
+        ITStateParamsThresholdsTest.class
 })
 public class AllTests {
 }
