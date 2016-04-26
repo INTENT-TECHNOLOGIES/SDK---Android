@@ -41,12 +41,12 @@ public class ITEquipment implements Parcelable {
     public String label;
     public String model;
     @SerializedName("nature")
-    public Scope scope;
+    public Scope scope = Scope.UNKNOWN;
     @SerializedName("SN")
     public String serialNumber;
     @SerializedName("inserviceDate")
     public long serviceDate;
-    public Type type;
+    public Type type = Type.UNKNOWN;
     @SerializedName("removalDate")
     public long uninstallDate;
     /**
@@ -220,11 +220,11 @@ public class ITEquipment implements Parcelable {
         /**
          * The equipment is related to several assets.
          */
-        COMMON,
+        @SerializedName("common")COMMON,
         /**
          * The equipment is related to one asset only.
          */
-        PRIVATE,
+        @SerializedName("private")PRIVATE,
         UNKNOWN
     }
 

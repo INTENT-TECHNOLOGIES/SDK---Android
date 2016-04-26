@@ -9,6 +9,7 @@ import java.util.List;
  * A list of ITEquipments.
  */
 public class ITEquipmentList {
+    @SerializedName("equips")
     public List<ITEquipment> equipments = new ArrayList<>();
     @SerializedName("total")
     public int totalCount = 0;

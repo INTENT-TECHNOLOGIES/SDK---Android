@@ -1,0 +1,85 @@
+{
+  "total": 3,
+  "equips": [
+    {
+      "type": "CMV",
+      "nature": "common",
+      "inserviceDate": null,
+      "SN": null,
+      "brand": null,
+      "model": "Test",
+      "removalDate": null,
+      "label": null,
+      "externalRef": "VMC-099-00012",
+      "lastUpdate": 1456743265258,
+      "address": {
+        "num": "450",
+        "way": "Route de la Cousinerie",
+        "zip": "76190",
+        "city": "Fréville",
+        "country": "FR",
+        "complement": null,
+        "pos": {
+          "lng": 0.8337478999999348,
+          "lat": 49.5809623
+        },
+        "validated": true
+      },
+      "owner": "demo1",
+      "id": "89dbf4a0-69dd-4091-b777-dc0ff19eb8f8"
+    },
+    {
+      "type": "COMMUNITY_BOILER",
+      "nature": "common",
+      "inserviceDate": null,
+      "SN": null,
+      "brand": null,
+      "model": null,
+      "removalDate": null,
+      "label": null,
+      "externalRef": "H8278",
+      "lastUpdate": 1456743082489,
+      "address": {
+        "num": "3",
+        "way": "Rue de la Vienne",
+        "zip": "37220",
+        "city": "Panzoult",
+        "country": "FR",
+        "complement": null,
+        "pos": {
+          "lng": 0.4009212999999363,
+          "lat": 47.14525760000001
+        },
+        "validated": true
+      },
+      "owner": "demo1",
+      "id": "fbd4e7ba-b16e-432d-b24a-c83e564c0cd5"
+    },
+    {
+      "type": "INDIVIDUAL_BOILER",
+      "nature": "private",
+      "inserviceDate": 1325631600000,
+      "SN": "0Z902729837",
+      "brand": "ELM Leblanc",
+      "label": "Chauffe-eau Porte 20",
+      "address": {
+        "city": "Romagnat",
+        "country": "FR",
+        "num": "10",
+        "pos": {
+          "lng": 3.0991589000000204,
+          "lat": 45.7332116
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "externalRef": "CHFO.GAZ.01",
+      "owner": "demo1",
+      "assetType": "part",
+      "assetId": "PART-000043",
+      "lastUpdate": 1451918878561,
+      "id": "50b59de1-6108-4cd3-8119-a5af48e65352"
+    }
+  ]
+}

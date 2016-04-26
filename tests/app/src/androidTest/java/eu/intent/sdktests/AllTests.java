@@ -10,6 +10,8 @@ import org.junit.runners.Suite;
         ITContactTest.class,
         ITConversationTest.class,
         ITDataTest.class,
-        ITDeviceTest.class})
+        ITDeviceTest.class,
+        ITEquipmentTest.class
+})
 public class AllTests {
 }
