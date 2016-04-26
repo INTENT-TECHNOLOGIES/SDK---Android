@@ -40,7 +40,7 @@ public class ITGreenGesture implements Parcelable {
      * Duration in weeks
      */
     @SerializedName("period")
-    public String duration;
+    public int duration;
     /**
      * True if this green gesture can be shown to the users, false otherwise
      */
@@ -68,7 +68,7 @@ public class ITGreenGesture implements Parcelable {
     }
 
     protected ITGreenGesture(Parcel in) {
-        duration = in.readString();
+        duration = in.readInt();
         enabled = in.readByte() != 0;
         id = in.readString();
         savings = in.readInt();
@@ -110,7 +110,7 @@ public class ITGreenGesture implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(duration);
+        dest.writeInt(duration);
         dest.writeByte(enabled ? (byte) 1 : (byte) 0);
         dest.writeString(id);
         dest.writeInt(savings);
