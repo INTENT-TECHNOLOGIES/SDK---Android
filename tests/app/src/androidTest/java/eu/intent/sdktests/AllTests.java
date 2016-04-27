@@ -24,7 +24,8 @@ import org.junit.runners.Suite;
         ITStateTemplateTest.class,
         ITStateTest.class,
         ITStreamTest.class,
-        ITSubscriptionTest.class
+        ITSubscriptionTest.class,
+        ITTagTest.class
 })
 public class AllTests {
 }
