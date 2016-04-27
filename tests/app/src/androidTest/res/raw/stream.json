@@ -1,0 +1,32 @@
+{
+  "address": {
+    "city": "Romagnat",
+    "country": "FR",
+    "num": "10",
+    "pos": {
+      "lng": 3.0991589000000204,
+      "lat": 45.7332116
+    },
+    "way": "Avenue Jean Jaurès",
+    "zip": "63540"
+  },
+  "firstDataDate": null,
+  "lastUpdate": 1461757500884,
+  "lastValue": {
+    "timestamp": 1461754800000,
+    "trustlevel": "COMPUTED",
+    "value": 22.416
+  },
+  "nbVal": 7705,
+  "owner": "demo1",
+  "streamId": "c1fe60e5-7f1e-4272-bd55-7b61adf9ecc8",
+  "tags": {
+    "measureType": "airTempAgg",
+    "unit": "celcius",
+    "position": "inside",
+    "activityKey": "AggSiteTemp",
+    "siteId": "SITE-ROMAGNAT-000538",
+    "icon": "temp",
+    "siteExternalRef": "Site-Démo2"
+  }
+}

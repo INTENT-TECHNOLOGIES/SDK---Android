@@ -259,6 +259,7 @@ public class ITData implements Parcelable {
     }
 
     public enum TrustLevel {
+        @SerializedName("COMPUTED")COMPUTED,
         @SerializedName("ESTIMATE")ESTIMATE,
         @SerializedName("MANUAL")MANUAL,
         @SerializedName("SENSOR")SENSOR,

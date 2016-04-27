@@ -20,8 +20,10 @@ import org.junit.runners.Suite;
         ITOperationTest.class,
         ITPartTest.class,
         ITSiteTest.class,
+        ITStateParamsThresholdsTest.class,
+        ITStateTemplateTest.class,
         ITStateTest.class,
-        ITStateParamsThresholdsTest.class
+        ITStreamTest.class
 })
 public class AllTests {
 }
