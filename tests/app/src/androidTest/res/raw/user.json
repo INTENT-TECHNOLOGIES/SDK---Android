@@ -1,0 +1,26 @@
+{
+  "city": "Toulouse",
+  "creationDate": "2015-03-11T16:19:52Z",
+  "domain": "demo1.intent",
+  "email": "test@intent.com",
+  "endpoint": "https://gateway.hubintent.com",
+  "entityFile": "http://hubintent.com/intent/entities/logos/5a7dc4cb-10f5-4e9f-b213-820e8246f97c",
+  "entityRoles": [
+    {
+      "name": "client"
+    }
+  ],
+  "firstname": "Intent",
+  "id": "09a4f835-85d7-4f82-9f09-0bb16b58c930",
+  "jid": "urn:demo1.intent:f515c499-8785-4217-a1b7-98f0d4b81162",
+  "lastname": "Démo",
+  "mobile": "0687737480",
+  "phone": "05 05 05",
+  "userRoles": [
+    {
+      "name": "admin"
+    }
+  ],
+  "username": "admin.demo1",
+  "zip": "31000"
+}

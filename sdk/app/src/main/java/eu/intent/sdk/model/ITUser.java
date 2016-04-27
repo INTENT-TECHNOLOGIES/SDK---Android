@@ -45,7 +45,6 @@ public class ITUser implements Parcelable {
 
     private static Service sService;
 
-    @SerializedName("creation_date")
     public Date creationDate;
     public String domain;
     public String email;
@@ -112,8 +111,8 @@ public class ITUser implements Parcelable {
     public String getFullName() {
         ArrayList<String> names = new ArrayList<>(Arrays.asList(new String[]{firstName, lastName}));
         names.removeAll(Collections.singleton((String) null));
-        String fullName = TextUtils.join(" ", names);
-        return !TextUtils.isEmpty(fullName.trim()) ? fullName : username;
+        String fullName = TextUtils.join(" ", names).trim();
+        return !TextUtils.isEmpty(fullName) ? fullName : username;
     }
 
     /**
@@ -134,8 +133,8 @@ public class ITUser implements Parcelable {
         String firstLetterOfLastName = !TextUtils.isEmpty(lastName) ? lastName.toUpperCase().charAt(0) + "." : "";
         ArrayList<String> names = new ArrayList<>(Arrays.asList(new String[]{firstName, firstLetterOfLastName}));
         names.removeAll(Collections.singleton((String) null));
-        String shortName = TextUtils.join(" ", names);
-        return !TextUtils.isEmpty(shortName.trim()) ? shortName : username;
+        String shortName = TextUtils.join(" ", names).trim();
+        return !TextUtils.isEmpty(shortName) ? shortName : username;
     }
 
     /**
