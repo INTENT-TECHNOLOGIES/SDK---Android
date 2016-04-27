@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
         ITStateParamsThresholdsTest.class,
         ITStateTemplateTest.class,
         ITStateTest.class,
-        ITStreamTest.class
+        ITStreamTest.class,
+        ITSubscriptionTest.class
 })
 public class AllTests {
 }

@@ -61,6 +61,9 @@ public class ITSubscription implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITSubscription() {
+        emails = new String[0];
+        push = new PushToken[0];
+        sms = new String[0];
     }
 
     protected ITSubscription(Parcel in) {
