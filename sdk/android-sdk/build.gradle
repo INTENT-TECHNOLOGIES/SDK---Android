@@ -2,6 +2,22 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
+ext {
+    groupId = "eu.intent"
+    artifactId = "android-sdk"
+
+    libraryName = "Intent Android SDK"
+    libraryDescription = "An SDK to use the Intent API in your Android apps."
+    libraryVersion = "0.5"
+
+    developerId = "Intent Technologies"
+    developerName = "Intent Technologies"
+    developerEmail = "support@intent-technologies.eu"
+}
+
+group = groupId
+version = libraryVersion
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -27,25 +43,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
 }
 
-ext {
-    bintrayRepo = "maven"
-    bintrayName = "intent-sdk-android"
-
-    publishedGroupId = "eu.intent"
-    artifact = "android-sdk"
-
-    libraryName = "Intent Android SDK"
-    libraryDescription = "An SDK to use the Intent API in your Android apps."
-    libraryVersion = "0.5"
-
-    developerId = "Intent Technologies"
-    developerName = "Intent Technologies"
-    developerEmail = "support@intent-technologies.eu"
-}
-
-group = publishedGroupId
-version = libraryVersion
-
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -55,12 +52,14 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
+    failOnError false
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
@@ -68,12 +67,11 @@ artifacts {
 
 install {
     repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
         pom {
             project {
                 packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
+                groupId groupId
+                artifactId artifactId
 
                 name libraryName
                 description libraryDescription
@@ -90,34 +88,19 @@ install {
     }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.groupId = 'eu.intent'
-            pom.artifactId = 'android-sdk'
-            pom.version = '0.5'
-            repository(url: mavenLocal().url)
-        }
-    }
-}
-
 // Bintray
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
 
     configurations = ['archives']
     pkg {
-        repo = bintrayRepo
-        name = bintrayName
+        userOrg = "intent-technologies"
+        repo = "maven"
+        name = "intent-sdk-android"
         desc = libraryDescription
         publish = true
-        publicDownloadNumbers = true
-        version {
-            desc = libraryDescription
-        }
     }
 }

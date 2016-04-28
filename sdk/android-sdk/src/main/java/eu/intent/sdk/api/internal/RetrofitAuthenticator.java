@@ -29,7 +29,7 @@ public class RetrofitAuthenticator implements Authenticator {
         String accessToken = Oauth.getInstance(mContext).refreshToken();
         if (!TextUtils.isEmpty(accessToken)) {
             // Remove any existing Authorization header before adding the new one
-            return response.request().newBuilder().removeHeader("Authorization").addHeader("Authorization", "Bearer " + accessToken).build();
+            return response.request().newBuilder().header("Authorization", "Bearer " + accessToken).build();
         } else {
             // No access token, need to sign in
             Intent sessionExpired = new Intent(Oauth.ACTION_SESSION_EXPIRED);

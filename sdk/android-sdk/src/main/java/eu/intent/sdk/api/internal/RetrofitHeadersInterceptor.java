@@ -29,7 +29,7 @@ public class RetrofitHeadersInterceptor implements Interceptor {
             // Use the current access token
             // If the access token is not valid, the call will fail (401) and the Authenticator will be called
             Oauth oauth = Oauth.getInstance(mContext);
-            request = request.newBuilder().addHeader("Authorization", "Bearer " + oauth.getAccessToken()).build();
+            request = request.newBuilder().header("Authorization", "Bearer " + oauth.getAccessToken()).build();
         }
         return chain.proceed(request);
     }
