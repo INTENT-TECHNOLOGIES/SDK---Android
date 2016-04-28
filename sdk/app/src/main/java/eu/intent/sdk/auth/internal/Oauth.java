@@ -58,6 +58,7 @@ public final class Oauth {
         // TODO Remove logs before releasing
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        clientBuilder.addInterceptor(loggingInterceptor);
         clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context));
         Gson gson = new GsonBuilder().registerTypeAdapter(ITUser.class, new ITUser.Deserializer()).create();
         mService = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(getBaseUrl()).client(clientBuilder.build()).build().create(Service.class);
@@ -194,7 +195,7 @@ public final class Oauth {
 
     private void saveToken(String accessToken, String refreshToken, long expiresIn) {
         Log.d(getClass().getCanonicalName(), "Saved access token, expires in " + expiresIn + " seconds");
-        Log.d(getClass().getCanonicalName(), TextUtils.isEmpty(refreshToken) ? "No refresh token" : "Saved refresh token " + refreshToken);
+        Log.d(getClass().getCanonicalName(), TextUtils.isEmpty(refreshToken) ? "No refresh token" : "Saved refresh token");
         long expiry = System.currentTimeMillis() + (expiresIn - 60) * 1000;   // Remove 1 minutes to be sure
         mContext.getSharedPreferences(PREF_FILE_NAME, 0).edit()
                 .putString(PREF_ACCESS_TOKEN, accessToken)
