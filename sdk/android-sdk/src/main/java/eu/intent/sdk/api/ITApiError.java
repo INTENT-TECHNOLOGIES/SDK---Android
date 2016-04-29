@@ -21,7 +21,7 @@ public class ITApiError {
                 return context.getString(R.string.it_error, httpCode, fallbackMessage);
             }
         } else if (!ITConnectivityHelper.isNetworkAvailable(context)) {
-            return context.getString(R.string.it_error_no_network, fallbackMessage);
+            return context.getString(R.string.it_error_no_network);
         } else {
             return context.getString(R.string.it_error_internal, fallbackMessage);
         }
