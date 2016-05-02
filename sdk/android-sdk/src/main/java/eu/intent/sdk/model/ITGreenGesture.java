@@ -13,6 +13,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Locale;
+
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
 import eu.intent.sdk.api.internal.ProxyCallback;
@@ -61,6 +63,7 @@ public class ITGreenGesture implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -130,7 +133,7 @@ public class ITGreenGesture implements Parcelable {
         public ITGreenGesture deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             ITGreenGesture gesture = new Gson().fromJson(json, typeOfT);
             try {
-                gesture.energy = ITEnergy.valueOf(json.getAsJsonObject().get("energy").getAsString().toUpperCase());
+                gesture.energy = ITEnergy.valueOf(json.getAsJsonObject().get("energy").getAsString().toUpperCase(Locale.US));
             } catch (IllegalArgumentException e) {
                 gesture.energy = ITEnergy.UNKNOWN;
             }

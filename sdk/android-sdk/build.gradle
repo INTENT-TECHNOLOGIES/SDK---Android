@@ -33,6 +33,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        // Retrofit needs packages that are not declared
+        disable 'InvalidPackage'
+        // Model classes have a 'custom' Bundle property, where the developer can store whatever he wants
+        disable 'ParcelClassLoader'
+        // The Activities in this library are not declared in AndroidManifest.xml, the client applications will declare them in their own AndroidManifest.xml
+        disable 'Registered'
+        // Some strings are not used in this library but may be used in the client applications
+        disable 'UnusedResources'
+    }
 }
 
 idea {
@@ -72,8 +82,8 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-    archives javadocJar
     archives sourcesJar
+    archives javadocJar
 }
 
 install {

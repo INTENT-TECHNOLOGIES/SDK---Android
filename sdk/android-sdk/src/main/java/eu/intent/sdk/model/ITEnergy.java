@@ -1,5 +1,7 @@
 package eu.intent.sdk.model;
 
+import java.util.Locale;
+
 /**
  * The types of measured energies.
  */
@@ -11,11 +13,11 @@ public enum ITEnergy {
      * @throws IllegalArgumentException if the given key does not exist
      */
     public static ITEnergy fromString(String energy) throws IllegalArgumentException {
-        return ITEnergy.valueOf(energy.toUpperCase());
+        return ITEnergy.valueOf(energy.toUpperCase(Locale.US));
     }
 
     @Override
     public String toString() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.US);
     }
 }

@@ -51,6 +51,7 @@ public class ITEquipment implements Parcelable {
     public long uninstallDate;
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 

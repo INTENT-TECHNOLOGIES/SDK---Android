@@ -16,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -53,6 +54,7 @@ public class ITNews implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -143,7 +145,7 @@ public class ITNews implements Parcelable {
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.US);
         }
     }
 
@@ -157,7 +159,7 @@ public class ITNews implements Parcelable {
         public ITNews deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             ITNews news = new Gson().fromJson(json, typeOfT);
             try {
-                news.type = Type.valueOf(json.getAsJsonObject().get("category").getAsString().toUpperCase());
+                news.type = Type.valueOf(json.getAsJsonObject().get("category").getAsString().toUpperCase(Locale.US));
             } catch (IllegalArgumentException e) {
                 news.type = Type.UNKNOWN;
             }

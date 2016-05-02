@@ -2,6 +2,8 @@ package eu.intent.sdk.model;
 
 import android.text.TextUtils;
 
+import java.util.Locale;
+
 /**
  * An asset can be a site, a part, or an equipment.
  */
@@ -10,7 +12,7 @@ public enum ITAssetType {
 
     public static ITAssetType fromString(String name) {
         try {
-            return ITAssetType.valueOf(name.toUpperCase());
+            return ITAssetType.valueOf(name.toUpperCase(Locale.US));
         } catch (IllegalArgumentException e) {
             if (TextUtils.equals(name, "equip")) {
                 return EQUIPMENT;

@@ -50,6 +50,7 @@ public class ITAction implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! It is not saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -65,7 +66,6 @@ public class ITAction implements Parcelable {
         lastUpdate = in.readLong();
         payload = in.readParcelable(Payload.class.getClassLoader());
         templateId = in.readString();
-        custom = in.readBundle();
     }
 
     @Override
@@ -83,7 +83,6 @@ public class ITAction implements Parcelable {
         dest.writeLong(lastUpdate);
         dest.writeParcelable(payload, flags);
         dest.writeString(templateId);
-        dest.writeBundle(custom);
     }
 
     /**

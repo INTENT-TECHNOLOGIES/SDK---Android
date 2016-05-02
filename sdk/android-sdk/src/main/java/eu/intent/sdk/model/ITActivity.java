@@ -55,6 +55,7 @@ public class ITActivity implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! It is not saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -69,7 +70,6 @@ public class ITActivity implements Parcelable {
         for (String tag : tagsBundle.keySet()) {
             tags.put(tag, tagsBundle.getString(tag));
         }
-        custom = in.readBundle();
     }
 
     /**
@@ -155,7 +155,6 @@ public class ITActivity implements Parcelable {
             tagsBundle.putString(tag.getKey(), tag.getValue());
         }
         dest.writeBundle(tagsBundle);
-        dest.writeBundle(custom);
     }
 
     @Override

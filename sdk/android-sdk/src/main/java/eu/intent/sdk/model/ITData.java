@@ -15,6 +15,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -52,6 +53,7 @@ public class ITData implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -254,7 +256,7 @@ public class ITData implements Parcelable {
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.US);
         }
     }
 

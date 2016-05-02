@@ -27,6 +27,7 @@ public class ITActivityCategory implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! It is not saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -38,7 +39,6 @@ public class ITActivityCategory implements Parcelable {
         id = in.readString();
         label = in.readString();
         activities = in.createStringArray();
-        custom = in.readBundle();
     }
 
     @Override
@@ -52,7 +52,6 @@ public class ITActivityCategory implements Parcelable {
         dest.writeString(id);
         dest.writeString(label);
         dest.writeStringArray(activities);
-        dest.writeBundle(custom);
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -54,6 +55,7 @@ public class ITConversation implements Parcelable {
     public String creatorName;
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     public Bundle custom = new Bundle();
 
@@ -164,7 +166,7 @@ public class ITConversation implements Parcelable {
             JsonObject link = json.getAsJsonObject().getAsJsonObject("link");
             conversation.activityCategory = link.get("theme").getAsString();
             conversation.assetId = link.get("assetId").getAsString();
-            conversation.assetType = ITAssetType.fromString(link.get("assetType").getAsString().toUpperCase());
+            conversation.assetType = ITAssetType.fromString(link.get("assetType").getAsString().toUpperCase(Locale.US));
             return conversation;
         }
     }

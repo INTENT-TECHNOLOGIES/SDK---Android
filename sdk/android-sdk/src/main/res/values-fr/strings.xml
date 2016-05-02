@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="it_error">HTTP %1$d: %2$s</string>
     <string name="it_error_internal">Erreur interne: %s</string>
     <string name="it_error_no_network">Vous n\'êtes pas connecté à Internet</string>
     <string name="it_error_403">Vous n\'avez pas accès à cette fonctionnalité</string>

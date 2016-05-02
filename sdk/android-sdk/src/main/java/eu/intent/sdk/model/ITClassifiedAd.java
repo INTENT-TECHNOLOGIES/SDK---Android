@@ -14,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -70,6 +71,7 @@ public class ITClassifiedAd implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -220,7 +222,7 @@ public class ITClassifiedAd implements Parcelable {
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.US);
         }
     }
 
@@ -229,7 +231,7 @@ public class ITClassifiedAd implements Parcelable {
 
         @Override
         public String toString() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.US);
         }
     }
 
@@ -284,12 +286,12 @@ public class ITClassifiedAd implements Parcelable {
         public ITClassifiedAd deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             ITClassifiedAd ad = new Gson().fromJson(json, typeOfT);
             try {
-                ad.type = Type.valueOf(json.getAsJsonObject().get("type").getAsString().toUpperCase());
+                ad.type = Type.valueOf(json.getAsJsonObject().get("type").getAsString().toUpperCase(Locale.US));
             } catch (IllegalArgumentException e) {
                 ad.type = Type.UNKNOWN;
             }
             try {
-                ad.visibility = Visibility.valueOf(json.getAsJsonObject().get("visibility").getAsString().toUpperCase());
+                ad.visibility = Visibility.valueOf(json.getAsJsonObject().get("visibility").getAsString().toUpperCase(Locale.US));
             } catch (IllegalArgumentException e) {
                 ad.visibility = Visibility.PUBLIC;
             }

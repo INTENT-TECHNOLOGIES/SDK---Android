@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -62,6 +63,7 @@ public class ITUser implements Parcelable {
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
+     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
      */
     transient public Bundle custom = new Bundle();
 
@@ -130,7 +132,7 @@ public class ITUser implements Parcelable {
      * Returns a concatenation of the user's first name and the first letter of his last name. If these are empty, return the username.
      */
     public String getShortName() {
-        String firstLetterOfLastName = !TextUtils.isEmpty(lastName) ? lastName.toUpperCase().charAt(0) + "." : "";
+        String firstLetterOfLastName = !TextUtils.isEmpty(lastName) ? lastName.toUpperCase(Locale.US).charAt(0) + "." : "";
         ArrayList<String> names = new ArrayList<>(Arrays.asList(new String[]{firstName, firstLetterOfLastName}));
         names.removeAll(Collections.singleton((String) null));
         String shortName = TextUtils.join(" ", names).trim();
