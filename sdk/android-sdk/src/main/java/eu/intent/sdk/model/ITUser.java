@@ -18,7 +18,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,7 +45,6 @@ public class ITUser implements Parcelable {
 
     private static Service sService;
 
-    public Date creationDate;
     public String domain;
     public String email;
     @SerializedName("firstname")
@@ -71,8 +69,6 @@ public class ITUser implements Parcelable {
     }
 
     protected ITUser(Parcel in) {
-        long tmpCreationDate = in.readLong();
-        creationDate = tmpCreationDate == -1 ? null : new Date(tmpCreationDate);
         domain = in.readString();
         email = in.readString();
         firstName = in.readString();
@@ -153,7 +149,6 @@ public class ITUser implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(creationDate != null ? creationDate.getTime() : -1);
         dest.writeString(domain);
         dest.writeString(email);
         dest.writeString(firstName);
