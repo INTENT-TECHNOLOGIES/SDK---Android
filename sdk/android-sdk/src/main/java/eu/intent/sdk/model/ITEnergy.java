@@ -6,7 +6,7 @@ import java.util.Locale;
  * The types of measured energies.
  */
 public enum ITEnergy {
-    ELEC, GAS, HEAT, TEMP, WATER, UNKNOWN;
+    ELEC, CALORIMETRY, GAS, TEMP, WATER, UNKNOWN;
 
     /**
      * Returns an ITEnergy from its name, as defined in the API.
