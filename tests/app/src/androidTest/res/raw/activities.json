@@ -1,0 +1,27 @@
+{
+  "total": 2,
+  "activities": [
+    {
+      "activityId": "HeatingElecCons",
+      "activityLabel": "Conso élec chauffage",
+      "activityDescription": "Consommation électrique du chauffage en kilowatt-heure",
+      "tags": {
+        "measureType": "elecConso",
+        "unit": "kwh",
+        "function": "heat",
+        "icon": "elec"
+      }
+    },
+    {
+      "activityId": "VmcPressure",
+      "activityLabel": "Pression moyenne VMC",
+      "activityDescription": "Pression moyenne VMC",
+      "tags": {
+        "measureType": "airPressure",
+        "unit": "Pa",
+        "function": "VMC",
+        "icon": "air"
+      }
+    }
+  ]
+}

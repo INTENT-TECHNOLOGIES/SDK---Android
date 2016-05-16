@@ -1,0 +1,11 @@
+{
+  "activityId": "HeatingElecCons",
+  "activityLabel": "Conso élec chauffage",
+  "activityDescription": "Consommation électrique du chauffage en kilowatt-heure",
+  "tags": {
+    "measureType": "elecConso",
+    "unit": "kwh",
+    "function": "heat",
+    "icon": "elec"
+  }
+}

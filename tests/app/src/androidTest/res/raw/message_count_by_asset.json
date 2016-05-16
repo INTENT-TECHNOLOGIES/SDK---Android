@@ -1,0 +1,32 @@
+[
+  {
+    "assetId": "SITE-1",
+    "messageCount": 0,
+    "openReportingCount": 0,
+    "nonDefaultStateCount": 0
+  },
+  {
+    "assetId": "SITE-2",
+    "messageCount": 103,
+    "openReportingCount": 0,
+    "nonDefaultStateCount": 0
+  },
+  {
+    "assetId": "SITE-3",
+    "messageCount": 66,
+    "openReportingCount": 0,
+    "nonDefaultStateCount": 1
+  },
+  {
+    "assetId": "SITE-4",
+    "messageCount": 68,
+    "openReportingCount": 34,
+    "nonDefaultStateCount": 0
+  },
+  {
+    "assetId": "SITE-5",
+    "messageCount": 22,
+    "openReportingCount": 12,
+    "nonDefaultStateCount": 3
+  }
+]

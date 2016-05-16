@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="it_error">HTTP %1$d: %2$s</string>
+    <string name="it_error_internal">Erreur interne: %s</string>
+    <string name="it_error_no_network">Vous n\'êtes pas connecté à Internet</string>
+    <string name="it_error_403">Vous n\'avez pas accès à cette fonctionnalité</string>
+    <string name="it_error_404">L\'élément demande n\'existe pas</string>
+    <string name="it_error_500">Erreur interne du serveur</string>
+    <string name="it_no_authenticated_user">Aucun utilisateur n\'est connecté</string>
+    <string name="it_session_expired">Votre session a expiré, veuillez vous reconnecter</string>
+    <string name="it_user_update_failed">Échec de la sauvegarde de votre profil</string>
+</resources>

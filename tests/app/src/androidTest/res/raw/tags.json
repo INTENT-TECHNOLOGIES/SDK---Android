@@ -1,0 +1,1531 @@
+[
+  {
+    "key": "measureType",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Type de mesure"
+    },
+    "label": {
+      "fr": "Grandeur mesurée"
+    },
+    "tags": [
+      {
+        "key": "sunPower",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Ensoleillement"
+        },
+        "label": {
+          "fr": "Ensoleillement"
+        }
+      },
+      {
+        "key": "waterConso",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Conso eau"
+        },
+        "label": {
+          "fr": "Consommation d'eau"
+        }
+      },
+      {
+        "key": "airTempAgg",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Moy temp site"
+        },
+        "label": {
+          "fr": "Moyenne de température des parties d'un site"
+        }
+      },
+      {
+        "key": "airTempVar",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Ecart temp site"
+        },
+        "label": {
+          "fr": "Ecart entre les températures Min/Max des parties d'un site"
+        }
+      },
+      {
+        "key": "gasConso",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Conso gaz"
+        },
+        "label": {
+          "fr": "Consommation de gaz"
+        }
+      },
+      {
+        "key": "windSpeed",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Vitesse vent"
+        },
+        "label": {
+          "fr": "Vitesse du vent"
+        }
+      },
+      {
+        "key": "windDirection",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Direction vent"
+        },
+        "label": {
+          "fr": "Direction du vent"
+        }
+      },
+      {
+        "key": "elecConso",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Conso elec"
+        },
+        "label": {
+          "fr": "Consommation électrique"
+        }
+      },
+      {
+        "key": "airTemp",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp air"
+        },
+        "label": {
+          "fr": "Température air"
+        }
+      },
+      {
+        "key": "airTempMin",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp air min"
+        },
+        "label": {
+          "fr": "Température air minimale"
+        }
+      },
+      {
+        "key": "airTempMax",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp air max"
+        },
+        "label": {
+          "fr": "Température air maximale"
+        }
+      },
+      {
+        "key": "airTempAvg",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp air moy"
+        },
+        "label": {
+          "fr": "Température air moyenne"
+        }
+      },
+      {
+        "key": "hygro",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Hygro"
+        },
+        "label": {
+          "fr": "Hygrométrie"
+        }
+      },
+      {
+        "key": "dju",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "DJU"
+        },
+        "label": {
+          "fr": "Degré Jour Unifié"
+        }
+      },
+      {
+        "key": "fuelCons",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Conso fioul"
+        },
+        "label": {
+          "fr": "Consommation de fioul"
+        }
+      },
+      {
+        "key": "calorimetry",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Calo"
+        },
+        "label": {
+          "fr": "Calorimétrie"
+        }
+      },
+      {
+        "key": "inTemp",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp In"
+        },
+        "label": {
+          "fr": "Température entrée"
+        }
+      },
+      {
+        "key": "outTemp",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp Out"
+        },
+        "label": {
+          "fr": "Température sortie"
+        }
+      },
+      {
+        "key": "pressure",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Pression"
+        },
+        "label": {
+          "fr": "Pression de fluide"
+        }
+      },
+      {
+        "key": "signalDur",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Durée signal"
+        },
+        "label": {
+          "fr": "Durée signal"
+        }
+      },
+      {
+        "key": "volume",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Volume"
+        },
+        "label": {
+          "fr": "Volume"
+        }
+      },
+      {
+        "key": "alarmReport",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Report d'alarme"
+        },
+        "label": {
+          "fr": "Report d'alarme"
+        }
+      },
+      {
+        "key": "msIntervention",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "msIntervention"
+        },
+        "label": {
+          "fr": "msIntervention"
+        }
+      },
+      {
+        "key": "brakedeActivationTime",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp de désactivation du frein"
+        },
+        "label": {
+          "fr": "Temp de désactivation du frein"
+        }
+      },
+      {
+        "key": "engineStart",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Démarrage moteur"
+        },
+        "label": {
+          "fr": "Démarrage du moteur"
+        }
+      },
+      {
+        "key": "waterTemp",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Temp Eau"
+        },
+        "label": {
+          "fr": "Température eau"
+        }
+      },
+      {
+        "key": "humidex",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Indice Humidex"
+        },
+        "label": {
+          "fr": "Indice Humidex"
+        }
+      },
+      {
+        "key": "elecProd",
+        "owner": "system",
+        "classification": "measureType",
+        "short_label": {
+          "fr": "Prod elec"
+        },
+        "label": {
+          "fr": "Production électrique"
+        }
+      }
+    ]
+  },
+  {
+    "key": "unit",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Unité"
+    },
+    "label": {
+      "fr": "Unité de mesure"
+    },
+    "tags": [
+      {
+        "key": "wm2",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "w/m2"
+        },
+        "label": {
+          "fr": "Watt par mètre carré"
+        }
+      },
+      {
+        "key": "m3",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "m3"
+        },
+        "label": {
+          "fr": "Mètres cube"
+        }
+      },
+      {
+        "key": "mps",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "m/s"
+        },
+        "label": {
+          "fr": "Mètre par seconde"
+        }
+      },
+      {
+        "key": "L",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "L"
+        },
+        "label": {
+          "fr": "Litres"
+        }
+      },
+      {
+        "key": "celcius",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "°C"
+        },
+        "label": {
+          "fr": "Degrés Celsius"
+        }
+      },
+      {
+        "key": "kwh",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "kWh"
+        },
+        "label": {
+          "fr": "kilowatt-heure"
+        }
+      },
+      {
+        "key": "percentage",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "%"
+        },
+        "label": {
+          "fr": "Pourcentage"
+        }
+      },
+      {
+        "key": "pascal",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "P"
+        },
+        "label": {
+          "fr": "Pascal"
+        }
+      },
+      {
+        "key": "mn",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "min"
+        },
+        "label": {
+          "fr": "Minutes"
+        }
+      },
+      {
+        "key": "h",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "H"
+        },
+        "label": {
+          "fr": "Heure"
+        }
+      },
+      {
+        "key": "s",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "s"
+        },
+        "label": {
+          "fr": "Secondes"
+        }
+      },
+      {
+        "key": "kph",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "km/h"
+        },
+        "label": {
+          "fr": "Kilomètres par heure"
+        }
+      },
+      {
+        "key": "mbar",
+        "owner": "system",
+        "classification": "unit",
+        "short_label": {
+          "fr": "mbar"
+        },
+        "label": {
+          "fr": "Millibars"
+        }
+      }
+    ]
+  },
+  {
+    "key": "function",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Usage"
+    },
+    "label": {
+      "fr": "Usage du point de mesure"
+    },
+    "tags": [
+      {
+        "key": "hotWaterProd",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Prod. eau chaude"
+        },
+        "label": {
+          "fr": "Production d'eau chaude"
+        }
+      },
+      {
+        "key": "domesticWater",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Eau froide"
+        },
+        "label": {
+          "fr": "Eau froide"
+        }
+      },
+      {
+        "key": "heat",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Chauffage"
+        },
+        "label": {
+          "fr": "Chauffage"
+        }
+      },
+      {
+        "key": "lighting",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Eclairage"
+        },
+        "label": {
+          "fr": "Eclairage"
+        }
+      },
+      {
+        "key": "computingDevices",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Informatique"
+        },
+        "label": {
+          "fr": "Equipements informatique"
+        }
+      },
+      {
+        "key": "shutters",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Volets"
+        },
+        "label": {
+          "fr": "Volets roulants"
+        }
+      },
+      {
+        "key": "cooking",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Cuisson"
+        },
+        "label": {
+          "fr": "Cuisson"
+        }
+      },
+      {
+        "key": "ecs",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "E.C.S."
+        },
+        "label": {
+          "fr": "Eau Chaude Sanitaire"
+        }
+      },
+      {
+        "key": "global",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Général"
+        },
+        "label": {
+          "fr": "Général"
+        }
+      },
+      {
+        "key": "mechanicalVentilation",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "VMC"
+        },
+        "label": {
+          "fr": "Ventilation Mécanique Contrôlée"
+        }
+      },
+      {
+        "key": "liftState",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Etat ascenseur"
+        },
+        "label": {
+          "fr": "Etat d'utilisation de l'ascenseur"
+        }
+      },
+      {
+        "key": "lowLevel",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Niveau bas"
+        },
+        "label": {
+          "fr": "Niveau bas"
+        }
+      },
+      {
+        "key": "smokeDetection",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Détection fumée"
+        },
+        "label": {
+          "fr": "Détection de fumée"
+        }
+      },
+      {
+        "key": "systemActivation",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Activation système"
+        },
+        "label": {
+          "fr": "Activation système"
+        }
+      },
+      {
+        "key": "intrusion",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Intrusion"
+        },
+        "label": {
+          "fr": "Intrusion"
+        }
+      },
+      {
+        "key": "systemFailure",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Panne système"
+        },
+        "label": {
+          "fr": "Panne système"
+        }
+      },
+      {
+        "key": "washing",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Lavage"
+        },
+        "label": {
+          "fr": "Lavage"
+        }
+      },
+      {
+        "key": "outlet",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Prises de courant"
+        },
+        "label": {
+          "fr": "Prises de courant"
+        }
+      },
+      {
+        "key": "boiler",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Chaudière"
+        },
+        "label": {
+          "fr": "Chaudière"
+        }
+      },
+      {
+        "key": "withDrawal",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Soutirage"
+        },
+        "label": {
+          "fr": "Soutirage d'énergie"
+        }
+      },
+      {
+        "key": "solar",
+        "owner": "system",
+        "classification": "function",
+        "short_label": {
+          "fr": "Solaire"
+        },
+        "label": {
+          "fr": "Energie solaire"
+        }
+      }
+    ]
+  },
+  {
+    "key": "portion",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Partie"
+    },
+    "label": {
+      "fr": "Partie commune ou privative"
+    },
+    "tags": [
+      {
+        "key": "commonPortion",
+        "owner": "system",
+        "classification": "portion",
+        "short_label": {
+          "fr": "Partie commune"
+        },
+        "label": {
+          "fr": "Partie commune"
+        }
+      },
+      {
+        "key": "privatePortion",
+        "owner": "system",
+        "classification": "portion",
+        "short_label": {
+          "fr": "Partie privative"
+        },
+        "label": {
+          "fr": "Partie privative"
+        }
+      }
+    ]
+  },
+  {
+    "key": "position",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Position"
+    },
+    "label": {
+      "fr": "Localisation du point de mesure"
+    },
+    "tags": [
+      {
+        "key": "inside",
+        "owner": "system",
+        "classification": "position",
+        "short_label": {
+          "fr": "Intérieur"
+        },
+        "label": {
+          "fr": "Intérieur"
+        }
+      },
+      {
+        "key": "outside",
+        "owner": "system",
+        "classification": "position",
+        "short_label": {
+          "fr": "Extérieur"
+        },
+        "label": {
+          "fr": "Extérieur"
+        }
+      }
+    ]
+  },
+  {
+    "key": "level",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Niveau"
+    },
+    "label": {
+      "fr": "Niveau"
+    },
+    "tags": [
+      {
+        "key": "r-4",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R-4"
+        },
+        "label": {
+          "fr": "Etage -4"
+        }
+      },
+      {
+        "key": "r-3",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R-3"
+        },
+        "label": {
+          "fr": "Etage -3"
+        }
+      },
+      {
+        "key": "r-2",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R-2"
+        },
+        "label": {
+          "fr": "Etage -2"
+        }
+      },
+      {
+        "key": "r-1",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R-1"
+        },
+        "label": {
+          "fr": "Etage -1"
+        }
+      },
+      {
+        "key": "rdc",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "RDC"
+        },
+        "label": {
+          "fr": "Rez-de-chaussée"
+        }
+      },
+      {
+        "key": "r+1",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+1"
+        },
+        "label": {
+          "fr": "Etage 1"
+        }
+      },
+      {
+        "key": "r+2",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+2"
+        },
+        "label": {
+          "fr": "Etage 2"
+        }
+      },
+      {
+        "key": "r+3",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+3"
+        },
+        "label": {
+          "fr": "Etage 3"
+        }
+      },
+      {
+        "key": "r+4",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+4"
+        },
+        "label": {
+          "fr": "Etage 4"
+        }
+      },
+      {
+        "key": "r+5",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+5"
+        },
+        "label": {
+          "fr": "Etage 5"
+        }
+      },
+      {
+        "key": "r+6",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+6"
+        },
+        "label": {
+          "fr": "Etage 6"
+        }
+      },
+      {
+        "key": "r+7",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+7"
+        },
+        "label": {
+          "fr": "Etage 7"
+        }
+      },
+      {
+        "key": "r+8",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+8"
+        },
+        "label": {
+          "fr": "Etage 8"
+        }
+      },
+      {
+        "key": "r+9",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+9"
+        },
+        "label": {
+          "fr": "Etage 9"
+        }
+      },
+      {
+        "key": "r+10",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+10"
+        },
+        "label": {
+          "fr": "Etage 10"
+        }
+      },
+      {
+        "key": "r+11",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+11"
+        },
+        "label": {
+          "fr": "Etage 11"
+        }
+      },
+      {
+        "key": "r+12",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+12"
+        },
+        "label": {
+          "fr": "Etage 12"
+        }
+      },
+      {
+        "key": "r+13",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+13"
+        },
+        "label": {
+          "fr": "Etage 13"
+        }
+      },
+      {
+        "key": "r+14",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+14"
+        },
+        "label": {
+          "fr": "Etage 14"
+        }
+      },
+      {
+        "key": "r+15",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+15"
+        },
+        "label": {
+          "fr": "Etage 15"
+        }
+      },
+      {
+        "key": "r+16",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+16"
+        },
+        "label": {
+          "fr": "Etage 16"
+        }
+      },
+      {
+        "key": "r+17",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+17"
+        },
+        "label": {
+          "fr": "Etage 17"
+        }
+      },
+      {
+        "key": "r+18",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+18"
+        },
+        "label": {
+          "fr": "Etage 18"
+        }
+      },
+      {
+        "key": "r+19",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+19"
+        },
+        "label": {
+          "fr": "Etage 19"
+        }
+      },
+      {
+        "key": "r+20",
+        "owner": "system",
+        "classification": "level",
+        "short_label": {
+          "fr": "R+20"
+        },
+        "label": {
+          "fr": "Etage 20"
+        }
+      }
+    ]
+  },
+  {
+    "key": "room",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Pièce"
+    },
+    "label": {
+      "fr": "Pièce d'installation du point de mesure"
+    },
+    "tags": [
+      {
+        "key": "livingRoom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Salon"
+        },
+        "label": {
+          "fr": "Salon"
+        }
+      },
+      {
+        "key": "kitchen",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Cuisine"
+        },
+        "label": {
+          "fr": "Cuisine"
+        }
+      },
+      {
+        "key": "entrance",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Entrée"
+        },
+        "label": {
+          "fr": "Entrée"
+        }
+      },
+      {
+        "key": "bathroom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Sdb"
+        },
+        "label": {
+          "fr": "Salle de bain"
+        }
+      },
+      {
+        "key": "bedroom1",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Ch. 1"
+        },
+        "label": {
+          "fr": "Chambre 1"
+        }
+      },
+      {
+        "key": "bedroom2",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Ch. 2"
+        },
+        "label": {
+          "fr": "Chambre 2"
+        }
+      },
+      {
+        "key": "bedroom3",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Ch. 3"
+        },
+        "label": {
+          "fr": "Chambre 3"
+        }
+      },
+      {
+        "key": "bedroom4",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Ch. 4"
+        },
+        "label": {
+          "fr": "Chambre 4"
+        }
+      },
+      {
+        "key": "bedrooms",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Chambres"
+        },
+        "label": {
+          "fr": "Toutes les Chambres"
+        }
+      },
+      {
+        "key": "balcony",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Balcon"
+        },
+        "label": {
+          "fr": "Balcon"
+        }
+      },
+      {
+        "key": "terrace",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Terrasse"
+        },
+        "label": {
+          "fr": "Terrasse"
+        }
+      },
+      {
+        "key": "utility",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Buanderie"
+        },
+        "label": {
+          "fr": "Buanderie"
+        }
+      },
+      {
+        "key": "garage",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Garage"
+        },
+        "label": {
+          "fr": "Garage"
+        }
+      },
+      {
+        "key": "corridor",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Couloir"
+        },
+        "label": {
+          "fr": "Couloir"
+        }
+      },
+      {
+        "key": "storeroom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Cellier"
+        },
+        "label": {
+          "fr": "Cellier"
+        }
+      },
+      {
+        "key": "cellar",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Cave"
+        },
+        "label": {
+          "fr": "Cave"
+        }
+      },
+      {
+        "key": "attic",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Grenier"
+        },
+        "label": {
+          "fr": "Grenier"
+        }
+      },
+      {
+        "key": "technicalRoom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Gaine Technique"
+        },
+        "label": {
+          "fr": "Gaine Technique"
+        }
+      },
+      {
+        "key": "toilets",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "WC"
+        },
+        "label": {
+          "fr": "Toilettes"
+        }
+      },
+      {
+        "key": "heatingSystemRoom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Chaufferie"
+        },
+        "label": {
+          "fr": "Chaufferie"
+        }
+      },
+      {
+        "key": "diningRoom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Salle à manger"
+        },
+        "label": {
+          "fr": "Salle à manger"
+        }
+      },
+      {
+        "key": "office",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Bureau"
+        },
+        "label": {
+          "fr": "Bureau"
+        }
+      },
+      {
+        "key": "classroom",
+        "owner": "system",
+        "classification": "room",
+        "short_label": {
+          "fr": "Salle de classe"
+        },
+        "label": {
+          "fr": "Salle de classe"
+        }
+      }
+    ]
+  },
+  {
+    "key": "fluid",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Liquide"
+    },
+    "label": {
+      "fr": "Liquide"
+    },
+    "tags": [
+      {
+        "key": "water",
+        "owner": "system",
+        "classification": "fluid",
+        "short_label": {
+          "fr": "Eau"
+        },
+        "label": {
+          "fr": "Eau"
+        }
+      },
+      {
+        "classification": "fluid",
+        "key": "fuel",
+        "label": {
+          "fr": "Fioul"
+        },
+        "owner": "system",
+        "short_label": {
+          "fr": "Fioul"
+        }
+      }
+    ]
+  },
+  {
+    "key": "dataType",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Type d'événement"
+    },
+    "label": {
+      "fr": "Type d'événement"
+    },
+    "tags": [
+      {
+        "key": "snapshot",
+        "owner": "system",
+        "classification": "dataType",
+        "short_label": {
+          "fr": "mesure"
+        },
+        "label": {
+          "fr": "Mesure instantanée"
+        }
+      },
+      {
+        "key": "alert",
+        "owner": "system",
+        "classification": "dataType",
+        "short_label": {
+          "fr": "alerte"
+        },
+        "label": {
+          "fr": "Alerte"
+        }
+      },
+      {
+        "key": "delta",
+        "owner": "system",
+        "classification": "dataType",
+        "short_label": {
+          "fr": "delta"
+        },
+        "label": {
+          "fr": "Delta"
+        }
+      },
+      {
+        "key": "average",
+        "owner": "system",
+        "classification": "dataType",
+        "short_label": {
+          "fr": "moyenne"
+        },
+        "label": {
+          "fr": "Moyenne"
+        }
+      },
+      {
+        "key": "ticket",
+        "owner": "system",
+        "classification": "dataType",
+        "short_label": {
+          "fr": "ticket"
+        },
+        "label": {
+          "fr": "Ticket"
+        }
+      }
+    ]
+  },
+  {
+    "key": "washingDevice",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Equipements de lavage"
+    },
+    "label": {
+      "fr": "Equipements de lavage"
+    },
+    "tags": [
+      {
+        "key": "washingMachine",
+        "owner": "system",
+        "classification": "washingDevice",
+        "short_label": {
+          "fr": "Lave linge"
+        },
+        "label": {
+          "fr": "Lave linge"
+        }
+      },
+      {
+        "key": "clothesDryer",
+        "owner": "system",
+        "classification": "washingDevice",
+        "short_label": {
+          "fr": "Sèche linge"
+        },
+        "label": {
+          "fr": "Sèche linge"
+        }
+      },
+      {
+        "key": "dishwasher",
+        "owner": "system",
+        "classification": "washingDevice",
+        "short_label": {
+          "fr": "Lave-vaiselle"
+        },
+        "label": {
+          "fr": "Lave-vaiselle"
+        }
+      }
+    ]
+  },
+  {
+    "key": "cookingDevice",
+    "owner": "system",
+    "default_locale": "fr",
+    "short_label": {
+      "fr": "Equipements de cuisson"
+    },
+    "label": {
+      "fr": "Equipements de cuisson"
+    },
+    "tags": [
+      {
+        "key": "oven",
+        "owner": "system",
+        "classification": "cookingDevice",
+        "short_label": {
+          "fr": "Four"
+        },
+        "label": {
+          "fr": "Four"
+        }
+      },
+      {
+        "key": "cooktop",
+        "owner": "system",
+        "classification": "cookingDevice",
+        "short_label": {
+          "fr": "Plaque de cuisson"
+        },
+        "label": {
+          "fr": "Plaque de cuisson"
+        }
+      }
+    ]
+  }
+]

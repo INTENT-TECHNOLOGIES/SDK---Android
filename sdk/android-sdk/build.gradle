@@ -1,0 +1,127 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'idea'
+
+ext {
+    groupId = "eu.intent"
+    artifactId = "android-sdk"
+
+    libraryName = "Intent Android SDK"
+    libraryDescription = "An SDK to use the Intent API in your Android apps."
+    libraryVersion = "0.5"
+
+    developerId = "Intent Technologies"
+    developerName = "Intent Technologies"
+    developerEmail = "support@intent-technologies.eu"
+}
+
+group = groupId
+version = libraryVersion
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        // Retrofit needs packages that are not declared
+        disable 'InvalidPackage'
+        // Model classes have a 'custom' Bundle property, where the developer can store whatever he wants
+        disable 'ParcelClassLoader'
+        // The Activities in this library are not declared in AndroidManifest.xml, the client applications will declare them in their own AndroidManifest.xml
+        disable 'Registered'
+        // Some strings are not used in this library but may be used in the client applications
+        disable 'UnusedResources'
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+    if (JavaVersion.current().isJava8Compatible()) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId groupId
+                artifactId artifactId
+
+                name libraryName
+                description libraryDescription
+
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        userOrg = "intent-technologies"
+        repo = "maven"
+        name = "intent-sdk-android"
+        desc = libraryDescription
+        publish = true
+    }
+}

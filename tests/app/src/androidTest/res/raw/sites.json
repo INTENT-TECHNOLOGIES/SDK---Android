@@ -1,0 +1,43 @@
+{
+  "total": 30,
+  "sites": [
+    {
+      "externalRef": "DEMO1-SITE-DEMO-TSH-28",
+      "address": {
+        "num": "450",
+        "way": "Route de la Cousinerie",
+        "zip": "76190",
+        "city": "Fréville",
+        "country": "FR",
+        "complement": "Le Clos du mont",
+        "pos": {
+          "lng": 0.8337479,
+          "lat": 49.5809623
+        }
+      },
+      "owner": "demo1",
+      "type": "collective",
+      "label": null,
+      "id": "03f8e099-10d5-4521-93ef-c76325641216"
+    },
+    {
+      "externalRef": "DEMO1-SITE-DEMO-TSH-04",
+      "address": {
+        "num": "5",
+        "way": "route de trezmalouen",
+        "zip": "29550",
+        "city": "Plonevez-Porzay",
+        "country": "FR",
+        "complement": "Résidence Bildin",
+        "pos": {
+          "lng": -4.2697343,
+          "lat": 48.1138314
+        }
+      },
+      "owner": "demo1",
+      "type": "collective",
+      "label": "test",
+      "id": "05b7bfee-7272-4b9a-a76e-3b3fb53b80c8"
+    }
+  ]
+}

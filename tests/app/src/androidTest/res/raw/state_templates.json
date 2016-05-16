@@ -1,0 +1,243 @@
+[
+  {
+    "templateId": "ThresholdCrossing-AirTemp-Max",
+    "templateLabel": "Inconfort : trop chaud",
+    "fnName": "thresholdCrossing",
+    "validityDuration": 259200000,
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "statusDefault": "NORMAL",
+    "filters": {
+      "type": "object",
+      "properties": {
+        "stream": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "object",
+              "properties": {
+                "activityKey": {
+                  "enum": [
+                    "AirTemp"
+                  ]
+                }
+              },
+              "required": [
+                "activityKey"
+              ]
+            }
+          },
+          "required": [
+            "tags"
+          ]
+        }
+      },
+      "required": [
+        "stream"
+      ]
+    },
+    "paramsSchema": {
+      "type": "object",
+      "required": [
+        "timetables"
+      ],
+      "properties": {
+        "timetables": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "max": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "max"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "templateId": "Visit-Counter-Intervention",
+    "templateLabel": "Nombre de visites effectuées",
+    "fnName": "visit-counter",
+    "validityDuration": null,
+    "statusEnum": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "5+"
+    ],
+    "statusDefault": "0",
+    "statusColor": {
+      "default": "#009933",
+      "criticity1": "#FF5722",
+      "criticity2": "#F44336"
+    },
+    "filters": {
+      "type": "object",
+      "properties": {
+        "stream": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "object",
+              "properties": {
+                "activityKey": {
+                  "enum": [
+                    "Intervention"
+                  ]
+                },
+                "portion": {
+                  "enum": [
+                    "privatePortion"
+                  ]
+                }
+              },
+              "required": [
+                "activityKey",
+                "portion"
+              ]
+            }
+          },
+          "required": [
+            "tags"
+          ]
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "stream",
+        "payload"
+      ]
+    },
+    "paramsSchema": {
+      "type": "object",
+      "required": [
+        "timetables"
+      ],
+      "properties": {
+        "timetables": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "startDate": {
+                "type": "number"
+              },
+              "endDate": {
+                "type": "number"
+              },
+              "periodDuration": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "startDate",
+              "endDate",
+              "periodDuration"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "templateId": "VE-Done-Intervention",
+    "templateLabel": "Visite d'entretien effectuée",
+    "fnName": "ve-done",
+    "validityDuration": 31536000000,
+    "statusEnum": [
+      "YES",
+      "NO"
+    ],
+    "statusDefault": "NO",
+    "statusColor": {
+      "default": "#2196F3"
+    },
+    "filters": {
+      "type": "object",
+      "properties": {
+        "stream": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "object",
+              "properties": {
+                "activityKey": {
+                  "enum": [
+                    "Intervention"
+                  ]
+                }
+              },
+              "required": [
+                "activityKey"
+              ]
+            }
+          },
+          "required": [
+            "tags"
+          ]
+        },
+        "payload": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "stream",
+        "payload"
+      ]
+    },
+    "paramsSchema": {
+      "type": "object",
+      "required": [
+        "timetables"
+      ],
+      "properties": {
+        "timetables": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "startDate": {
+                "type": "number"
+              },
+              "endDate": {
+                "type": "number"
+              },
+              "periodDuration": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "startDate",
+              "endDate",
+              "periodDuration"
+            ]
+          }
+        }
+      }
+    }
+  }
+]

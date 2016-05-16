@@ -1,0 +1,12 @@
+[
+  {
+    "number": "06.12.34.56.78",
+    "name": "Gardien",
+    "isPrivate": false
+  },
+  {
+    "number": "06.06.06.06.06",
+    "name": "Michel",
+    "isPrivate": true
+  }
+]

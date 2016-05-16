@@ -1,0 +1,16 @@
+[
+  {
+    "key": "cat_event",
+    "value": {
+      "en": "Event",
+      "fr": "Évènement"
+    }
+  },
+  {
+    "key": "cat_other",
+    "value": {
+      "en": "Other",
+      "fr": "Autre"
+    }
+  }
+]

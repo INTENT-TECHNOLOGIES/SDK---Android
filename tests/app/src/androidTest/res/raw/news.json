@@ -1,0 +1,31 @@
+[
+  {
+    "category": "info",
+    "timestamp": 1453280215560,
+    "content": {
+      "title": "Remise en service de la chaufferie collective",
+      "description": "Remise en service de la chaufferie collective en début d'après midi"
+    },
+    "newsId": "1094f82e-496b-44b7-b5d7-56ca7f5ca2b8"
+  },
+  {
+    "category": "tip",
+    "timestamp": 1437380650291,
+    "content": {
+      "title": "Application Mes Services",
+      "description": "Intent-Technologies vous souhaite une bonne réception et utilisation de l'application Mes Services."
+    },
+    "newsId": "6f277cc9-a19c-4a5b-a248-500a58e06a7f"
+  },
+  {
+    "category": "event",
+    "timestamp": 1430291942922,
+    "content": {
+      "title": "Maintenance de l'ascenseur",
+      "description": "L'ascenseur est hors service pour cause de problème technique. Il sera réparé dans les 2 jours à venir. Je reste à votre disposition pour les services de portage.",
+      "eventDate": 1430299876543,
+      "eventLocation": "Hall D"
+    },
+    "newsId": "e2c81312-8188-425e-a01a-d37b0620f585"
+  }
+]

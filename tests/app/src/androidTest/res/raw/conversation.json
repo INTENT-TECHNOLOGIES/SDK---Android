@@ -1,0 +1,199 @@
+{
+  "id": "da251bff-64f6-4f4e-a873-990ab57a0a3a",
+  "link": {
+    "assetType": "site",
+    "assetId": "04a17890-1122-48e0-95f4-3cc696a3bc4d",
+    "theme": "HEATING"
+  },
+  "creationDate": 1457987228299,
+  "creatorName": "Intent",
+  "lastUpdate": 1458896339111,
+  "creatorDomain": "intent",
+  "messages": [
+    {
+      "title": null,
+      "payload": {},
+      "type": "COMMENT",
+      "message": "Test",
+      "id": "9004652e-59e5-4496-80a3-44a021a053a1",
+      "creatorName": "Administrateur Demo",
+      "creationDate": 1458896339107,
+      "lastUpdate": 1458896339107,
+      "creatorDomain": "demo1.intent"
+    },
+    {
+      "title": "Signalement",
+      "payload": {
+        "state": "OPEN",
+        "stateHistory": [
+          {
+            "state": "OPEN",
+            "timestamp": 1458652668679,
+            "changer": "urn:demo1.intent:9879a242-78d6-489e-a17e-4434fc05ef50",
+            "changerName": "Administrateur Demo"
+          }
+        ]
+      },
+      "type": "REPORTING",
+      "message": "Signalement urgent",
+      "id": "f220ea4a-c1ad-4633-85c7-ad5e0ec62f22",
+      "creatorName": "Administrateur Demo",
+      "creationDate": 1458652668679,
+      "lastUpdate": 1458652668679,
+      "creatorDomain": "demo1.intent"
+    },
+    {
+      "title": "Trop chaud",
+      "payload": {
+        "state": "CLOSED",
+        "stateHistory": [
+          {
+            "state": "OPEN",
+            "timestamp": 1458602226043,
+            "changer": "urn:demo1.intent:9879a242-78d6-489e-a17e-4434fc05ef50",
+            "changerName": "Administrateur Demo"
+          },
+          {
+            "state": "CLOSED",
+            "timestamp": 1458602235682,
+            "changer": "urn:demo1.intent:9879a242-78d6-489e-a17e-4434fc05ef50",
+            "changerName": "Administrateur Demo"
+          }
+        ]
+      },
+      "type": "REPORTING",
+      "message": "Fait chaud!",
+      "id": "f177e29d-8839-489e-872d-81df302e9f20",
+      "creatorName": "Administrateur Demo",
+      "creationDate": 1458602226043,
+      "lastUpdate": 1458602237279,
+      "creatorDomain": "demo1.intent"
+    },
+    {
+      "title": "Trop grand écart de T°",
+      "payload": {
+        "creationDate": 1453071600000,
+        "domain": "demo1.intent",
+        "observerId": "all-dispersion-temp-max",
+        "streamId": "9616b454-8465-4d79-be43-79fb32ede7f0",
+        "templateId": "Disparity-SiteTempVar-Max",
+        "status": "CRITICAL",
+        "params": {
+          "timetables": [
+            {
+              "max": 2,
+              "criticalMax": 5
+            }
+          ],
+          "maxAnomaliesPerPeriod": 4,
+          "maxCriticalAnomaliesPerPeriod": 4,
+          "periodDuration": 86400000
+        },
+        "validityDuration": 259200000,
+        "validityExpirationDate": 1453330800000,
+        "texts": {
+          "templateLabel": "Trop grand écart de T°",
+          "label": "Trop grand écart de T°",
+          "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+          "stateLabel": "CRITIQUE : Température de site : écart trop important > Site TEST PROXIMIT� RIEUX (DEMO1-SITE-TLS-RIEUX-1)",
+          "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>1 Avenue Jean Rieux, 31500 Toulouse, FR</td></tr><tr><td>Quand</td><td>lundi 18 janvier 2016 à 00:00</td></tr><tr><td>Détails</td><td> - 00h : 5.368 °C (max. critique : 5)<br> - 02h : 5.221 °C (max. critique : 5)<br> - 03h : 5.349 °C (max. critique : 5)<br> - 15h : 5.335 °C (max. critique : 5)<br></td></tr></table>"
+        },
+        "stream": {
+          "tags": {
+            "measureType": "airTempVar",
+            "unit": "celcius",
+            "position": "inside",
+            "icon": "temp",
+            "activityKey": "SiteTempVar",
+            "siteId": "04a17890-1122-48e0-95f4-3cc696a3bc4d"
+          },
+          "streamId": "9616b454-8465-4d79-be43-79fb32ede7f0",
+          "owner": "demo1.intent",
+          "address": {
+            "num": "1",
+            "way": "Avenue Jean Rieux",
+            "zip": "31500",
+            "city": "Toulouse",
+            "country": "FR",
+            "complement": null,
+            "pos": {
+              "type": "Point",
+              "coordinates": [
+                1.4571436999999605,
+                43.59832490000001
+              ]
+            },
+            "validated": false
+          }
+        },
+        "receptionDate": 1457987473090,
+        "statusEnum": [
+          "NORMAL",
+          "ANORMAL",
+          "CRITICAL"
+        ],
+        "statusDefault": "NORMAL",
+        "details": {
+          "anomalies": [
+            {
+              "max": 2,
+              "value": 2.352999999999998,
+              "timestamp": 1453075200000
+            },
+            {
+              "max": 2,
+              "value": 4.1469999999999985,
+              "timestamp": 1453114800000
+            },
+            {
+              "max": 2,
+              "value": 2.225999999999999,
+              "timestamp": 1453132800000
+            },
+            {
+              "max": 2,
+              "value": 2.722999999999999,
+              "timestamp": 1453136400000
+            }
+          ],
+          "maxAnomalies": 4,
+          "criticalAnomalies": [
+            {
+              "criticalMax": 5,
+              "value": 5.368000000000002,
+              "timestamp": 1453071600000
+            },
+            {
+              "criticalMax": 5,
+              "value": 5.221,
+              "timestamp": 1453078800000
+            },
+            {
+              "criticalMax": 5,
+              "value": 5.349,
+              "timestamp": 1453082400000
+            },
+            {
+              "criticalMax": 5,
+              "value": 5.335000000000001,
+              "timestamp": 1453125600000
+            }
+          ],
+          "maxCriticalAnomalies": 4
+        },
+        "statusColor": null,
+        "contractId": null,
+        "dataIssuer": "demo1.intent"
+      },
+      "type": "STATE",
+      "message": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "id": "0f31b13e-978c-40a4-b304-084d718eb836",
+      "creatorName": "Intent",
+      "creationDate": 1457991858226,
+      "lastUpdate": 1457991858226,
+      "creatorDomain": "intent"
+    }
+  ],
+  "totalMessagesCount": 46,
+  "lastRead": 0
+}

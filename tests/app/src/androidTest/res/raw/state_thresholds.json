@@ -1,0 +1,41 @@
+[
+  {
+    "timetables": [
+      {
+        "max": 2.5,
+        "criticalMax": 5.5
+      }
+    ]
+  },
+  {
+    "timetables": [
+      {
+        "max": 3.5,
+        "criticalMax": 5.5,
+        "fromHour": 8,
+        "fromMinute": 30,
+        "toHour": 18,
+        "toMinute": 30
+      },
+      {
+        "max": 1.5,
+        "criticalMax": 3.5,
+        "fromHour": 18,
+        "fromMinute": 30,
+        "toHour": 8,
+        "toMinute": 30
+      }
+    ]
+  },
+  {
+    "timetables": [
+      {
+        "max": 2.5,
+        "criticalMax": 5.5,
+        "dayOfWeek": 0,
+        "fromHour": 10,
+        "toHour": 20
+      }
+    ]
+  }
+]

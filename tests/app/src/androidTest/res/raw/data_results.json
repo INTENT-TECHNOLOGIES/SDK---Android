@@ -1,0 +1,65 @@
+[
+  {
+    "total": 3,
+    "type": "snapshot",
+    "stream": {
+      "tags": {
+        "measureType": "elecConso",
+        "unit": "kwh",
+        "function": "global",
+        "icon": "elec",
+        "activityKey": "ElecCons",
+        "partId": "PART-001944",
+        "siteId": "SITE-ROMAGNAT-000538",
+        "level": "r+4",
+        "portion": "privatePortion",
+        "homeId": "90d229117c5944f2b5e440aa0f85908d.homes.demo1.intent",
+        "door": "402",
+        "sourceType": "human",
+        "siteExternalRef": "testAPI",
+        "partExternalRef": "DEMO1-BERNE"
+      },
+      "streamId": "fe6840d3-aa82-44e9-a169-df09a40fc3ab",
+      "owner": "demo1.intent",
+      "address": {
+        "city": "Toulouse",
+        "complement": "Résidence Jean Jaurès",
+        "country": "FR",
+        "num": "1",
+        "pos": {
+          "lng": 3.09915890000002,
+          "lat": 45.7332116
+        },
+        "way": "Rue des pénitents blancs",
+        "zip": "31000"
+      },
+      "lastUpdate": 1458061814574,
+      "lastValue": {
+        "trustlevel": "TRUSTED_MANUAL",
+        "timestamp": 1458061814574,
+        "value": 789
+      },
+      "nbVal": 8
+    },
+    "data": [
+      {
+        "timestamp": 1458061814574,
+        "value": 789.0,
+        "trustlevel": "TRUSTED_MANUAL"
+      },
+      {
+        "timestamp": 1458661878227,
+        "value": 456.7,
+        "trustlevel": "TRUSTED_MANUAL"
+      },
+      {
+        "timestamp": 1460049538627,
+        "value": {
+          "min": 12.3,
+          "max": 23.4
+        },
+        "trustlevel": "TRUSTED_SENSOR"
+      }
+    ]
+  }
+]

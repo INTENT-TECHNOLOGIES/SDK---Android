@@ -1,0 +1,362 @@
+[
+  {
+    "_id": "571f6a4fb6b762deb1a3982c",
+    "contractId": null,
+    "creationDate": 1461625200000,
+    "dataIssuer": "demo1.intent",
+    "details": [
+      {
+        "max": 2.5,
+        "value": 4.829999999999998,
+        "timestamp": 1461625200000
+      }
+    ],
+    "domain": "demo1.intent",
+    "observerId": "0990d6aa-efe3-45cb-ae7f-7aca09ad31d0",
+    "params": {
+      "timetables": [
+        {
+          "max": 2.5,
+          "criticalMax": 5.5
+        }
+      ]
+    },
+    "receptionDate": 1461674701179,
+    "status": "ANORMAL",
+    "statusColor": "#ff0000",
+    "statusDefault": "NORMAL",
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "stream": {
+      "address": {
+        "city": "Romagnat",
+        "country": "FR",
+        "num": "10",
+        "pos": {
+          "coordinates": [
+            3.0991589000000204,
+            45.7332116
+          ],
+          "type": "Point"
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "firstDataDate": null,
+      "owner": "demo1.intent",
+      "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+      "tags": {
+        "measureType": "airTempVar",
+        "unit": "celcius",
+        "position": "inside",
+        "activityKey": "SiteTempVar",
+        "siteId": "SITE-ROMAGNAT-000538",
+        "icon": "temp"
+      }
+    },
+    "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+    "templateId": "Disparity-SiteTempVar-Max",
+    "texts": {
+      "templateLabel": "Trop grand écart de T°",
+      "label": "Trop grand écart de T°",
+      "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "stateLabel": "Température de site : écart trop important > Résidence Jean Jaurès, Entrée B (Site-Démo2)",
+      "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>10 Avenue Jean Jaurès, 63540 Romagnat, FR</td></tr><tr><td>Quand</td><td>mardi 26 avril 2016 à 01:00</td></tr></table>"
+    },
+    "validityDuration": 86400000,
+    "validityExpirationDate": 1461711600000
+  },
+  {
+    "_id": "571f6a4fb6b762deb1a3982b",
+    "contractId": null,
+    "creationDate": 1461621600000,
+    "dataIssuer": "demo1.intent",
+    "details": [],
+    "domain": "demo1.intent",
+    "observerId": "0990d6aa-efe3-45cb-ae7f-7aca09ad31d0",
+    "params": {
+      "timetables": [
+        {
+          "max": 3.5,
+          "criticalMax": 5.5,
+          "fromHour": 8,
+          "fromMinute": 30,
+          "toHour": 18,
+          "toMinute": 30
+        },
+        {
+          "max": 1.5,
+          "criticalMax": 3.5,
+          "fromHour": 18,
+          "fromMinute": 30,
+          "toHour": 8,
+          "toMinute": 30
+        }
+      ]
+    },
+    "receptionDate": 1461674701185,
+    "status": "NORMAL",
+    "statusColor": null,
+    "statusDefault": "NORMAL",
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "stream": {
+      "address": {
+        "city": "Romagnat",
+        "country": "FR",
+        "num": "10",
+        "pos": {
+          "coordinates": [
+            3.0991589000000204,
+            45.7332116
+          ],
+          "type": "Point"
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "firstDataDate": null,
+      "owner": "demo1.intent",
+      "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+      "tags": {
+        "measureType": "airTempVar",
+        "unit": "celcius",
+        "position": "inside",
+        "activityKey": "SiteTempVar",
+        "siteId": "SITE-ROMAGNAT-000538",
+        "icon": "temp"
+      }
+    },
+    "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+    "templateId": "Disparity-SiteTempVar-Max",
+    "texts": {
+      "templateLabel": "Trop grand écart de T°",
+      "label": "Trop grand écart de T°",
+      "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "stateLabel": "Température de site : écart trop important > Résidence Jean Jaurès, Entrée B (Site-Démo2)",
+      "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>10 Avenue Jean Jaurès, 63540 Romagnat, FR</td></tr><tr><td>Quand</td><td>mardi 26 avril 2016 à 00:00</td></tr></table>"
+    },
+    "validityDuration": 86400000,
+    "validityExpirationDate": 1461708000000
+  },
+  {
+    "_id": "571e975eb6b762deb1a1b60a",
+    "contractId": null,
+    "creationDate": 1461589200000,
+    "dataIssuer": "demo1.intent",
+    "details": [
+      {
+        "max": 2.5,
+        "value": 3.16,
+        "timestamp": 1461589200000
+      }
+    ],
+    "domain": "demo1.intent",
+    "observerId": "069fee0b-f1c5-4a52-8515-4c0aebc8607d",
+    "params": {
+      "timetables": [
+        {
+          "max": 2.5,
+          "criticalMax": 5.5,
+          "dayOfWeek": 6,
+          "fromHour": 10,
+          "toHour": 20
+        }
+      ]
+    },
+    "receptionDate": 1461620701178,
+    "status": "CRITICAL",
+    "statusColor": null,
+    "statusDefault": "NORMAL",
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "stream": {
+      "address": {
+        "city": "Romagnat",
+        "complement": null,
+        "country": "FR",
+        "num": "5",
+        "pos": {
+          "coordinates": [
+            3.0991228999999976,
+            45.7320955
+          ],
+          "type": "Point"
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "firstDataDate": null,
+      "owner": "demo1.intent",
+      "streamId": "2ebf49f8-431a-4860-b9fd-e7c631bb91c9",
+      "tags": {
+        "measureType": "airTempVar",
+        "unit": "celcius",
+        "position": "inside",
+        "activityKey": "SiteTempVar",
+        "siteId": "SITE-MONTBRONN-000626",
+        "icon": "temp"
+      }
+    },
+    "streamId": "2ebf49f8-431a-4860-b9fd-e7c631bb91c9",
+    "templateId": "Disparity-SiteTempVar-Max",
+    "texts": {
+      "templateLabel": "Trop grand écart de T°",
+      "label": "Trop grand écart de T°",
+      "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "stateLabel": "Température de site : écart trop important > Résidence Jean Jaurès, Entrée A (Site-Démo1)",
+      "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>5 Avenue Jean Jaurès, 63540 Romagnat, FR</td></tr><tr><td>Quand</td><td>lundi 25 avril 2016 à 15:00</td></tr></table>"
+    },
+    "validityDuration": 86400000,
+    "validityExpirationDate": 1461675600000
+  },
+  {
+    "_id": "571e975eb6b762deb1a1b605",
+    "contractId": null,
+    "creationDate": 1461585600000,
+    "dataIssuer": "demo1.intent",
+    "details": [
+      {
+        "max": 2.5,
+        "value": 6.1419999999999995,
+        "timestamp": 1461585600000
+      }
+    ],
+    "domain": "demo1.intent",
+    "observerId": "0990d6aa-efe3-45cb-ae7f-7aca09ad31d0",
+    "params": {
+      "timetables": [
+        {
+          "max": 2.5,
+          "criticalMax": 5.5
+        }
+      ]
+    },
+    "receptionDate": 1461620701095,
+    "status": "ANORMAL",
+    "statusColor": null,
+    "statusDefault": "NORMAL",
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "stream": {
+      "address": {
+        "city": "Romagnat",
+        "country": "FR",
+        "num": "10",
+        "pos": {
+          "coordinates": [
+            3.0991589000000204,
+            45.7332116
+          ],
+          "type": "Point"
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "firstDataDate": null,
+      "owner": "demo1.intent",
+      "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+      "tags": {
+        "measureType": "airTempVar",
+        "unit": "celcius",
+        "position": "inside",
+        "activityKey": "SiteTempVar",
+        "siteId": "SITE-ROMAGNAT-000538",
+        "icon": "temp"
+      }
+    },
+    "streamId": "96d61d52-59e6-4637-99bb-8cd022bd5ccf",
+    "templateId": "Disparity-SiteTempVar-Max",
+    "texts": {
+      "templateLabel": "Trop grand écart de T°",
+      "label": "Trop grand écart de T°",
+      "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "stateLabel": "Température de site : écart trop important > Résidence Jean Jaurès, Entrée B (Site-Démo2)",
+      "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>10 Avenue Jean Jaurès, 63540 Romagnat, FR</td></tr><tr><td>Quand</td><td>lundi 25 avril 2016 à 14:00</td></tr></table>"
+    },
+    "validityDuration": 86400000,
+    "validityExpirationDate": 1461672000000
+  },
+  {
+    "_id": "571e975eb6b762deb1a1b609",
+    "contractId": null,
+    "creationDate": 1461585600000,
+    "dataIssuer": "demo1.intent",
+    "details": [],
+    "domain": "demo1.intent",
+    "observerId": "069fee0b-f1c5-4a52-8515-4c0aebc8607d",
+    "params": {
+      "timetables": [
+        {
+          "max": 2.5,
+          "criticalMax": 5.5
+        }
+      ]
+    },
+    "receptionDate": 1461620701143,
+    "status": "NORMAL",
+    "statusColor": null,
+    "statusDefault": "NORMAL",
+    "statusEnum": [
+      "NORMAL",
+      "ANORMAL",
+      "CRITICAL"
+    ],
+    "stream": {
+      "address": {
+        "city": "Romagnat",
+        "complement": null,
+        "country": "FR",
+        "num": "5",
+        "pos": {
+          "coordinates": [
+            3.0991228999999976,
+            45.7320955
+          ],
+          "type": "Point"
+        },
+        "validated": true,
+        "way": "Avenue Jean Jaurès",
+        "zip": "63540"
+      },
+      "firstDataDate": null,
+      "owner": "demo1.intent",
+      "streamId": "2ebf49f8-431a-4860-b9fd-e7c631bb91c9",
+      "tags": {
+        "measureType": "airTempVar",
+        "unit": "celcius",
+        "position": "inside",
+        "activityKey": "SiteTempVar",
+        "siteId": "SITE-MONTBRONN-000626",
+        "icon": "temp"
+      }
+    },
+    "streamId": "2ebf49f8-431a-4860-b9fd-e7c631bb91c9",
+    "templateId": "Disparity-SiteTempVar-Max",
+    "texts": {
+      "templateLabel": "Trop grand écart de T°",
+      "label": "Trop grand écart de T°",
+      "desc": "Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)",
+      "stateLabel": "Température de site : écart trop important > Résidence Jean Jaurès, Entrée A (Site-Démo1)",
+      "stateDesc": "<table class=\"table\"><tr><td>Alerte</td><td>Écart de température trop important entre les logements d'un site (l'appartement le plus froid et le plus chaud ont un écart de température trop important)</td></tr><tr><td>Où</td><td>5 Avenue Jean Jaurès, 63540 Romagnat, FR</td></tr><tr><td>Quand</td><td>lundi 25 avril 2016 à 14:00</td></tr></table>"
+    },
+    "validityDuration": 86400000,
+    "validityExpirationDate": 1461672000000
+  }
+]

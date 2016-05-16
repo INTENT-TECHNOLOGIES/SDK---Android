@@ -1,0 +1,70 @@
+[
+  {
+    "type": "lift",
+    "sms": [],
+    "mail": [],
+    "push": []
+  },
+  {
+    "type": "news",
+    "mail": ["test@intent.com", "fallback@intent.com"],
+    "push": [
+      {
+        "deviceId": "fVs8YqThh4g",
+        "registrationId": "fVs8YqThh4g:APA91bGhnkU1HyosLhvhnX4XS0hLsfxEev3SNnUjBd-oJlAVX79t7a2QvHLi9A__Vp5B81hyGrFmwrJgSukMKn9Kr8LY0Cex0IHsSinQwmfEQ9hDSFwE2BBOGwwWdE7z9rIOyT6cL9iJ",
+        "deviceType": "ANDROID"
+      }
+    ]
+  },
+  {
+    "type": "classified",
+    "mail": ["test@intent.com"],
+    "push": [
+      {
+        "deviceId": "d8jnfrnYZ7s",
+        "registrationId": "d8jnfrnYZ7s:APA91bE8r6Umxm_OZi7dlhu9jxKbmncRMTykQ8nOloj6FUZYtvwVMlfrxphjmFT1y_Aty3pIlCuVF0neHyCXHq9RZaYybWguqxtWZ2tsnLNj785QYIne78oqCYKkViMx-6ISPtGybyLB",
+        "deviceType": "ANDROID"
+      },
+      {
+        "deviceId": "fVs8YqThh4g",
+        "registrationId": "fVs8YqThh4g:APA91bGhnkU1HyosLhvhnX4XS0hLsfxEev3SNnUjBd-oJlAVX79t7a2QvHLi9A__Vp5B81hyGrFmwrJgSukMKn9Kr8LY0Cex0IHsSinQwmfEQ9hDSFwE2BBOGwwWdE7z9rIOyT6cL9iJ",
+        "deviceType": "ANDROID"
+      }
+    ]
+  },
+  {
+    "type": "classified_answer",
+    "mail": [],
+    "sms": ["06 06 06"],
+    "push": [
+      {
+        "deviceId": "d8jnfrnYZ7s",
+        "registrationId": "d8jnfrnYZ7s:APA91bE8r6Umxm_OZi7dlhu9jxKbmncRMTykQ8nOloj6FUZYtvwVMlfrxphjmFT1y_Aty3pIlCuVF0neHyCXHq9RZaYybWguqxtWZ2tsnLNj785QYIne78oqCYKkViMx-6ISPtGybyLB",
+        "deviceType": "ANDROID"
+      },
+      {
+        "deviceId": "fVs8YqThh4g",
+        "registrationId": "fVs8YqThh4g:APA91bGhnkU1HyosLhvhnX4XS0hLsfxEev3SNnUjBd-oJlAVX79t7a2QvHLi9A__Vp5B81hyGrFmwrJgSukMKn9Kr8LY0Cex0IHsSinQwmfEQ9hDSFwE2BBOGwwWdE7z9rIOyT6cL9iJ",
+        "deviceType": "ANDROID"
+      }
+    ]
+  },
+  {
+    "type": "classified_expiry",
+    "mail": [],
+    "sms": ["06 06 06", "07 07 07"],
+    "push": [
+      {
+        "deviceId": "d8jnfrnYZ7s",
+        "registrationId": "abc",
+        "deviceType": "ANDROID"
+      },
+      {
+        "deviceId": "fVs8YqThh4g",
+        "registrationId": "def",
+        "deviceType": "IOS",
+        "locale": "fr"
+      }
+    ]
+  }
+]

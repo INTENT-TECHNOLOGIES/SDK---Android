@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="it_error">HTTP %1$d: %2$s</string>
+    <string name="it_error_internal">Error del sistema: %s</string>
+    <string name="it_error_no_network">No está conectado a internet </string>
+    <string name="it_error_403">No tiene acceso a esta función</string>
+    <string name="it_error_404">Recurso no encontrado</string>
+    <string name="it_error_500">Error interno del servidor</string>
+    <string name="it_no_authenticated_user">No hay un usuario registrado en este momento</string>
+    <string name="it_session_expired">Tu sesión ha expirado, inicia sesión de nuevo por favor</string>
+    <string name="it_user_update_failed">No se ha podido actualizar su perfil</string>
+</resources>
