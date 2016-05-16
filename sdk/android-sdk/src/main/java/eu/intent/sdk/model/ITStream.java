@@ -107,23 +107,21 @@ public class ITStream implements Parcelable {
     /**
      * Retrieves the streams of a given site. The callback returns the stream IDs.
      *
-     * @param siteId           the ITSite's ID
-     * @param withLinkedAssets if true, the API will fetch the streams of the site and its assets (parts, equipments), otherwise it will fetch the streams for the site only
-     * @param activities       if you want to filter on activity keys
+     * @param siteId     the ITSite's ID
+     * @param activities if you want to filter on activity keys
      */
-    public static void getBySiteId(Context context, String siteId, boolean withLinkedAssets, String[] activities, ITApiCallback<List<String>> callback) {
-        getServiceInstance(context).getBySite(siteId, true, withLinkedAssets, activities).enqueue(new ProxyCallback<>(callback));
+    public static void getBySiteId(Context context, String siteId, String[] activities, ITApiCallback<List<String>> callback) {
+        getServiceInstance(context).getBySite(siteId, true, activities).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
      * Retrieves the streams of a given site. The callback returns the stream IDs.
      *
-     * @param siteRef          the ITSite's external ref
-     * @param withLinkedAssets if true, the API will fetch the streams of the site and its assets (parts, equipments), otherwise it will fetch the streams for the site only
-     * @param activities       if you want to filter on activity keys
+     * @param siteRef    the ITSite's external ref
+     * @param activities if you want to filter on activity keys
      */
-    public static void getBySiteRef(Context context, String siteRef, boolean withLinkedAssets, String[] activities, ITApiCallback<List<String>> callback) {
-        getServiceInstance(context).getBySite(siteRef, false, withLinkedAssets, activities).enqueue(new ProxyCallback<>(callback));
+    public static void getBySiteRef(Context context, String siteRef, String[] activities, ITApiCallback<List<String>> callback) {
+        getServiceInstance(context).getBySite(siteRef, false, activities).enqueue(new ProxyCallback<>(callback));
     }
 
     private static Service getServiceInstance(Context context) {
@@ -161,7 +159,7 @@ public class ITStream implements Parcelable {
         Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
 
         @GET("datahub/v1/sites/{externalRef}/streams")
-        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("withLinkedAssets") boolean withLinkedAssets, @Query("activityKey") String[] activities);
+        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
     }
 
     public static class Deserializer implements JsonDeserializer<ITStream> {
