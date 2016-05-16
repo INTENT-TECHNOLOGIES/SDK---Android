@@ -160,28 +160,26 @@ public class ITState implements Parcelable {
      * @param status   the status of the states you want to retrieve if you want to filter by status
      */
     public static void getCurrentByParts(Context context, String[] partRefs, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentByAssets("part", partRefs, false, status).enqueue(new ProxyCallback<>(callback));
+        getServiceInstance(context).getCurrentByAssets("part", partRefs, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
      * Retrieves the current states of the sites with the given refs.
      *
      * @param siteRefs         the ITSites' external refs
-     * @param withLinkedAssets if true, the API will fetch the states of the site and its assets (parts, equipments), otherwise it will fetch the states for the site only
      */
-    public static void getCurrentBySites(Context context, String[] siteRefs, boolean withLinkedAssets, ITApiCallback<List<ITState>> callback) {
-        getCurrentBySites(context, siteRefs, withLinkedAssets, null, callback);
+    public static void getCurrentBySites(Context context, String[] siteRefs, ITApiCallback<List<ITState>> callback) {
+        getCurrentBySites(context, siteRefs, null, callback);
     }
 
     /**
      * Retrieves the current states of the sites with the given refs.
      *
      * @param siteRefs         the ITSites' external refs
-     * @param withLinkedAssets if true, the API will fetch the states of the site and its assets (parts, equipments), otherwise it will fetch the states for the site only
      * @param status           the status of the states you want to retrieve if you want to filter by status
      */
-    public static void getCurrentBySites(Context context, String[] siteRefs, boolean withLinkedAssets, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentByAssets("site", siteRefs, withLinkedAssets, status).enqueue(new ProxyCallback<>(callback));
+    public static void getCurrentBySites(Context context, String[] siteRefs, String status, ITApiCallback<List<ITState>> callback) {
+        getServiceInstance(context).getCurrentByAssets("site", siteRefs, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -317,7 +315,7 @@ public class ITState implements Parcelable {
         Call<List<ITState>> getCurrentAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") double distance);
 
         @GET("v1/states/current/assets")
-        Call<List<ITState>> getCurrentByAssets(@Query("assetType") String assetType, @Query("assetIds") String[] assetIds, @Query("withLinkedAssets") boolean withLinkedAssets, @Query("status") String status);
+        Call<List<ITState>> getCurrentByAssets(@Query("assetType") String assetType, @Query("assetIds") String[] assetIds, @Query("status") String status);
 
         @GET("v1/states/current/streams")
         Call<List<ITState>> getCurrentByStreams(@Query("streamIds") String[] assetIds, @Query("status") String status);

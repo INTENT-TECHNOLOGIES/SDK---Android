@@ -117,20 +117,18 @@ public class ITActivity implements Parcelable {
      * Retrieves the activities of a given site. The callback returns the activity keys.
      *
      * @param siteRef          the ITSite's external ref
-     * @param withLinkedAssets if true, the API will fetch the activities of the site and its assets (parts, equipments), otherwise it will fetch the activities for the site only
      */
-    public static void getBySiteRef(Context context, String siteRef, boolean withLinkedAssets, ITApiCallback<ITActivityKeys> callback) {
-        getServiceInstance(context).getBySite(siteRef, false, withLinkedAssets).enqueue(new ProxyCallback<>(callback));
+    public static void getBySiteRef(Context context, String siteRef, ITApiCallback<ITActivityKeys> callback) {
+        getServiceInstance(context).getBySite(siteRef, false).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
      * Retrieves the activities of a given site by Intent Id. The callback returns the activity keys.
      *
      * @param siteId           the ITSite's Intent id
-     * @param withLinkedAssets if true, the API will fetch the activities of the site and its assets (parts, equipments), otherwise it will fetch the activities for the site only
      */
-    public static void getBySiteId(Context context, String siteId, boolean withLinkedAssets, ITApiCallback<ITActivityKeys> callback) {
-        getServiceInstance(context).getBySite(siteId, true, withLinkedAssets).enqueue(new ProxyCallback<>(callback));
+    public static void getBySiteId(Context context, String siteId, ITApiCallback<ITActivityKeys> callback) {
+        getServiceInstance(context).getBySite(siteId, true).enqueue(new ProxyCallback<>(callback));
     }
 
     private static Service getServiceInstance(Context context) {
@@ -173,7 +171,7 @@ public class ITActivity implements Parcelable {
         Call<ITActivityKeys> getByPart(@Path("externalRef") String partRef, @Query("byId") boolean byId);
 
         @GET("datahub/v1/sites/{externalRef}/activities")
-        Call<ITActivityKeys> getBySite(@Path("externalRef") String siteRef, @Query("byId") boolean byId, @Query("withLinkedAssets") boolean withLinkedAssets);
+        Call<ITActivityKeys> getBySite(@Path("externalRef") String siteRef, @Query("byId") boolean byId);
 
         @GET("datahub/v1/themes")
         Call<List<ITActivityCategory>> getByCategory();
