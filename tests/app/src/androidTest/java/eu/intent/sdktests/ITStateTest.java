@@ -16,6 +16,7 @@ import eu.intent.sdk.model.ITState;
 import eu.intent.sdk.model.ITStateParamsThresholds;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
@@ -44,6 +45,8 @@ public class ITStateTest {
         assertEquals(0L, stateList.get(0).lastUpdate);
         assertEquals(1461625200000L, stateList.get(0).time);
         assertEquals(86400000L, stateList.get(0).validityDuration);
+        assertEquals(1461711600000L, stateList.get(0).validityExpirationDate);
+        assertFalse(stateList.get(0).isValid());
         assertEquals(false, stateList.get(0).isInDefaultStatus());
         assertEquals(true, stateList.get(1).isInDefaultStatus());
         assertEquals(false, stateList.get(2).isInDefaultStatus());
