@@ -46,7 +46,6 @@ public class ITStateTest {
         assertEquals(1461625200000L, stateList.get(0).time);
         assertEquals(86400000L, stateList.get(0).validityDuration);
         assertEquals(1461711600000L, stateList.get(0).validityExpirationDate);
-        assertFalse(stateList.get(0).isValid());
         assertEquals(false, stateList.get(0).isInDefaultStatus());
         assertEquals(true, stateList.get(1).isInDefaultStatus());
         assertEquals(false, stateList.get(2).isInDefaultStatus());
@@ -64,5 +63,18 @@ public class ITStateTest {
         assertNotNull(stateList.get(0).texts.get("stateLabel"));
         assertNotNull(stateList.get(0).texts.get("stateDesc"));
         assertTrue(stateList.get(0).params instanceof ITStateParamsThresholds);
+    }
+
+    @Test
+    public void testIsValid() {
+        ITState state = new ITState();
+        assertEquals(0, state.validityExpirationDate);
+        assertTrue(state.isValid()); // If a state does not have validityExpirationDate property, assume it is still valid
+        state.validityExpirationDate = System.currentTimeMillis() - 60000;
+        assertFalse(state.isValid());
+        state.validityExpirationDate = System.currentTimeMillis() + 60000;
+        assertTrue(state.isValid());
+        state.validityExpirationDate = System.currentTimeMillis();
+        assertFalse(state.isValid()); // If the validityExpirationDate is just now, assume it is not valid anymore
     }
 }
