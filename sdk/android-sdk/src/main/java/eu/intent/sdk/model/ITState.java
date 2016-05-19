@@ -66,6 +66,7 @@ public class ITState implements Parcelable {
     @SerializedName("creationDate")
     public long time;
     public long validityDuration;
+    public long validityExpirationDate;
     /**
      * When the state was created. Typically, data reception date
      */
@@ -106,6 +107,7 @@ public class ITState implements Parcelable {
         }
         time = in.readLong();
         validityDuration = in.readLong();
+        validityExpirationDate = in.readLong();
         creationTime = in.readLong();
         custom = in.readBundle();
     }
@@ -271,6 +273,13 @@ public class ITState implements Parcelable {
     }
 
     /**
+     * Returns true if this state is still valid, i.e. its expiry date is in the future (or equals 0, meaning it's not set). Otherwise returns false.
+     */
+    public boolean isValid() {
+        return validityExpirationDate == 0 || validityExpirationDate > System.currentTimeMillis();
+    }
+
+    /**
      * Returns true if the current status is the default status, false otherwise.
      */
     public boolean isInDefaultStatus() {
@@ -303,6 +312,7 @@ public class ITState implements Parcelable {
         dest.writeBundle(textsBundle);
         dest.writeLong(time);
         dest.writeLong(validityDuration);
+        dest.writeLong(validityExpirationDate);
         dest.writeLong(creationTime);
         dest.writeBundle(custom);
     }
