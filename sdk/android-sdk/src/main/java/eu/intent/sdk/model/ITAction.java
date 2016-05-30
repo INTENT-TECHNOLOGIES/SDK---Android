@@ -99,6 +99,7 @@ public class ITAction implements Parcelable {
             }
         };
 
+        public String assetId;
         @SerializedName("connection_point")
         public String connectionPoint;
         public String deviceId;
@@ -125,6 +126,7 @@ public class ITAction implements Parcelable {
         }
 
         protected Payload(Parcel in) {
+            assetId = in.readString();
             connectionPoint = in.readString();
             deviceId = in.readString();
             floor = in.readString();
@@ -157,6 +159,7 @@ public class ITAction implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(assetId);
             dest.writeString(connectionPoint);
             dest.writeString(deviceId);
             dest.writeString(floor);
