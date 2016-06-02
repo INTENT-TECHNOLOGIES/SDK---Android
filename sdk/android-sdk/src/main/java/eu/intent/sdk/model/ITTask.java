@@ -62,6 +62,7 @@ public class ITTask implements Parcelable {
     @SerializedName("updated")
     public long lastUpdate;
     public ITOperation operation;
+    public boolean selectAssetOnInstall;
     @SerializedName("totalStep")
     public int stepsCount;
     @SerializedName("taskTemplateId")
@@ -96,6 +97,7 @@ public class ITTask implements Parcelable {
         id = in.readString();
         lastUpdate = in.readLong();
         operation = in.readParcelable(ITOperation.class.getClassLoader());
+        selectAssetOnInstall = in.readByte() > 0;
         stepsCount = in.readInt();
         templateId = in.readString();
         address = in.readParcelable(ITAddress.class.getClassLoader());
@@ -199,6 +201,7 @@ public class ITTask implements Parcelable {
         dest.writeString(id);
         dest.writeLong(lastUpdate);
         dest.writeParcelable(operation, flags);
+        dest.writeByte((byte) (selectAssetOnInstall ? 1 : 0));
         dest.writeInt(stepsCount);
         dest.writeString(templateId);
         dest.writeParcelable(address, 0);
@@ -265,6 +268,7 @@ public class ITTask implements Parcelable {
                 }
 
                 class PayloadInstall {
+                    public String assetId;
                     public String deviceId;
                     public String level;
                     public String room;
@@ -274,6 +278,7 @@ public class ITTask implements Parcelable {
                     public Map<String, String> usageAddresses;
 
                     PayloadInstall(ITAction.Payload payload) {
+                        this.assetId = payload.assetId;
                         this.deviceId = payload.deviceId;
                         this.level = payload.floor;
                         this.room = payload.installRoom;
