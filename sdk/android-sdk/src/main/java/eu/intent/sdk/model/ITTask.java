@@ -281,6 +281,12 @@ public class ITTask implements Parcelable {
                         for (Map.Entry<String, ITAction.Payload.Settings> entry : payload.settings.entrySet()) {
                             String output = entry.getKey();
                             ITAction.Payload.Settings settings = entry.getValue();
+                            // Replace any NaN value by null (NaN is not supported by JsonWriter)
+                            for (Map.Entry<String, Double> setting : settings.entries.entrySet()) {
+                                if (Double.isNaN(setting.getValue())) {
+                                    settings.entries.put(setting.getKey(), null);
+                                }
+                            }
                             this.params.put(output, settings.entries);
                         }
                     }
