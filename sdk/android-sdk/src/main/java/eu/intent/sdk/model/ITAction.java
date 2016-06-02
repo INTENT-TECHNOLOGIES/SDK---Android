@@ -270,7 +270,9 @@ public class ITAction implements Parcelable {
             public void writeToParcel(Parcel dest, int flags) {
                 Bundle bundle = new Bundle();
                 for (Map.Entry<String, Double> entry : entries.entrySet()) {
-                    bundle.putDouble(entry.getKey(), entry.getValue());
+                    Double value = entry.getValue();
+                    if (value == null) value = Double.NaN;
+                    bundle.putDouble(entry.getKey(), value);
                 }
                 dest.writeBundle(bundle);
             }
