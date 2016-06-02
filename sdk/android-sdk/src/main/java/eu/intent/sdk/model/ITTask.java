@@ -136,6 +136,13 @@ public class ITTask implements Parcelable {
     }
 
     /**
+     * Retrieves the parts related to the given task.
+     */
+    public static void getParts(Context context, String taskId, ITApiCallback<List<ITPart>> callback) {
+        getServiceInstance(context).getParts(taskId).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Retrieves the task templates.
      */
     public static void getTemplates(Context context, ITApiCallback<List<ITTaskTemplate>> callback) {
@@ -213,6 +220,9 @@ public class ITTask implements Parcelable {
 
         @GET("v1/tasks/{id}")
         Call<ITTask> get(@Path("id") String taskId);
+
+        @GET("v1/tasks/{id}/parts")
+        Call<List<ITPart>> getParts(@Path("id") String taskId);
 
         @GET("v1/tasks/templates")
         Call<List<ITTaskTemplate>> getTemplates();
