@@ -82,7 +82,9 @@ public class ITData implements Parcelable {
     public static void getByPartRef(Context context, String partRef, Type dataType, String[] activityKeys, Granularity granularity, long startTime, long endTime, int page, ITApiCallback<List<ITDataResult>> callback) {
         String startTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(startTime));
         String endTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(endTime));
-        getServiceInstance(context).getByPart(partRef, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, false, Granularity.DAY.equals(granularity)).enqueue(new ProxyCallback<>(callback));
+        boolean byDay = Granularity.DAY.equals(granularity);
+        Integer frequency = Granularity.MANUAL.equals(granularity) ? 0 : null;
+        getServiceInstance(context).getByPart(partRef, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, false, byDay, frequency).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -99,7 +101,9 @@ public class ITData implements Parcelable {
     public static void getByPartId(Context context, String partId, Type dataType, String[] activityKeys, Granularity granularity, long startTime, long endTime, int page, ITApiCallback<List<ITDataResult>> callback) {
         String startTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(startTime));
         String endTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(endTime));
-        getServiceInstance(context).getByPart(partId, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, true, Granularity.DAY.equals(granularity)).enqueue(new ProxyCallback<>(callback));
+        boolean byDay = Granularity.DAY.equals(granularity);
+        Integer frequency = Granularity.MANUAL.equals(granularity) ? 0 : null;
+        getServiceInstance(context).getByPart(partId, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, true, byDay, frequency).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -116,7 +120,9 @@ public class ITData implements Parcelable {
     public static void getBySiteRef(Context context, String siteRef, Type dataType, String[] activityKeys, Granularity granularity, long startTime, long endTime, int page, ITApiCallback<List<ITDataResult>> callback) {
         String startTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(startTime));
         String endTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(endTime));
-        getServiceInstance(context).getBySite(siteRef, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, false, Granularity.DAY.equals(granularity)).enqueue(new ProxyCallback<>(callback));
+        boolean byDay = Granularity.DAY.equals(granularity);
+        Integer frequency = Granularity.MANUAL.equals(granularity) ? 0 : null;
+        getServiceInstance(context).getBySite(siteRef, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, false, byDay, frequency).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -133,7 +139,9 @@ public class ITData implements Parcelable {
     public static void getBySiteId(Context context, String siteId, Type dataType, String[] activityKeys, Granularity granularity, long startTime, long endTime, int page, ITApiCallback<List<ITDataResult>> callback) {
         String startTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(startTime));
         String endTimeIso8601 = ITDateUtils.formatDateIso8601(new Date(endTime));
-        getServiceInstance(context).getBySite(siteId, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, true, Granularity.DAY.equals(granularity)).enqueue(new ProxyCallback<>(callback));
+        boolean byDay = Granularity.DAY.equals(granularity);
+        Integer frequency = Granularity.MANUAL.equals(granularity) ? 0 : null;
+        getServiceInstance(context).getBySite(siteId, dataType.toString(), activityKeys, startTimeIso8601, endTimeIso8601, page, Service.MAX_COUNT, true, byDay, frequency).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -228,7 +236,7 @@ public class ITData implements Parcelable {
     }
 
     public enum Granularity {
-        DAY, HOUR
+        DAY, HOUR, MANUAL
     }
 
     public enum Type {
@@ -274,10 +282,10 @@ public class ITData implements Parcelable {
         int MAX_COUNT = 31 * 24;
 
         @GET("datahub/v1/parts/{externalRef}/{dataType}")
-        Call<List<ITDataResult>> getByPart(@Path("externalRef") String partRef, @Path("dataType") String dataType, @Query("activityKey") String[] activityKeys, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") int page, @Query("countByPage") int count, @Query("byId") boolean byId, @Query("dataByDay") boolean dataByDay);
+        Call<List<ITDataResult>> getByPart(@Path("externalRef") String partRef, @Path("dataType") String dataType, @Query("activityKey") String[] activityKeys, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") int page, @Query("countByPage") int count, @Query("byId") boolean byId, @Query("dataByDay") boolean dataByDay, @Query("frequency") Integer frequency);
 
         @GET("datahub/v1/sites/{externalRef}/{dataType}")
-        Call<List<ITDataResult>> getBySite(@Path("externalRef") String siteRef, @Path("dataType") String dataType, @Query("activityKey") String[] activityKeys, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") int page, @Query("countByPage") int count, @Query("byId") boolean byId, @Query("dataByDay") boolean dataByDay);
+        Call<List<ITDataResult>> getBySite(@Path("externalRef") String siteRef, @Path("dataType") String dataType, @Query("activityKey") String[] activityKeys, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") int page, @Query("countByPage") int count, @Query("byId") boolean byId, @Query("dataByDay") boolean dataByDay, @Query("frequency") Integer frequency);
 
         @GET("datahub/v1/streams/{dataType}")
         Call<List<ITDataResult>> getByStream(@Path("dataType") String dataType, @Query("streamId") String[] streamIds, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") int page, @Query("countByPage") int count, @Query("dataByDay") boolean dataByDay);
