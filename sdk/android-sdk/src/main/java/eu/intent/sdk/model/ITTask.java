@@ -62,6 +62,7 @@ public class ITTask implements Parcelable {
     @SerializedName("updated")
     public long lastUpdate;
     public ITOperation operation;
+    public boolean selectAssetOnInstall;
     @SerializedName("totalStep")
     public int stepsCount;
     @SerializedName("taskTemplateId")
@@ -96,6 +97,7 @@ public class ITTask implements Parcelable {
         id = in.readString();
         lastUpdate = in.readLong();
         operation = in.readParcelable(ITOperation.class.getClassLoader());
+        selectAssetOnInstall = in.readByte() > 0;
         stepsCount = in.readInt();
         templateId = in.readString();
         address = in.readParcelable(ITAddress.class.getClassLoader());
@@ -133,6 +135,13 @@ public class ITTask implements Parcelable {
      */
     public static void get(Context context, String taskId, ITApiCallback<ITTask> callback) {
         getServiceInstance(context).get(taskId).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Retrieves the parts related to the given task.
+     */
+    public static void getParts(Context context, String taskId, ITApiCallback<List<ITPart>> callback) {
+        getServiceInstance(context).getParts(taskId).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -192,6 +201,7 @@ public class ITTask implements Parcelable {
         dest.writeString(id);
         dest.writeLong(lastUpdate);
         dest.writeParcelable(operation, flags);
+        dest.writeByte((byte) (selectAssetOnInstall ? 1 : 0));
         dest.writeInt(stepsCount);
         dest.writeString(templateId);
         dest.writeParcelable(address, 0);
@@ -213,6 +223,9 @@ public class ITTask implements Parcelable {
 
         @GET("v1/tasks/{id}")
         Call<ITTask> get(@Path("id") String taskId);
+
+        @GET("v1/tasks/{id}/parts")
+        Call<List<ITPart>> getParts(@Path("id") String taskId);
 
         @GET("v1/tasks/templates")
         Call<List<ITTaskTemplate>> getTemplates();
@@ -255,6 +268,7 @@ public class ITTask implements Parcelable {
                 }
 
                 class PayloadInstall {
+                    public String assetId;
                     public String deviceId;
                     public String level;
                     public String room;
@@ -264,6 +278,7 @@ public class ITTask implements Parcelable {
                     public Map<String, String> usageAddresses;
 
                     PayloadInstall(ITAction.Payload payload) {
+                        this.assetId = payload.assetId;
                         this.deviceId = payload.deviceId;
                         this.level = payload.floor;
                         this.room = payload.installRoom;

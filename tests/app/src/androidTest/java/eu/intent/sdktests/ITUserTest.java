@@ -25,7 +25,6 @@ public class ITUserTest {
         assertEquals("demo1.intent", user.domain);
         assertEquals("09a4f835-85d7-4f82-9f09-0bb16b58c930", user.id);
         assertEquals("admin.demo1", user.username);
-        assertEquals(1426090792000L, user.creationDate.getTime());
         assertEquals(1, user.entityRoles.size());
         assertEquals(1, user.userRoles.size());
         assertEquals("client", user.entityRoles.get(0));
