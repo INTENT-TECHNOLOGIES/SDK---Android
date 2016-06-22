@@ -91,9 +91,11 @@ public class ITState implements Parcelable {
         lastUpdate = in.readLong();
         observerId = in.readString();
         String paramsClass = in.readString();
-        try {
-            params = in.readParcelable(Class.forName(paramsClass).getClassLoader());
-        } catch (ClassNotFoundException ignored) {
+        if (!TextUtils.isEmpty(paramsClass)) {
+            try {
+                params = in.readParcelable(Class.forName(paramsClass).getClassLoader());
+            } catch (ClassNotFoundException ignored) {
+            }
         }
         status = in.readString();
         statusColor = in.readString();
@@ -297,8 +299,12 @@ public class ITState implements Parcelable {
         dest.writeLong(lastChange);
         dest.writeLong(lastUpdate);
         dest.writeString(observerId);
-        dest.writeString(params.getClass().getCanonicalName());
-        dest.writeParcelable((Parcelable) params, flags);
+        if (params == null) {
+            dest.writeString("");
+        } else {
+            dest.writeString(params.getClass().getCanonicalName());
+            dest.writeParcelable((Parcelable) params, flags);
+        }
         dest.writeString(status);
         dest.writeString(statusColor);
         dest.writeString(statusDefault);
