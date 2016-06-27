@@ -170,14 +170,12 @@ public class ITUser implements Parcelable {
         Call<ITUser> updateUser(@Body UserUpdate body);
 
         class UserUpdate {
-            public String email;
             public String firstname;
             public String lastname;
             public String mobile;
             public String phone;
 
             public UserUpdate(ITUser user) {
-                email = user.email;
                 firstname = user.firstName;
                 lastname = user.lastName;
                 mobile = user.mobile;
