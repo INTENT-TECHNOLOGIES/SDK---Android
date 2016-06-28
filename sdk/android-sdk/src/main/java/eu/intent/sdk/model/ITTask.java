@@ -67,6 +67,8 @@ public class ITTask implements Parcelable {
     public int stepsCount;
     @SerializedName("taskTemplateId")
     public String templateId;
+    @SerializedName("waitingMode")
+    public boolean waitingForValidation;
 
     transient public ITAddress address;
     transient public String assetId;
@@ -100,6 +102,7 @@ public class ITTask implements Parcelable {
         selectAssetOnInstall = in.readByte() > 0;
         stepsCount = in.readInt();
         templateId = in.readString();
+        waitingForValidation = in.readByte() > 0;
         address = in.readParcelable(ITAddress.class.getClassLoader());
         assetId = in.readString();
         int tmpAssetType = in.readInt();
@@ -187,6 +190,13 @@ public class ITTask implements Parcelable {
         return currentStep >= stepsCount;
     }
 
+    /**
+     * Returns true if the task is finished and not in waiting state.
+     */
+    public boolean isValidated() {
+        return isFinished() && !waitingForValidation;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -204,6 +214,7 @@ public class ITTask implements Parcelable {
         dest.writeByte((byte) (selectAssetOnInstall ? 1 : 0));
         dest.writeInt(stepsCount);
         dest.writeString(templateId);
+        dest.writeByte((byte) (waitingForValidation ? 1 : 0));
         dest.writeParcelable(address, 0);
         dest.writeString(assetId);
         dest.writeInt(assetType == null ? -1 : assetType.ordinal());
