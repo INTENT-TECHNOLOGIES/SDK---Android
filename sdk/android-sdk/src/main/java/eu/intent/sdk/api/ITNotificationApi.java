@@ -114,7 +114,7 @@ public class ITNotificationApi {
 
     private interface Service {
         @GET("notifications/v1/subscriptions")
-        Call<List<ITSubscription>> get(@Query("types") String[] categories);
+        Call<List<ITSubscription>> get(@Query("types") String... categories);
 
         @POST("notifications/v1/{type}/mail")
         Call<Void> subscribeToEmailNotifications(@Path("type") String category, @Body Email email);
@@ -126,13 +126,13 @@ public class ITNotificationApi {
         Call<Void> subscribeToSmsNotifications(@Path("type") String category, @Body Sms sms);
 
         @DELETE("notifications/v1/{type}/mail")
-        Call<Void> unsubscribeFromEmailNotifications(@Path("type") String category, @Query("mail") String[] emails);
+        Call<Void> unsubscribeFromEmailNotifications(@Path("type") String category, @Query("mail") String... emails);
 
         @DELETE("notifications/v1/{type}/push")
-        Call<Void> unsubscribeFromGcmPushNotifications(@Path("type") String category, @Query("push") String[] deviceIds);
+        Call<Void> unsubscribeFromGcmPushNotifications(@Path("type") String category, @Query("push") String... deviceIds);
 
         @DELETE("notifications/v1/{type}/sms")
-        Call<Void> unsubscribeFromSmsNotifications(@Path("type") String category, @Query("sms") String[] phoneNumbers);
+        Call<Void> unsubscribeFromSmsNotifications(@Path("type") String category, @Query("sms") String... phoneNumbers);
 
         @PUT("notifications/v1/registration/{deviceId}")
         Call<Void> registerGcmToken(@Path("deviceId") String deviceId, @Body Token token);

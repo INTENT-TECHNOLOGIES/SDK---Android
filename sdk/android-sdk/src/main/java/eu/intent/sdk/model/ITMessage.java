@@ -3,6 +3,7 @@ package eu.intent.sdk.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -69,6 +70,7 @@ public class ITMessage implements Parcelable {
     public Bundle custom = new Bundle();
 
     public ITMessage() {
+        // Needed by Retrofit
     }
 
     protected ITMessage(Parcel in) {
@@ -142,19 +144,23 @@ public class ITMessage implements Parcelable {
             if (MessageType.REPORTING.equals(message.type) || MessageType.STATE.equals(message.type)) {
                 JsonObject payload = json.getAsJsonObject().getAsJsonObject("payload");
                 if (payload != null) {
-                    if (MessageType.REPORTING.equals(message.type)) {
-                        message.reportingState = gson.fromJson(payload.get("state"), ReportingState.class);
-                        message.reportingStateHistory = gson.fromJson(payload.getAsJsonArray("stateHistory"),
-                                new TypeToken<ArrayList<ReportingStateHistoryItem>>() {
-                                }.getType());
-                    } else if (MessageType.STATE.equals(message.type)) {
-                        message.state = gson.fromJson(payload, new TypeToken<ITState>() {
-                        }.getType());
-                    }
+                    deserializePayload(message, payload, gson);
                 }
             }
 
             return message;
+        }
+
+        private void deserializePayload(@NonNull ITMessage message, @NonNull JsonObject payload, @NonNull Gson gson) {
+            if (MessageType.REPORTING.equals(message.type)) {
+                message.reportingState = gson.fromJson(payload.get("state"), ReportingState.class);
+                message.reportingStateHistory = gson.fromJson(payload.getAsJsonArray("stateHistory"),
+                        new TypeToken<ArrayList<ReportingStateHistoryItem>>() {
+                        }.getType());
+            } else if (MessageType.STATE.equals(message.type)) {
+                message.state = gson.fromJson(payload, new TypeToken<ITState>() {
+                }.getType());
+            }
         }
     }
 }

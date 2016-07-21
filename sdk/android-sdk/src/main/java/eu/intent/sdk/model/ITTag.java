@@ -12,8 +12,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A tag has a key, a label and a short label, each for multiple languages.
@@ -24,8 +24,8 @@ public class ITTag {
     public String key;
     public String owner;
 
-    transient public Map<String, String> labels = new HashMap<>();
-    transient public Map<String, String> shortLabels = new HashMap<>();
+    transient public Map<String, String> labels = new ConcurrentHashMap<>();
+    transient public Map<String, String> shortLabels = new ConcurrentHashMap<>();
 
     /**
      * Returns the tag label in the given language. Returns the tag key if no label was found.

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import eu.intent.sdk.util.ITParcelableUtils;
+
 /**
  * An occupant can read and publish classified ads, visible by the other occupants of his residence.
  *
@@ -64,15 +66,16 @@ public class ITClassifiedAd implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITClassifiedAd() {
+        // Needed by Retrofit
     }
 
     protected ITClassifiedAd(Parcel in) {
         category = in.readString();
         creationDate = in.readLong();
         expirationDate = in.readLong();
-        hasMyReply = in.readByte() != 0;
+        hasMyReply = ITParcelableUtils.readBoolean(in);
         id = in.readString();
-        isMine = in.readByte() != 0;
+        isMine = ITParcelableUtils.readBoolean(in);
         publisherName = in.readString();
         replies = new ArrayList<>();
         in.readList(replies, ITClassifiedAdReply.class.getClassLoader());
@@ -95,9 +98,9 @@ public class ITClassifiedAd implements Parcelable {
         dest.writeString(category);
         dest.writeLong(creationDate);
         dest.writeLong(expirationDate);
-        dest.writeByte(hasMyReply ? (byte) 1 : (byte) 0);
+        ITParcelableUtils.writeBoolean(dest, hasMyReply);
         dest.writeString(id);
-        dest.writeByte(isMine ? (byte) 1 : (byte) 0);
+        ITParcelableUtils.writeBoolean(dest, isMine);
         dest.writeString(publisherName);
         dest.writeList(replies);
         dest.writeString(text);

@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The state of a part or site at a given time. A state is defined by the implementation of a template, i.e. a function with some parameters.
@@ -63,7 +64,7 @@ public class ITState implements Parcelable {
     public long creationTime;
 
     transient public ITStateParams params;
-    transient public Map<String, String> texts = new HashMap<>();
+    transient public Map<String, String> texts = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -72,6 +73,7 @@ public class ITState implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITState() {
+        // Needed by Retrofit
     }
 
     protected ITState(Parcel in) {
@@ -84,6 +86,7 @@ public class ITState implements Parcelable {
             try {
                 params = in.readParcelable(Class.forName(paramsClass).getClassLoader());
             } catch (ClassNotFoundException ignored) {
+                // Should not happen. If it happens, then let params be null.
             }
         }
         status = in.readString();

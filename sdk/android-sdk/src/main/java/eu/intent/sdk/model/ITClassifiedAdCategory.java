@@ -12,9 +12,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A category of ITClassifiedAd with its translations.
@@ -34,7 +34,7 @@ public class ITClassifiedAdCategory implements Parcelable {
 
     public String key;
 
-    transient public Map<String, String> labels = new HashMap<>();
+    transient public Map<String, String> labels = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -43,6 +43,7 @@ public class ITClassifiedAdCategory implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITClassifiedAdCategory() {
+        // Needed by Retrofit
     }
 
     protected ITClassifiedAdCategory(Parcel in) {

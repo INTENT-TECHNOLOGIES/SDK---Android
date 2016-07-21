@@ -115,7 +115,7 @@ public class ITTaskApi {
                 this.action = new Action(action);
             }
 
-            class Action {
+            static class Action {
                 public String actionTemplateId;
                 public boolean error;
                 public boolean finished;
@@ -137,10 +137,12 @@ public class ITTaskApi {
                         case "settings":
                             this.payload = new PayloadSettings(action.payload);
                             break;
+                        default:
+                            // No payload for other action types
                     }
                 }
 
-                class PayloadInstall {
+                static class PayloadInstall {
                     public String assetId;
                     public String deviceId;
                     public String level;
@@ -161,7 +163,7 @@ public class ITTaskApi {
                     }
                 }
 
-                class PayloadSettings {
+                static class PayloadSettings {
                     public Map<String, Map<String, Double>> params;
 
                     PayloadSettings(ITAction.Payload payload) {
@@ -180,7 +182,7 @@ public class ITTaskApi {
                     }
                 }
 
-                class PayloadRepeaters {
+                static class PayloadRepeaters {
                     public List<Repeater> repeaters;
 
                     PayloadRepeaters(ITAction.Payload payload) {
@@ -190,7 +192,7 @@ public class ITTaskApi {
                         }
                     }
 
-                    class Repeater {
+                    static class Repeater {
                         public String deviceId;
                         public String floor;
 

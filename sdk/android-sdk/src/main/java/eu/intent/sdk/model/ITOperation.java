@@ -40,6 +40,7 @@ public class ITOperation implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITOperation() {
+        // Needed by Retrofit
     }
 
     protected ITOperation(Parcel in) {

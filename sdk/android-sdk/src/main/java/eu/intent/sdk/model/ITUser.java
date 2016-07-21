@@ -55,6 +55,7 @@ public class ITUser implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITUser() {
+        // Needed by Retrofit
     }
 
     protected ITUser(Parcel in) {

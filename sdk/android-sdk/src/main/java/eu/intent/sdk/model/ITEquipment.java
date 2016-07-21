@@ -42,6 +42,7 @@ public class ITEquipment implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITEquipment() {
+        // Needed by Retrofit
     }
 
     protected ITEquipment(Parcel in) {

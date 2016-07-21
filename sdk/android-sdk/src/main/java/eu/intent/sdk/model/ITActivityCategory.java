@@ -32,6 +32,7 @@ public class ITActivityCategory implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITActivityCategory() {
+        // Needed by Retrofit
     }
 
     protected ITActivityCategory(Parcel in) {

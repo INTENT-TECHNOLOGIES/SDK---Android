@@ -48,6 +48,7 @@ public class ITConversation implements Parcelable {
     public Bundle custom = new Bundle();
 
     public ITConversation() {
+        // Needed by Retrofit
     }
 
     protected ITConversation(Parcel in) {

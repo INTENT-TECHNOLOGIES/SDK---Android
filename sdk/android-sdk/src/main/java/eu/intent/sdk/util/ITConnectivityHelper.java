@@ -7,7 +7,9 @@ import android.net.NetworkInfo;
 /**
  * Call isNetworkAvailable() to test the connectivity status.
  */
-public class ITConnectivityHelper {
+public final class ITConnectivityHelper {
+    private ITConnectivityHelper() {
+    }
 
     /**
      * Returns true if the device is connected to the Internet by any mean, false otherwise.

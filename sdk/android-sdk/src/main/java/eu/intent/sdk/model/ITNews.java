@@ -45,6 +45,7 @@ public class ITNews implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITNews() {
+        // Needed by Retrofit
     }
 
     protected ITNews(Parcel in) {

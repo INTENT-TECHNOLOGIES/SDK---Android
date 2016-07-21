@@ -50,6 +50,7 @@ public class ITStateTemplate implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITStateTemplate() {
+        // Needed by Retrofit
     }
 
     protected ITStateTemplate(Parcel in) {

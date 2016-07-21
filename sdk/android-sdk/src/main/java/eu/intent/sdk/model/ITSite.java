@@ -31,6 +31,7 @@ public class ITSite implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITSite() {
+        // Needed by Retrofit
     }
 
     protected ITSite(Parcel in) {

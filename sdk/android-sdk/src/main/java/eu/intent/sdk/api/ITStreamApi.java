@@ -75,9 +75,9 @@ public class ITStreamApi {
         Call<ITStream> get(@Path("streamId") String streamId);
 
         @GET("datahub/v1/parts/{externalRef}/streams")
-        Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
+        Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
 
         @GET("datahub/v1/sites/{externalRef}/streams")
-        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
+        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
     }
 }

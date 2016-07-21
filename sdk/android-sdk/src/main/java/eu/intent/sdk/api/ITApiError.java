@@ -8,7 +8,10 @@ import eu.intent.sdk.util.ITConnectivityHelper;
 /**
  * An util class to manage errors sent back by the API.
  */
-public class ITApiError {
+public final class ITApiError {
+    private ITApiError() {
+    }
+
     /**
      * Returns a readable message from the given HTTP code. If no generic message matches the given code, the fallback message is returned. Most of the time, this fallback message should be the response message.
      */

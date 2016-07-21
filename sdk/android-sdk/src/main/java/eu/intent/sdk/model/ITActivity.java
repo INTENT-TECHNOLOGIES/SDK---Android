@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An activity is something that can be measured or trigger events, for example temperature, electricity consumption, or lifts.
@@ -38,7 +39,7 @@ public class ITActivity implements Parcelable {
     @SerializedName("activityLabel")
     public String label;
 
-    transient public Map<String, String> tags = new HashMap<>();
+    transient public Map<String, String> tags = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -47,6 +48,7 @@ public class ITActivity implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITActivity() {
+        // Needed by Retrofit
     }
 
     protected ITActivity(Parcel in) {

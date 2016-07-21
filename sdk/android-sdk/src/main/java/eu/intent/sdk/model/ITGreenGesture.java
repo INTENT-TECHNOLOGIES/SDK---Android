@@ -57,6 +57,7 @@ public class ITGreenGesture implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITGreenGesture() {
+        // Needed by Retrofit
     }
 
     protected ITGreenGesture(Parcel in) {

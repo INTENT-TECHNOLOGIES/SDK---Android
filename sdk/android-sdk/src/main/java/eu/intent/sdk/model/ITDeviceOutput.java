@@ -29,6 +29,7 @@ public class ITDeviceOutput implements Parcelable {
     public boolean required;
 
     public ITDeviceOutput() {
+        // Needed by Retrofit
     }
 
     protected ITDeviceOutput(Parcel in) {
@@ -69,6 +70,7 @@ public class ITDeviceOutput implements Parcelable {
         public String pattern;
 
         public Param() {
+            // Needed by Retrofit
         }
 
         protected Param(Parcel in) {

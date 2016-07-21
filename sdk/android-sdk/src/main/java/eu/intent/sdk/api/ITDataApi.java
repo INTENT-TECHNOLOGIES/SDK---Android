@@ -195,7 +195,7 @@ public class ITDataApi {
         @POST("datahub/v1/streams/{streamId}/{dataType}")
         Call<Void> publishToStream(@Path("streamId") String streamId, @Path("dataType") String dataType, @retrofit2.http.Body Body body);
 
-        class Body {
+        final class Body {
             public long timestamp;
             public double value;
             @SerializedName("trustlevel")

@@ -35,6 +35,7 @@ public class ITContact implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITContact() {
+        // Needed by Retrofit
     }
 
     protected ITContact(Parcel in) {
