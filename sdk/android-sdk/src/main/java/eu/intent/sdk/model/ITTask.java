@@ -244,7 +244,7 @@ public class ITTask implements Parcelable {
         @POST("v1/tasks/{taskId}/action")
         Call<Void> updateAction(@Path("taskId") String taskId, @Body UpdateAction action);
 
-        class UpdateAction {
+        static class UpdateAction {
             public String taskId;
             public Action action;
 
@@ -253,7 +253,7 @@ public class ITTask implements Parcelable {
                 this.action = new Action(action);
             }
 
-            class Action {
+            static class Action {
                 public String actionTemplateId;
                 public boolean error;
                 public boolean finished;
@@ -275,10 +275,12 @@ public class ITTask implements Parcelable {
                         case "settings":
                             this.payload = new PayloadSettings(action.payload);
                             break;
+                        default:
+                            // payload will stay null, that's ok
                     }
                 }
 
-                class PayloadInstall {
+                static class PayloadInstall {
                     public String assetId;
                     public String deviceId;
                     public String level;
@@ -299,7 +301,7 @@ public class ITTask implements Parcelable {
                     }
                 }
 
-                class PayloadSettings {
+                static class PayloadSettings {
                     public Map<String, Map<String, Double>> params;
 
                     PayloadSettings(ITAction.Payload payload) {
@@ -318,7 +320,7 @@ public class ITTask implements Parcelable {
                     }
                 }
 
-                class PayloadRepeaters {
+                static class PayloadRepeaters {
                     public List<Repeater> repeaters;
 
                     PayloadRepeaters(ITAction.Payload payload) {
@@ -328,7 +330,7 @@ public class ITTask implements Parcelable {
                         }
                     }
 
-                    class Repeater {
+                    static class Repeater {
                         public String deviceId;
                         public String floor;
 
@@ -401,9 +403,9 @@ public class ITTask implements Parcelable {
                 JsonObject assetObject = asset.getAsJsonObject();
                 task.address = gson.fromJson(assetObject.get("address"), ITAddress.class);
                 task.assetId = assetObject.has("assetId") && !assetObject.get("assetId").isJsonNull() ? assetObject.get("assetId").getAsString() : "";
-                task.assetType = assetObject.has("assetType") && !assetObject.get("assetType").isJsonNull() ?
-                        ITAssetType.fromString(assetObject.get("assetType").getAsString()) :
-                        ITAssetType.SITE;
+                task.assetType = assetObject.has("assetType") && !assetObject.get("assetType").isJsonNull()
+                        ? ITAssetType.fromString(assetObject.get("assetType").getAsString())
+                        : ITAssetType.SITE;
                 task.commonPart = !assetObject.has("portion") || TextUtils.isEmpty(assetObject.get("portion").getAsString()) || TextUtils.equals(assetObject.get("portion").getAsString(), "commonPortion");
                 task.door = assetObject.has("door") && !assetObject.get("door").isJsonNull() ? assetObject.get("door").getAsString() : "";
                 task.floor = assetObject.has("level") && !assetObject.get("level").isJsonNull() ? assetObject.get("level").getAsString() : "";

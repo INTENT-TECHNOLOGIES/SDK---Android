@@ -15,7 +15,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -29,10 +28,44 @@ public class ITMessagesCount {
      * Messages count includes report and states messages count
      */
     public static class ByActivityCategory implements Parcelable {
+        public static final Parcelable.Creator<ByActivityCategory> CREATOR = new Parcelable.Creator<ByActivityCategory>() {
+            public ByActivityCategory createFromParcel(Parcel source) {
+                return new ByActivityCategory(source);
+            }
+
+            public ByActivityCategory[] newArray(int size) {
+                return new ByActivityCategory[size];
+            }
+        };
         /**
          * activityCategoryId <=> counts
          */
         public HashMap<String, Item> countsByActivityCategory = new HashMap<>();
+
+
+        public ByActivityCategory() {
+        }
+
+        protected ByActivityCategory(Parcel in) {
+            Bundle messagesCountsBundle = in.readBundle();
+            for (String assetId : messagesCountsBundle.keySet()) {
+                countsByActivityCategory.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
+            }
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            Bundle messagesCountsBundle = new Bundle();
+            for (Map.Entry<String, Item> messageCount : countsByActivityCategory.entrySet()) {
+                messagesCountsBundle.putParcelable(messageCount.getKey(), messageCount.getValue());
+            }
+            dest.writeBundle(messagesCountsBundle);
+        }
 
         public static class Deserializer implements JsonDeserializer<ByActivityCategory> {
 
@@ -54,7 +87,37 @@ public class ITMessagesCount {
                 return messagesCounts;
             }
         }
+    }
 
+    /**
+     * Messages, open reports and non default states count by asset id
+     * Messages count includes report and states messages count
+     */
+    public static class ByAssetId implements Parcelable {
+        public static final Parcelable.Creator<ByAssetId> CREATOR = new Parcelable.Creator<ByAssetId>() {
+            public ByAssetId createFromParcel(Parcel source) {
+                return new ByAssetId(source);
+            }
+
+            public ByAssetId[] newArray(int size) {
+                return new ByAssetId[size];
+            }
+        };
+        /**
+         * assetId <=> counts
+         */
+        public HashMap<String, Item> countsByAssetId = new HashMap<>();
+
+
+        public ByAssetId() {
+        }
+
+        protected ByAssetId(Parcel in) {
+            Bundle messagesCountsBundle = in.readBundle();
+            for (String assetId : messagesCountsBundle.keySet()) {
+                countsByAssetId.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
+            }
+        }
 
         @Override
         public int describeContents() {
@@ -64,41 +127,11 @@ public class ITMessagesCount {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             Bundle messagesCountsBundle = new Bundle();
-            for (Map.Entry<String, Item> messageCount : countsByActivityCategory.entrySet()) {
+            for (Map.Entry<String, Item> messageCount : countsByAssetId.entrySet()) {
                 messagesCountsBundle.putParcelable(messageCount.getKey(), messageCount.getValue());
             }
             dest.writeBundle(messagesCountsBundle);
         }
-        public ByActivityCategory() {
-        }
-
-        protected ByActivityCategory(Parcel in) {
-            Bundle messagesCountsBundle = in.readBundle();
-            for (String assetId : messagesCountsBundle.keySet()) {
-                countsByActivityCategory.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
-            }
-        }
-
-        public static final Parcelable.Creator<ByActivityCategory> CREATOR = new Parcelable.Creator<ByActivityCategory>() {
-            public ByActivityCategory createFromParcel(Parcel source) {
-                return new ByActivityCategory(source);
-            }
-
-            public ByActivityCategory[] newArray(int size) {
-                return new ByActivityCategory[size];
-            }
-        };
-    }
-
-    /**
-     * Messages, open reports and non default states count by asset id
-     * Messages count includes report and states messages count
-     */
-    public static class ByAssetId implements Parcelable {
-        /**
-         * assetId <=> counts
-         */
-        public HashMap<String, Item> countsByAssetId = new HashMap<>();
 
         public static class Deserializer implements JsonDeserializer<ByAssetId> {
 
@@ -120,44 +153,18 @@ public class ITMessagesCount {
                 return messagesCounts;
             }
         }
-
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            Bundle messagesCountsBundle = new Bundle();
-            for (Map.Entry<String, Item> messageCount : countsByAssetId.entrySet()) {
-                messagesCountsBundle.putParcelable(messageCount.getKey(), messageCount.getValue());
-            }
-            dest.writeBundle(messagesCountsBundle);
-        }
-
-        public ByAssetId() {
-        }
-
-        protected ByAssetId(Parcel in) {
-            Bundle messagesCountsBundle = in.readBundle();
-            for (String assetId : messagesCountsBundle.keySet()) {
-                countsByAssetId.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
-            }
-        }
-
-        public static final Parcelable.Creator<ByAssetId> CREATOR = new Parcelable.Creator<ByAssetId>() {
-            public ByAssetId createFromParcel(Parcel source) {
-                return new ByAssetId(source);
-            }
-
-            public ByAssetId[] newArray(int size) {
-                return new ByAssetId[size];
-            }
-        };
     }
 
     public static class Item implements Parcelable {
+        public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+            public Item createFromParcel(Parcel source) {
+                return new Item(source);
+            }
+
+            public Item[] newArray(int size) {
+                return new Item[size];
+            }
+        };
         /**
          * Count of messages (includes report and states messages), default to -1
          */
@@ -172,6 +179,14 @@ public class ITMessagesCount {
          */
         public int nonDefaultStateCount = -1;
 
+        public Item() {
+        }
+
+        protected Item(Parcel in) {
+            this.messageCount = in.readInt();
+            this.openReportsCount = in.readInt();
+            this.nonDefaultStateCount = in.readInt();
+        }
 
         @Override
         public int describeContents() {
@@ -184,24 +199,5 @@ public class ITMessagesCount {
             dest.writeInt(this.openReportsCount);
             dest.writeInt(this.nonDefaultStateCount);
         }
-
-        public Item() {
-        }
-
-        protected Item(Parcel in) {
-            this.messageCount = in.readInt();
-            this.openReportsCount = in.readInt();
-            this.nonDefaultStateCount = in.readInt();
-        }
-
-        public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
-            public Item createFromParcel(Parcel source) {
-                return new Item(source);
-            }
-
-            public Item[] newArray(int size) {
-                return new Item[size];
-            }
-        };
     }
 }

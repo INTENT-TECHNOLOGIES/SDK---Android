@@ -139,8 +139,8 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
                 if (isAcrossTwoDays()) {
                     if (dayOfWeek < 0) {
                         // No day: we can be either after fromHour/fromMinute, or before toHour/toMinute
-                        result = (hour > fromHour || hour == fromHour && minute >= fromMinute) ||
-                                (hour < toHour || hour == toHour && minute < toMinute);
+                        result = (hour > fromHour || hour == fromHour && minute >= fromMinute)
+                                || (hour < toHour || hour == toHour && minute < toMinute);
                     } else if (c.get(Calendar.DAY_OF_WEEK) - 1 == dayOfWeek) {
                         // D-day: we must be after fromHour/fromMinute
                         result = hour > fromHour || hour == fromHour && minute >= fromMinute;
@@ -149,9 +149,9 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
                         result = hour < toHour || hour == toHour && minute < toMinute;
                     }
                 } else {
-                    result = (dayOfWeek < 0 || c.get(Calendar.DAY_OF_WEEK) - 1 == dayOfWeek) &&
-                            (hour > fromHour || hour == fromHour && minute >= fromMinute) &&
-                            (hour < toHour || hour == toHour && minute < toMinute);
+                    result = (dayOfWeek < 0 || c.get(Calendar.DAY_OF_WEEK) - 1 == dayOfWeek)
+                            && (hour > fromHour || hour == fromHour && minute >= fromMinute)
+                            && (hour < toHour || hour == toHour && minute < toMinute);
                 }
             } else {
                 result = dayOfWeek < 0 || c.get(Calendar.DAY_OF_WEEK) - 1 == dayOfWeek;

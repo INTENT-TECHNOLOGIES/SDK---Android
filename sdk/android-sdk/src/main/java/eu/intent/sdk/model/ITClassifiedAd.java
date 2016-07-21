@@ -254,7 +254,7 @@ public class ITClassifiedAd implements Parcelable {
         @POST("residentservices/v1/classifieds/{id}/visibility")
         Call<Void> updateVisibility(@Path("id") String adId, @Query("visibility") Visibility visibility);
 
-        class NewAd {
+        final class NewAd {
             public String category;
             public String creatorName;
             public String description;
@@ -268,7 +268,7 @@ public class ITClassifiedAd implements Parcelable {
             }
         }
 
-        class User {
+        final class User {
             public String mail;
             public String name;
             public String phone;

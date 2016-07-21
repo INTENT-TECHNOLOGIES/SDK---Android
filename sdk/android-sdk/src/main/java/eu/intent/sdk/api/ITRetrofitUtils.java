@@ -51,6 +51,9 @@ public final class ITRetrofitUtils {
     private static Gson sGson;
     private static Map<Type, Object> sCustomTypeAdapters;
 
+    private ITRetrofitUtils() {
+    }
+
     /**
      * Gets an instance of Retrofit, provided with an authenticator and the headers needed for each request.
      */
@@ -59,7 +62,7 @@ public final class ITRetrofitUtils {
             OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
             clientBuilder.addInterceptor(new RetrofitCacheInterceptor(context));
             clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
-            // TODO Remove logs before releasing
+            // TODO: Remove logs before releasing
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             clientBuilder.addInterceptor(loggingInterceptor);

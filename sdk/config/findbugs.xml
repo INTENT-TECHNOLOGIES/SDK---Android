@@ -1,0 +1,13 @@
+<FindBugsFilter>
+    <!-- Ignore unused public or protected fields: they can be used in client applications -->
+    <Match>
+        <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" />
+    </Match>
+    <Match>
+        <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" />
+    </Match>
+    <!-- Ignore using Integer.compare(i1, i2): that needs to target API version 19 -->
+    <Match>
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_COMPARE" />
+    </Match>
+</FindBugsFilter>

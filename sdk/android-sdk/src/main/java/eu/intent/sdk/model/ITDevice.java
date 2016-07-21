@@ -15,8 +15,11 @@ import retrofit2.http.GET;
  *
  * @see ITDeviceType
  */
-public class ITDevice {
+public final class ITDevice {
     private static Service sService;
+
+    private ITDevice() {
+    }
 
     /**
      * Retrieves all the device types handled by the platform.

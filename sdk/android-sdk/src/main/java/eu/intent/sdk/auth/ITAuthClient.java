@@ -14,7 +14,10 @@ import eu.intent.sdk.ui.activity.ITAuthActivity;
  *
  * @see ITAuthRequest.Builder
  */
-public class ITAuthClient {
+public final class ITAuthClient {
+    private ITAuthClient() {
+    }
+
     /**
      * Creates a login Intent to be started from your code.
      *

@@ -299,7 +299,7 @@ public class ITData implements Parcelable {
         @POST("datahub/v1/streams/{streamId}/{dataType}")
         Call<Void> publishToStream(@Path("streamId") String streamId, @Path("dataType") String dataType, @retrofit2.http.Body ITData.Service.Body body);
 
-        class Body {
+        final class Body {
             public long timestamp;
             public double value;
             @SerializedName("trustlevel")
