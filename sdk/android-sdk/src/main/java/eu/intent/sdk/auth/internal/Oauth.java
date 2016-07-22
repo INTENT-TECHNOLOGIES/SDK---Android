@@ -68,8 +68,10 @@ public final class Oauth {
      * @return an instance of Oauth.
      */
     public static Oauth getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new Oauth(context);
+        synchronized (Oauth.class) {
+            if (sInstance == null) {
+                sInstance = new Oauth(context);
+            }
         }
         return sInstance;
     }

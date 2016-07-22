@@ -44,6 +44,7 @@ public class ITMessagesCount {
 
 
         public ByActivityCategory() {
+            // Needed by Retrofit
         }
 
         protected ByActivityCategory(Parcel in) {
@@ -110,6 +111,7 @@ public class ITMessagesCount {
 
 
         public ByAssetId() {
+            // Needed by Retrofit
         }
 
         protected ByAssetId(Parcel in) {
@@ -180,6 +182,7 @@ public class ITMessagesCount {
         public int nonDefaultStateCount = -1;
 
         public Item() {
+            // Needed by Retrofit
         }
 
         protected Item(Parcel in) {

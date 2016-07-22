@@ -15,10 +15,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -38,8 +38,8 @@ public class ITTag {
     public String key;
     public String owner;
 
-    transient public Map<String, String> labels = new HashMap<>();
-    transient public Map<String, String> shortLabels = new HashMap<>();
+    transient public Map<String, String> labels = new ConcurrentHashMap<>();
+    transient public Map<String, String> shortLabels = new ConcurrentHashMap<>();
 
     /**
      * Gets the tags that belong to the given category.
@@ -48,8 +48,10 @@ public class ITTag {
     public static List<ITTag> getFromCategory(Context context, String category) {
         List<ITTag> tags = new ArrayList<>();
         if (!TextUtils.isEmpty(category)) {
-            if (sAllTags == null) {
-                sAllTags = ITTagList.load(context);
+            synchronized (ITTag.class) {
+                if (sAllTags == null) {
+                    sAllTags = ITTagList.load(context);
+                }
             }
             for (ITTag tag : sAllTags.tags) {
                 if (TextUtils.equals(tag.category, category)) {
@@ -66,8 +68,10 @@ public class ITTag {
      */
     public static String getLabel(Context context, String key) {
         if (key == null) return "";
-        if (sAllTags == null) {
-            sAllTags = ITTagList.load(context);
+        synchronized (ITTag.class) {
+            if (sAllTags == null) {
+                sAllTags = ITTagList.load(context);
+            }
         }
         ITTag tag = sAllTags.get(key);
         if (tag != null) {
@@ -84,8 +88,10 @@ public class ITTag {
      */
     public static String getShortLabel(Context context, String key) {
         if (key == null) return "";
-        if (sAllTags == null) {
-            sAllTags = ITTagList.load(context);
+        synchronized (ITTag.class) {
+            if (sAllTags == null) {
+                sAllTags = ITTagList.load(context);
+            }
         }
         ITTag tag = sAllTags.get(key);
         if (tag != null) {
@@ -114,8 +120,10 @@ public class ITTag {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITTag.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

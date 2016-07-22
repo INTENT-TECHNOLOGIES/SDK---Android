@@ -16,9 +16,9 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -51,7 +51,7 @@ public class ITStream implements Parcelable {
     public ITData lastValue;
     public String owner;
 
-    transient public Map<String, String> tags = new HashMap<>();
+    transient public Map<String, String> tags = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -60,6 +60,7 @@ public class ITStream implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITStream() {
+        // Needed by Retrofit
     }
 
     protected ITStream(Parcel in) {
@@ -125,8 +126,10 @@ public class ITStream implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITStream.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }
@@ -156,10 +159,10 @@ public class ITStream implements Parcelable {
         Call<ITStream> get(@Path("streamId") String streamId);
 
         @GET("datahub/v1/parts/{externalRef}/streams")
-        Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
+        Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
 
         @GET("datahub/v1/sites/{externalRef}/streams")
-        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String[] activities);
+        Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
     }
 
     public static class Deserializer implements JsonDeserializer<ITStream> {

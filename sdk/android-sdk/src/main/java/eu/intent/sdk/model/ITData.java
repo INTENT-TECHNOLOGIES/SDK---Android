@@ -58,6 +58,7 @@ public class ITData implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITData() {
+        // Needed by Retrofit
     }
 
     protected ITData(Parcel in) {
@@ -216,8 +217,10 @@ public class ITData implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITData.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

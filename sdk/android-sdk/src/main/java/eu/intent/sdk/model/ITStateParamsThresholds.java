@@ -38,6 +38,7 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITStateParamsThresholds() {
+        // Needed by Retrofit
     }
 
     protected ITStateParamsThresholds(Parcel in) {
@@ -96,6 +97,7 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
         public int dayOfWeek = -1;  // 0 to 6, 0 is Sunday (add 1 for Java)
 
         public Threshold() {
+            // Needed by Retrofit
         }
 
         protected Threshold(Parcel in) {

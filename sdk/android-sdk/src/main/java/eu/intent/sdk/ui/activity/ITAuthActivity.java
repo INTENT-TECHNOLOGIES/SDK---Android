@@ -17,11 +17,9 @@ import eu.intent.sdk.auth.internal.Oauth;
  * This is an authentication activity, displaying a login form in a web view. You must provide your API client ID and client secret by implementing the abstract methods.
  */
 public final class ITAuthActivity extends AppCompatActivity {
-    public static final String EXTRA_REQUEST_CODE = "EXTRA_REQUEST_CODE";
     public static final String EXTRA_WEB_FORM_URL = "EXTRA_WEB_FORM_URL";
 
     private Oauth mOauth;
-    private int mRequestCode;
 
     private WebView mWebView;
 
@@ -31,7 +29,6 @@ public final class ITAuthActivity extends AppCompatActivity {
         setContentView(R.layout.it_activity_auth);
 
         mOauth = Oauth.getInstance(this);
-        mRequestCode = getIntent().getIntExtra(EXTRA_REQUEST_CODE, 0);
 
         mWebView = (WebView) findViewById(R.id.it_auth_webview);
         mWebView.setWebViewClient(new WebViewClient() {

@@ -45,6 +45,7 @@ public class ITSite implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITSite() {
+        // Needed by Retrofit
     }
 
     protected ITSite(Parcel in) {
@@ -117,8 +118,10 @@ public class ITSite implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITSite.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

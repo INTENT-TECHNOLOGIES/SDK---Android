@@ -47,6 +47,7 @@ public class ITContact implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITContact() {
+        // Needed by Retrofit
     }
 
     private ITContact(String name, String number) {
@@ -90,8 +91,10 @@ public class ITContact implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITContact.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

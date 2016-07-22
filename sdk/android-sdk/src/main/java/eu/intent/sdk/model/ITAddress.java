@@ -35,6 +35,7 @@ public class ITAddress implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITAddress() {
+        // Needed by Retrofit
     }
 
     protected ITAddress(Parcel in) {

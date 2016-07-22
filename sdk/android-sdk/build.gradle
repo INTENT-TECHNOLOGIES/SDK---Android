@@ -49,10 +49,6 @@ android {
 
 check {
     abortOnError true
-    // Skip PMD for now
-    pmd {
-        skip true
-    }
 }
 
 idea {

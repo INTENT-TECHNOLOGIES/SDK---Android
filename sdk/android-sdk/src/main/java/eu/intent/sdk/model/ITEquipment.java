@@ -56,6 +56,7 @@ public class ITEquipment implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITEquipment() {
+        // Needed by Retrofit
     }
 
     protected ITEquipment(Parcel in) {
@@ -186,8 +187,10 @@ public class ITEquipment implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITEquipment.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

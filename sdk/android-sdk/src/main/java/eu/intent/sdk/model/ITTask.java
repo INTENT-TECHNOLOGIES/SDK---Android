@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -25,6 +26,8 @@ import java.util.Map;
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
 import eu.intent.sdk.api.internal.ProxyCallback;
+import eu.intent.sdk.util.ITJsonUtils;
+import eu.intent.sdk.util.ITParcelableUtils;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -88,6 +91,7 @@ public class ITTask implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITTask() {
+        // Needed by Retrofit
     }
 
     protected ITTask(Parcel in) {
@@ -99,16 +103,16 @@ public class ITTask implements Parcelable {
         id = in.readString();
         lastUpdate = in.readLong();
         operation = in.readParcelable(ITOperation.class.getClassLoader());
-        selectAssetOnInstall = in.readByte() > 0;
+        selectAssetOnInstall = ITParcelableUtils.readBoolean(in);
         stepsCount = in.readInt();
         templateId = in.readString();
-        waitingForValidation = in.readByte() > 0;
+        waitingForValidation = ITParcelableUtils.readBoolean(in);
         address = in.readParcelable(ITAddress.class.getClassLoader());
         assetId = in.readString();
         int tmpAssetType = in.readInt();
         assetType = tmpAssetType == -1 ? null : ITAssetType.values()[tmpAssetType];
         comment = in.readString();
-        commonPart = in.readByte() > 0;
+        commonPart = ITParcelableUtils.readBoolean(in);
         data = in.readParcelable(Data.class.getClassLoader());
         door = in.readString();
         floor = in.readString();
@@ -165,8 +169,10 @@ public class ITTask implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITTask.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }
@@ -211,15 +217,15 @@ public class ITTask implements Parcelable {
         dest.writeString(id);
         dest.writeLong(lastUpdate);
         dest.writeParcelable(operation, flags);
-        dest.writeByte((byte) (selectAssetOnInstall ? 1 : 0));
+        ITParcelableUtils.writeBoolean(dest, selectAssetOnInstall);
         dest.writeInt(stepsCount);
         dest.writeString(templateId);
-        dest.writeByte((byte) (waitingForValidation ? 1 : 0));
+        ITParcelableUtils.writeBoolean(dest, waitingForValidation);
         dest.writeParcelable(address, 0);
         dest.writeString(assetId);
         dest.writeInt(assetType == null ? -1 : assetType.ordinal());
         dest.writeString(comment);
-        dest.writeByte((byte) (commonPart ? 1 : 0));
+        ITParcelableUtils.writeBoolean(dest, commonPart);
         dest.writeParcelable(data, flags);
         dest.writeString(door);
         dest.writeString(floor);
@@ -362,6 +368,7 @@ public class ITTask implements Parcelable {
         public String deviceType;
 
         public Data() {
+            // Needed by Retrofit
         }
 
         protected Data(Parcel in) {
@@ -401,30 +408,36 @@ public class ITTask implements Parcelable {
             JsonElement asset = jsonObject.get("asset");
             if (asset != null && asset.isJsonObject()) {
                 JsonObject assetObject = asset.getAsJsonObject();
-                task.address = gson.fromJson(assetObject.get("address"), ITAddress.class);
-                task.assetId = assetObject.has("assetId") && !assetObject.get("assetId").isJsonNull() ? assetObject.get("assetId").getAsString() : "";
-                task.assetType = assetObject.has("assetType") && !assetObject.get("assetType").isJsonNull()
-                        ? ITAssetType.fromString(assetObject.get("assetType").getAsString())
-                        : ITAssetType.SITE;
-                task.commonPart = !assetObject.has("portion") || TextUtils.isEmpty(assetObject.get("portion").getAsString()) || TextUtils.equals(assetObject.get("portion").getAsString(), "commonPortion");
-                task.door = assetObject.has("door") && !assetObject.get("door").isJsonNull() ? assetObject.get("door").getAsString() : "";
-                task.floor = assetObject.has("level") && !assetObject.get("level").isJsonNull() ? assetObject.get("level").getAsString() : "";
-                task.keywords = assetObject.has("keywords") && !assetObject.get("keywords").isJsonNull() ? assetObject.get("keywords").getAsString().split(" ") : new String[0];
-                task.siteId = assetObject.has("siteId") && !assetObject.get("siteId").isJsonNull() ? assetObject.get("siteId").getAsString() : "";
+                deserializeAsset(task, assetObject, gson);
             }
             JsonElement infos = jsonObject.get("infos");
             if (infos != null && infos.isJsonObject()) {
                 JsonObject infosObject = infos.getAsJsonObject();
-                task.comment = infosObject.has("comment") && !infosObject.get("comment").isJsonNull() ? infosObject.get("comment").getAsString() : "";
-                task.data.deviceType = infosObject.has("deviceType") ? infosObject.get("deviceType").getAsString() : "";
-                task.data.activities = new ArrayList<>();
-                if (infosObject.has("activities")) {
-                    for (JsonElement activity : infosObject.get("activities").getAsJsonArray()) {
-                        task.data.activities.add(activity.getAsString());
-                    }
-                }
+                deserializeInfo(task, infosObject);
             }
             return task;
+        }
+
+        private void deserializeAsset(@NonNull ITTask task, @NonNull JsonObject asset, @NonNull Gson gson) {
+            task.address = gson.fromJson(asset.get("address"), ITAddress.class);
+            task.assetId = ITJsonUtils.getJsonAsString(asset, "assetId", "");
+            task.assetType = ITAssetType.fromString(ITJsonUtils.getJsonAsString(asset, "assetType", ITAssetType.SITE.name()));
+            task.commonPart = !asset.has("portion") || TextUtils.isEmpty(asset.get("portion").getAsString()) || TextUtils.equals(asset.get("portion").getAsString(), "commonPortion");
+            task.door = ITJsonUtils.getJsonAsString(asset, "door", "");
+            task.floor = ITJsonUtils.getJsonAsString(asset, "level", "");
+            task.keywords = ITJsonUtils.getJsonAsString(asset, "keywords", "").split(" ");
+            task.siteId = ITJsonUtils.getJsonAsString(asset, "siteId", "");
+        }
+
+        private void deserializeInfo(@NonNull ITTask task, @NonNull JsonObject info) {
+            task.comment = ITJsonUtils.getJsonAsString(info, "comment", "");
+            task.data.deviceType = ITJsonUtils.getJsonAsString(info, "deviceType", "");
+            task.data.activities = new ArrayList<>();
+            if (info.has("activities")) {
+                for (JsonElement activity : info.get("activities").getAsJsonArray()) {
+                    task.data.activities.add(activity.getAsString());
+                }
+            }
         }
     }
 }

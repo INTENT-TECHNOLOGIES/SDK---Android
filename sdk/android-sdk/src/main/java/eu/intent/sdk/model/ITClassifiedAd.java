@@ -19,6 +19,7 @@ import java.util.Locale;
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
 import eu.intent.sdk.api.internal.ProxyCallback;
+import eu.intent.sdk.util.ITParcelableUtils;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -76,15 +77,16 @@ public class ITClassifiedAd implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITClassifiedAd() {
+        // Needed by Retrofit
     }
 
     protected ITClassifiedAd(Parcel in) {
         category = in.readString();
         creationDate = in.readLong();
         expirationDate = in.readLong();
-        hasMyReply = in.readByte() != 0;
+        hasMyReply = ITParcelableUtils.readBoolean(in);
         id = in.readString();
-        isMine = in.readByte() != 0;
+        isMine = ITParcelableUtils.readBoolean(in);
         publisherName = in.readString();
         replies = new ArrayList<>();
         in.readList(replies, ITClassifiedAdReply.class.getClassLoader());
@@ -189,8 +191,10 @@ public class ITClassifiedAd implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITClassifiedAd.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }
@@ -205,9 +209,9 @@ public class ITClassifiedAd implements Parcelable {
         dest.writeString(category);
         dest.writeLong(creationDate);
         dest.writeLong(expirationDate);
-        dest.writeByte(hasMyReply ? (byte) 1 : (byte) 0);
+        ITParcelableUtils.writeBoolean(dest, hasMyReply);
         dest.writeString(id);
-        dest.writeByte(isMine ? (byte) 1 : (byte) 0);
+        ITParcelableUtils.writeBoolean(dest, isMine);
         dest.writeString(publisherName);
         dest.writeList(replies);
         dest.writeString(text);
