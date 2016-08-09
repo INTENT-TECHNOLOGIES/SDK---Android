@@ -111,7 +111,7 @@ public class ITStateTemplate implements Parcelable {
         public ITStateTemplate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             Gson gson = new Gson();
             ITStateTemplate template = gson.fromJson(json, typeOfT);
-            String[] hierarchy = {"filters", "properties", "stream", "properties", "tags", "properties", "activityKey"};
+            String[] hierarchy = {"filters", "properties", "stream", "properties", "tags", "properties", "id", "properties", "activityKey"};
             JsonObject jsonObject = json.getAsJsonObject();
             for (String property : hierarchy) {
                 jsonObject = jsonObject.getAsJsonObject(property);
