@@ -6,6 +6,7 @@
     <string name="it_error_403">U heeft geen toegang tot dit onderdeel</string>
     <string name="it_error_404">Pagina niet gevonden</string>
     <string name="it_error_500">Interne serverfout</string>
+    <string name="it_error_504">U heeft geen verbinding met Internet</string>
     <string name="it_no_authenticated_user">Er is geen gebruiker aangemeld op dit moment</string>
     <string name="it_session_expired">De sessie is verlopen, log  opnieuw in</string>
     <string name="it_user_update_failed">Uw profiel kon niet worden opgeslagen</string>
