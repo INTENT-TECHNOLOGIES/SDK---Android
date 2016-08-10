@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -18,19 +17,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * A task is something that must be done by a contractor for a client. A task can be part of an ITOperation. It implements a task template which defines its steps. These steps are represented as an array of ITAction.
@@ -47,8 +34,6 @@ public class ITTask implements Parcelable {
             return new ITTask[size];
         }
     };
-
-    private static Service sService;
 
     public List<ITAction> actions = new ArrayList<>();
     @SerializedName("owner")
@@ -118,60 +103,6 @@ public class ITTask implements Parcelable {
     }
 
     /**
-     * Retrieves all the tasks visible to the user and not finished.
-     */
-    public static void get(Context context, ITApiCallback<ITTaskList> callback) {
-        getServiceInstance(context).get((Integer) null).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves all the tasks visible to the user.
-     *
-     * @param finishedSince this request will also return the tasks finished since this number of days
-     */
-    public static void get(Context context, int finishedSince, ITApiCallback<ITTaskList> callback) {
-        getServiceInstance(context).get(24 * finishedSince).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the task with the given ID.
-     */
-    public static void get(Context context, String taskId, ITApiCallback<ITTask> callback) {
-        getServiceInstance(context).get(taskId).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the parts related to the given task.
-     */
-    public static void getParts(Context context, String taskId, ITApiCallback<List<ITPart>> callback) {
-        getServiceInstance(context).getParts(taskId).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the task templates.
-     */
-    public static void getTemplates(Context context, ITApiCallback<List<ITTaskTemplate>> callback) {
-        getServiceInstance(context).getTemplates().enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Updates the given action.
-     *
-     * @param taskId the ID of the task whose action belongs to
-     * @param action the action to update
-     */
-    public static void updateAction(Context context, String taskId, ITAction action, ITApiCallback<Void> callback) {
-        getServiceInstance(context).updateAction(taskId, new Service.UpdateAction(taskId, action)).enqueue(new ProxyCallback<>(callback));
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
-    }
-
-    /**
      * Returns true if at least an action of this task is marked with the error flag, false otherwise.
      */
     public boolean hasError() {
@@ -226,120 +157,6 @@ public class ITTask implements Parcelable {
         dest.writeStringArray(keywords);
         dest.writeString(siteId);
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("v1/my-tasks")
-        Call<ITTaskList> get(@Query("since") Integer finishedSince);
-
-        @GET("v1/tasks/{id}")
-        Call<ITTask> get(@Path("id") String taskId);
-
-        @GET("v1/tasks/{id}/parts")
-        Call<List<ITPart>> getParts(@Path("id") String taskId);
-
-        @GET("v1/tasks/templates")
-        Call<List<ITTaskTemplate>> getTemplates();
-
-        @POST("v1/tasks/{taskId}/action")
-        Call<Void> updateAction(@Path("taskId") String taskId, @Body UpdateAction action);
-
-        class UpdateAction {
-            public String taskId;
-            public Action action;
-
-            UpdateAction(String taskId, ITAction action) {
-                this.taskId = taskId;
-                this.action = new Action(action);
-            }
-
-            class Action {
-                public String actionTemplateId;
-                public boolean error;
-                public boolean finished;
-                public String comment;
-                public Object payload;
-
-                Action(ITAction action) {
-                    this.actionTemplateId = action.templateId;
-                    this.error = action.error;
-                    this.finished = action.finished;
-                    this.comment = action.comment;
-                    switch (action.templateId) {
-                        case "install":
-                            this.payload = new PayloadInstall(action.payload);
-                            break;
-                        case "repeater":
-                            this.payload = new PayloadRepeaters(action.payload);
-                            break;
-                        case "settings":
-                            this.payload = new PayloadSettings(action.payload);
-                            break;
-                    }
-                }
-
-                class PayloadInstall {
-                    public String assetId;
-                    public String deviceId;
-                    public String level;
-                    public String room;
-                    @SerializedName("connection_point")
-                    public String connectionPoint;
-                    public Map<String, String> bindings;
-                    public Map<String, String> usageAddresses;
-
-                    PayloadInstall(ITAction.Payload payload) {
-                        this.assetId = payload.assetId;
-                        this.deviceId = payload.deviceId;
-                        this.level = payload.floor;
-                        this.room = payload.installRoom;
-                        this.connectionPoint = payload.connectionPoint;
-                        this.bindings = payload.deviceBindings;
-                        this.usageAddresses = payload.usageRooms;
-                    }
-                }
-
-                class PayloadSettings {
-                    public Map<String, Map<String, Double>> params;
-
-                    PayloadSettings(ITAction.Payload payload) {
-                        this.params = new HashMap<>();
-                        for (Map.Entry<String, ITAction.Payload.Settings> entry : payload.settings.entrySet()) {
-                            String output = entry.getKey();
-                            ITAction.Payload.Settings settings = entry.getValue();
-                            // Replace any NaN value by null (NaN is not supported by JsonWriter)
-                            for (Map.Entry<String, Double> setting : settings.entries.entrySet()) {
-                                if (Double.isNaN(setting.getValue())) {
-                                    settings.entries.put(setting.getKey(), null);
-                                }
-                            }
-                            this.params.put(output, settings.entries);
-                        }
-                    }
-                }
-
-                class PayloadRepeaters {
-                    public List<Repeater> repeaters;
-
-                    PayloadRepeaters(ITAction.Payload payload) {
-                        this.repeaters = new ArrayList<>();
-                        for (ITAction.Payload.Repeater repeater : payload.repeaters) {
-                            this.repeaters.add(new Repeater(repeater));
-                        }
-                    }
-
-                    class Repeater {
-                        public String deviceId;
-                        public String floor;
-
-                        Repeater(ITAction.Payload.Repeater repeater) {
-                            this.deviceId = repeater.id;
-                            this.floor = repeater.floor;
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**

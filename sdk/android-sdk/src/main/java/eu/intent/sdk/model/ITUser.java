@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,14 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.PUT;
-
 /**
  * A user can be either a user of an application, or an occupant of a part.
  */
@@ -42,8 +33,6 @@ public class ITUser implements Parcelable {
             return new ITUser[size];
         }
     };
-
-    private static Service sService;
 
     public String domain;
     public String email;
@@ -80,27 +69,6 @@ public class ITUser implements Parcelable {
         entityRoles = in.createStringArrayList();
         userRoles = in.createStringArrayList();
         custom = in.readBundle();
-    }
-
-    /**
-     * Gets the current authenticated user.
-     */
-    public static void getCurrentUser(Context context, ITApiCallback<ITUser> callback) {
-        getServiceInstance(context).getUser().enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Updates the current authenticated user with the data of the given ITUser.
-     */
-    public static void updateCurrentUser(Context context, ITUser user, ITApiCallback<ITUser> callback) {
-        getServiceInstance(context).updateUser(new Service.UserUpdate(user)).enqueue(new ProxyCallback<>(callback));
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
     }
 
     /**
@@ -160,28 +128,6 @@ public class ITUser implements Parcelable {
         dest.writeStringList(entityRoles);
         dest.writeStringList(userRoles);
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("accounts/v1/me")
-        Call<ITUser> getUser();
-
-        @PUT("accounts/v1/me")
-        Call<ITUser> updateUser(@Body UserUpdate body);
-
-        class UserUpdate {
-            public String firstname;
-            public String lastname;
-            public String mobile;
-            public String phone;
-
-            public UserUpdate(ITUser user) {
-                firstname = user.firstName;
-                lastname = user.lastName;
-                mobile = user.mobile;
-                phone = user.phone;
-            }
-        }
     }
 
     public static class Deserializer implements JsonDeserializer<ITUser> {

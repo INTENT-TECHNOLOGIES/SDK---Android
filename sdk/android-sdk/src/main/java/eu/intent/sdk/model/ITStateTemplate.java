@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,14 +13,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Type;
-import java.util.List;
-
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 /**
  * A template defines a set of states in which a part of a site can be at a given time.
@@ -40,8 +31,6 @@ public class ITStateTemplate implements Parcelable {
             return new ITStateTemplate[size];
         }
     };
-
-    private static Service sService;
 
     @SerializedName("fnName")
     public String function;
@@ -72,20 +61,6 @@ public class ITStateTemplate implements Parcelable {
         custom = in.readBundle();
     }
 
-    /**
-     * Retrieves all the state templates.
-     */
-    public static void get(Context context, final ITApiCallback<List<ITStateTemplate>> callback) {
-        getServiceInstance(context).get(false).enqueue(new ProxyCallback<>(callback));
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -99,11 +74,6 @@ public class ITStateTemplate implements Parcelable {
         dest.writeString(statusDefault);
         dest.writeStringArray(statusEnum);
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("v1/states/templates")
-        Call<List<ITStateTemplate>> get(@Query("summary") boolean summary);
     }
 
     public static class Deserializer implements JsonDeserializer<ITStateTemplate> {

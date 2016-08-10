@@ -1,10 +1,8 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -14,13 +12,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Locale;
-
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 /**
  * A green gesture is an advice to an occupant to help him reduce his energy bill and be environmentally friendly.
@@ -35,8 +26,6 @@ public class ITGreenGesture implements Parcelable {
             return new ITGreenGesture[size];
         }
     };
-
-    private static Service sService;
 
     /**
      * Duration in weeks
@@ -59,7 +48,7 @@ public class ITGreenGesture implements Parcelable {
     public String text;
     public String title;
 
-    transient  public ITEnergy energy;
+    transient public ITEnergy energy;
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -82,30 +71,6 @@ public class ITGreenGesture implements Parcelable {
         custom = in.readBundle();
     }
 
-    /**
-     * Gets the green gestures proposed to the authenticated user.
-     */
-    public static void get(Context context, ITApiCallback<ITGreenGestureList> callback) {
-        get(context, null, callback);
-    }
-
-    /**
-     * Gets the green gestures proposed to the authenticated user.
-     *
-     * @param energies an array of ITEnergy
-     */
-    public static void get(Context context, ITEnergy[] energies, ITApiCallback<ITGreenGestureList> callback) {
-        String typesString = TextUtils.join(",", energies != null && energies.length > 0 ? energies : ITEnergy.values());
-        getServiceInstance(context).get(typesString, 1, Integer.MAX_VALUE).enqueue(new ProxyCallback<>(callback));
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -121,11 +86,6 @@ public class ITGreenGesture implements Parcelable {
         dest.writeString(title);
         dest.writeInt(energy == null ? -1 : energy.ordinal());
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("v1/green-gestures")
-        Call<ITGreenGestureList> get(@Query("energy") String energies, @Query("page") int page, @Query("countByPage") int count);
     }
 
     public static class Deserializer implements JsonDeserializer<ITGreenGesture> {

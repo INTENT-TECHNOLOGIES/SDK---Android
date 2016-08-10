@@ -23,7 +23,6 @@ import java.util.Map;
 /**
  * This is the "family" of a device, defining its vendor and its properties, including the device outputs.
  *
- * @see ITDevice
  * @see ITDeviceId
  */
 public class ITDeviceType implements Parcelable {

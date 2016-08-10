@@ -12,7 +12,7 @@ Add the SDK to the dependencies of your Gradle module:
 
 ```
 dependencies {
-    compile 'eu.intent:android-sdk:0.9'
+    compile 'eu.intent:android-sdk:1.0'
 }
 ```
 
@@ -81,10 +81,11 @@ You can log out by calling `ITAuthClient.logout(Context);`.
 
 ### API
 
-The API can be requested by calling static methods wrapped in the relevant classes. Each API method takes an `ITApiCallback` parameter, where you can handle the result:
+The API can be requested by calling methods wrapped in the relevant classes. Each API method takes an `ITApiCallback` parameter, where you can handle the result:
 
 ```
-ITUser.getCurrentUser(this, new ITApiCallback<ITUser>() {
+ITUserApi api = new ITUserApi(context);
+api.getCurrentUser(new ITApiCallback<ITUser>() {
     @Override
     public void onSuccess(ITUser result) {
     	// This is executed in the UI thread

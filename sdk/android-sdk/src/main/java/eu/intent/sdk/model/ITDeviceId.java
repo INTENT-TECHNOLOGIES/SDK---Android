@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * A device family has an ID pattern that can be used to validate or autocomplete a device ID.
  *
- * @see ITDevice
  * @see ITDeviceType
  */
 public class ITDeviceId implements Parcelable {
