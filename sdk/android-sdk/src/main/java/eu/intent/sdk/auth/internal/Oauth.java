@@ -55,7 +55,7 @@ public final class Oauth {
         mContext = context;
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
-        // TODO Remove logs before releasing
+        // TODO: Remove logs before releasing
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
@@ -68,8 +68,10 @@ public final class Oauth {
      * @return an instance of Oauth.
      */
     public static Oauth getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new Oauth(context);
+        synchronized (Oauth.class) {
+            if (sInstance == null) {
+                sInstance = new Oauth(context);
+            }
         }
         return sInstance;
     }
@@ -277,7 +279,7 @@ public final class Oauth {
     /**
      * The OAuth success body returned when a token has been requested.
      */
-    public class Info {
+    public static class Info {
         @SerializedName("expires_in")
         public long expiresIn;
         @SerializedName("access_token")

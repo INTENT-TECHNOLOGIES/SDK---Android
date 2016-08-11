@@ -39,6 +39,7 @@ public class ITLocation implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITLocation() {
+        // Needed by Retrofit
     }
 
     public ITLocation(double lat, double lng) {

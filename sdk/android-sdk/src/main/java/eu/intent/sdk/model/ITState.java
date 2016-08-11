@@ -20,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -74,7 +75,7 @@ public class ITState implements Parcelable {
     public long creationTime;
 
     transient public ITStateParams params;
-    transient public Map<String, String> texts = new HashMap<>();
+    transient public Map<String, String> texts = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -83,6 +84,7 @@ public class ITState implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITState() {
+        // Needed by Retrofit
     }
 
     protected ITState(Parcel in) {
@@ -95,6 +97,7 @@ public class ITState implements Parcelable {
             try {
                 params = in.readParcelable(Class.forName(paramsClass).getClassLoader());
             } catch (ClassNotFoundException ignored) {
+                // Should not happen. If it happens, then let params be null.
             }
         }
         status = in.readString();
@@ -115,8 +118,10 @@ public class ITState implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITState.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

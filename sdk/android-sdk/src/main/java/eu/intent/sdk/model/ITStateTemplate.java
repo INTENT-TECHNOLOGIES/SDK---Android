@@ -61,6 +61,7 @@ public class ITStateTemplate implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITStateTemplate() {
+        // Needed by Retrofit
     }
 
     protected ITStateTemplate(Parcel in) {
@@ -80,8 +81,10 @@ public class ITStateTemplate implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITStateTemplate.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

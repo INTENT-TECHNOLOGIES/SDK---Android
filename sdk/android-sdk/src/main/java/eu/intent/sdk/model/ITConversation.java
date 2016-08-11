@@ -60,6 +60,7 @@ public class ITConversation implements Parcelable {
     public Bundle custom = new Bundle();
 
     public ITConversation() {
+        // Needed by Retrofit
     }
 
     protected ITConversation(Parcel in) {
@@ -121,8 +122,10 @@ public class ITConversation implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITConversation.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

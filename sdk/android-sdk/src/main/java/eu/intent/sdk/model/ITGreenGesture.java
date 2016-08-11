@@ -59,7 +59,7 @@ public class ITGreenGesture implements Parcelable {
     public String text;
     public String title;
 
-    transient  public ITEnergy energy;
+    transient public ITEnergy energy;
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -68,6 +68,7 @@ public class ITGreenGesture implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITGreenGesture() {
+        // Needed by Retrofit
     }
 
     protected ITGreenGesture(Parcel in) {
@@ -100,8 +101,10 @@ public class ITGreenGesture implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITGreenGesture.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

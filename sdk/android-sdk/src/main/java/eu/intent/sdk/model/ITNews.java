@@ -59,6 +59,7 @@ public class ITNews implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITNews() {
+        // Needed by Retrofit
     }
 
     protected ITNews(Parcel in) {
@@ -114,8 +115,10 @@ public class ITNews implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITNews.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

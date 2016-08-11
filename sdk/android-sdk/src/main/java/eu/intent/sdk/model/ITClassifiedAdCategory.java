@@ -13,10 +13,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -44,7 +44,7 @@ public class ITClassifiedAdCategory implements Parcelable {
 
     public String key;
 
-    transient public Map<String, String> labels = new HashMap<>();
+    transient public Map<String, String> labels = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -53,6 +53,7 @@ public class ITClassifiedAdCategory implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITClassifiedAdCategory() {
+        // Needed by Retrofit
     }
 
     protected ITClassifiedAdCategory(Parcel in) {
@@ -72,8 +73,10 @@ public class ITClassifiedAdCategory implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITClassifiedAdCategory.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }

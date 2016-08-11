@@ -47,6 +47,7 @@ public class ITDataResult implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITDataResult() {
+        // Needed by Retrofit
     }
 
     protected ITDataResult(Parcel in) {

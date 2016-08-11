@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.api.ITRetrofitUtils;
@@ -51,7 +52,7 @@ public class ITActivity implements Parcelable {
     @SerializedName("activityLabel")
     public String label;
 
-    transient public Map<String, String> tags = new HashMap<>();
+    transient public Map<String, String> tags = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -60,6 +61,7 @@ public class ITActivity implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITActivity() {
+        // Needed by Retrofit
     }
 
     protected ITActivity(Parcel in) {
@@ -132,8 +134,10 @@ public class ITActivity implements Parcelable {
     }
 
     private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+        synchronized (ITActivity.class) {
+            if (sService == null) {
+                sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
+            }
         }
         return sService;
     }
