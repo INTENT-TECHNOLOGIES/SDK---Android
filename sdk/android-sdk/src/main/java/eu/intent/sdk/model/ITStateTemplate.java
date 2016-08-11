@@ -121,6 +121,8 @@ public class ITStateTemplate implements Parcelable {
             }
             if (jsonObject != null) {
                 template.activities = gson.fromJson(jsonObject.getAsJsonArray("enum"), String[].class);
+            } else {
+                template.activities = new String[0];
             }
             return template;
         }

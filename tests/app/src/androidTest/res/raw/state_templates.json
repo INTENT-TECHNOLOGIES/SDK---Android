@@ -19,14 +19,27 @@
             "tags": {
               "type": "object",
               "properties": {
-                "activityKey": {
-                  "enum": [
-                    "AirTemp"
+                "id": {
+                  "properties": {
+                    "activityKey": {
+                      "enum": [
+                        "AirTemp"
+                      ]
+                    },
+                    "frequency": {
+                      "enum": [
+                        60
+                      ]
+                    }
+                  },
+                  "required": [
+                    "activityKey",
+                    "frequency"
                   ]
                 }
               },
               "required": [
-                "activityKey"
+                "id"
               ]
             }
           },
@@ -92,20 +105,40 @@
             "tags": {
               "type": "object",
               "properties": {
-                "activityKey": {
-                  "enum": [
-                    "Intervention"
+                "id": {
+                  "properties": {
+                    "activityKey": {
+                      "enum": [
+                        "Intervention"
+                      ]
+                    },
+                    "frequency": {
+                      "enum": [
+                        0
+                      ]
+                    }
+                  },
+                  "required": [
+                    "activityKey",
+                    "frequency"
                   ]
                 },
-                "portion": {
-                  "enum": [
-                    "privatePortion"
+                "meta": {
+                  "properties": {
+                    "portion": {
+                      "enum": [
+                        "privatePortion"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "portion"
                   ]
                 }
               },
               "required": [
-                "activityKey",
-                "portion"
+                "id",
+                "meta"
               ]
             }
           },
@@ -180,14 +213,27 @@
             "tags": {
               "type": "object",
               "properties": {
-                "activityKey": {
-                  "enum": [
-                    "Intervention"
+                "id": {
+                  "properties": {
+                    "activityKey": {
+                      "enum": [
+                        "Intervention"
+                      ]
+                    },
+                    "frequency": {
+                      "enum": [
+                        0
+                      ]
+                    }
+                  },
+                  "required": [
+                    "activityKey",
+                    "frequency"
                   ]
                 }
               },
               "required": [
-                "activityKey"
+                "id"
               ]
             }
           },
