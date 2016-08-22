@@ -37,6 +37,7 @@ public class ITTaskTemplate implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITTaskTemplate() {
+        // Needed by Retrofit
     }
 
     protected ITTaskTemplate(Parcel in) {

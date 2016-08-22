@@ -40,6 +40,7 @@ public class ITClassifiedAdReply implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITClassifiedAdReply() {
+        // Needed by Retrofit
     }
 
     protected ITClassifiedAdReply(Parcel in) {

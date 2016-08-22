@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * A device can send data for each one of its outputs. Each output can represent an activity among a given list of activities. A "required" output will be computed by the platform and must have an associated activity. Optional outputs only have associated activities if they are used, (i.e. they are plugged to a piece of equipment). A device can require parameters in order to compute its data.
- *
- * @see ITDevice
  */
 public class ITDeviceOutput implements Parcelable {
     public static final Parcelable.Creator<ITDeviceOutput> CREATOR = new Parcelable.Creator<ITDeviceOutput>() {
@@ -31,6 +29,7 @@ public class ITDeviceOutput implements Parcelable {
     public boolean required;
 
     public ITDeviceOutput() {
+        // Needed by Retrofit
     }
 
     protected ITDeviceOutput(Parcel in) {
@@ -71,6 +70,7 @@ public class ITDeviceOutput implements Parcelable {
         public String pattern;
 
         public Param() {
+            // Needed by Retrofit
         }
 
         protected Param(Parcel in) {

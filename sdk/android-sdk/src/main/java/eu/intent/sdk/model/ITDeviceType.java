@@ -15,15 +15,14 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This is the "family" of a device, defining its vendor and its properties, including the device outputs.
  *
- * @see ITDevice
  * @see ITDeviceId
  */
 public class ITDeviceType implements Parcelable {
@@ -47,7 +46,7 @@ public class ITDeviceType implements Parcelable {
     public boolean wired;
 
     transient public ITDeviceId idPattern = new ITDeviceId();
-    transient public Map<String, String> labels = new HashMap<>();
+    transient public Map<String, String> labels = new ConcurrentHashMap<>();
     transient public String number;
     transient public String vendor;
 
@@ -58,6 +57,7 @@ public class ITDeviceType implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITDeviceType() {
+        // Needed by Retrofit
     }
 
     protected ITDeviceType(Parcel in) {

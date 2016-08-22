@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -18,15 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-
 /**
  * A conversation linked to a site and {@link ITActivityCategory}
  */
@@ -40,8 +30,6 @@ public class ITConversation implements Parcelable {
             return new ITConversation[size];
         }
     };
-
-    private static Service sService;
 
     public String assetId;
     public ITAssetType assetType;
@@ -60,6 +48,7 @@ public class ITConversation implements Parcelable {
     public Bundle custom = new Bundle();
 
     public ITConversation() {
+        // Needed by Retrofit
     }
 
     protected ITConversation(Parcel in) {
@@ -76,55 +65,6 @@ public class ITConversation implements Parcelable {
         creatorDomain = in.readString();
         creatorName = in.readString();
         custom = in.readBundle();
-    }
-
-    /**
-     * Get conversation
-     *
-     * @param siteId             the ITSite's Intent id
-     * @param activityCategoryId Activity category id {@link ITActivityCategory}
-     */
-    public static void getBySiteAndActivityCategory(Context context, String siteId, String activityCategoryId, ITApiCallback<ITConversation> callback) {
-        getBySiteAndActivityCategory(context, siteId, activityCategoryId, 0, callback);
-    }
-
-    /**
-     * Mark a conversation as read by siteId and activityCategory
-     *
-     * @param messageId Id of the last read message
-     */
-    public static void markAsRead(Context context, String messageId, ITApiCallback<Void> callback) {
-        getServiceInstance(context).markAsRead(messageId).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Get conversation with message since specified date
-     *
-     * @param siteId             the ITSite's Intent id
-     * @param activityCategoryId Activity category id {@link ITActivityCategory}
-     * @param updatedSince       Getting messages from this timestamp
-     */
-    public static void getBySiteAndActivityCategory(Context context, String siteId, String activityCategoryId, long updatedSince, ITApiCallback<ITConversation> callback) {
-        getServiceInstance(context).get(activityCategoryId, "site", siteId, updatedSince).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Get conversation with message by page
-     *
-     * @param siteId             the ITSite's Intent id
-     * @param activityCategoryId Activity category id {@link ITActivityCategory}
-     * @param page               Messages page (start at 1)
-     * @param countByPage        Messages count by page
-     */
-    public static void getBySiteAndActivityCategoryPaginated(Context context, String siteId, String activityCategoryId, int page, int countByPage, ITApiCallback<ITConversation> callback) {
-        getServiceInstance(context).get(activityCategoryId, "site", siteId, page, countByPage).enqueue(new ProxyCallback<>(callback));
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
     }
 
     @Override
@@ -145,17 +85,6 @@ public class ITConversation implements Parcelable {
         dest.writeString(this.creatorDomain);
         dest.writeString(this.creatorName);
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("reports/v1/")
-        Call<ITConversation> get(@Query("theme") String theme, @Query("assetType") String assetType, @Query("assetId") String assetId, @Query("since") long updatedSince);
-
-        @GET("reports/v1/")
-        Call<ITConversation> get(@Query("theme") String theme, @Query("assetType") String assetType, @Query("assetId") String assetId, @Query("page") long page, @Query("countByPage") long countByPage);
-
-        @POST("reports/v1/markAsRead/{messageId}")
-        Call<Void> markAsRead(@Path("messageId") String theme);
     }
 
     public static class Deserializer implements JsonDeserializer<ITConversation> {

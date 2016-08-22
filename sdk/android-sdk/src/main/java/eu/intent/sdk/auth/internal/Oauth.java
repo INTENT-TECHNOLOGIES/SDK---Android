@@ -55,7 +55,7 @@ public final class Oauth {
         mContext = context;
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
-        // TODO Remove logs before releasing
+        // TODO: Remove logs before releasing
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
@@ -68,8 +68,10 @@ public final class Oauth {
      * @return an instance of Oauth.
      */
     public static Oauth getInstance(Context context) {
-        if (sInstance == null) {
-            sInstance = new Oauth(context);
+        synchronized (Oauth.class) {
+            if (sInstance == null) {
+                sInstance = new Oauth(context);
+            }
         }
         return sInstance;
     }
@@ -78,6 +80,7 @@ public final class Oauth {
      * Requests a new access token. The received token is saved locally to be reused when calling the API.
      */
     public void requestToken(final String code, final Callback callback) {
+        Log.d(getClass().getCanonicalName(), "Request new access token (" + GRANT_TYPE_CODE + ")");
         mService.requestToken(GRANT_TYPE_CODE, code, getClientId(), getClientSecret()).enqueue(new retrofit2.Callback<Info>() {
             @Override
             public void onResponse(Call<Info> call, Response<Info> response) {
@@ -111,6 +114,7 @@ public final class Oauth {
      * Requests a new access token from a refresh token. The received token is saved locally to be reused when calling the API.
      */
     public void refreshToken(final Callback callback) {
+        Log.d(getClass().getCanonicalName(), "Refresh access token");
         mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).enqueue(new retrofit2.Callback<Info>() {
             @Override
             public void onResponse(Call<Info> call, Response<Info> response) {
@@ -145,6 +149,7 @@ public final class Oauth {
      * @return the new access token
      */
     public String refreshToken() throws IOException {
+        Log.d(getClass().getCanonicalName(), "Refresh access token");
         Response<Info> response = mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).execute();
         if (response.isSuccessful()) {
             Info body = response.body();
@@ -194,9 +199,17 @@ public final class Oauth {
     }
 
     private void saveToken(String accessToken, String refreshToken, long expiresIn) {
-        Log.d(getClass().getCanonicalName(), "Saved access token, expires in " + expiresIn + " seconds");
-        Log.d(getClass().getCanonicalName(), TextUtils.isEmpty(refreshToken) ? "No refresh token" : "Saved refresh token");
-        long expiry = System.currentTimeMillis() + (expiresIn - 60) * 1000;   // Remove 1 minutes to be sure
+        if (TextUtils.isEmpty(accessToken)) {
+            Log.d(getClass().getCanonicalName(), "Cleared access token");
+        } else {
+            Log.d(getClass().getCanonicalName(), "Saved access token, expires in " + expiresIn + " seconds");
+        }
+        if (TextUtils.isEmpty(refreshToken)) {
+            Log.d(getClass().getCanonicalName(), "Cleared refresh token");
+        } else {
+            Log.d(getClass().getCanonicalName(), "Saved refresh token");
+        }
+        long expiry = System.currentTimeMillis() + (expiresIn - 60) * 1000;   // Remove 1 minute to be sure
         mContext.getSharedPreferences(PREF_FILE_NAME, 0).edit()
                 .putString(PREF_ACCESS_TOKEN, accessToken)
                 .putString(PREF_REFRESH_TOKEN, refreshToken)
@@ -277,7 +290,7 @@ public final class Oauth {
     /**
      * The OAuth success body returned when a token has been requested.
      */
-    public class Info {
+    public static class Info {
         @SerializedName("expires_in")
         public long expiresIn;
         @SerializedName("access_token")

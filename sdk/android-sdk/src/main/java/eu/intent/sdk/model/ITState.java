@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -18,15 +17,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITRetrofitUtils;
-import eu.intent.sdk.api.internal.ProxyCallback;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The state of a part or site at a given time. A state is defined by the implementation of a template, i.e. a function with some parameters.
@@ -47,8 +39,6 @@ public class ITState implements Parcelable {
             return new ITState[size];
         }
     };
-
-    private static Service sService;
 
     public String domain;
     public long lastChange;
@@ -74,7 +64,7 @@ public class ITState implements Parcelable {
     public long creationTime;
 
     transient public ITStateParams params;
-    transient public Map<String, String> texts = new HashMap<>();
+    transient public Map<String, String> texts = new ConcurrentHashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -83,6 +73,7 @@ public class ITState implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITState() {
+        // Needed by Retrofit
     }
 
     protected ITState(Parcel in) {
@@ -95,6 +86,7 @@ public class ITState implements Parcelable {
             try {
                 params = in.readParcelable(Class.forName(paramsClass).getClassLoader());
             } catch (ClassNotFoundException ignored) {
+                // Should not happen. If it happens, then let params be null.
             }
         }
         status = in.readString();
@@ -112,166 +104,6 @@ public class ITState implements Parcelable {
         validityExpirationDate = in.readLong();
         creationTime = in.readLong();
         custom = in.readBundle();
-    }
-
-    private static Service getServiceInstance(Context context) {
-        if (sService == null) {
-            sService = ITRetrofitUtils.getRetrofitInstance(context).create(Service.class);
-        }
-        return sService;
-    }
-
-    /**
-     * Retrieves the current states of the user's domain.
-     */
-    public static void getCurrent(Context context, ITApiCallback<List<ITState>> callback) {
-        getCurrent(context, null, callback);
-    }
-
-    /**
-     * Retrieves the current states of the user's domain.
-     *
-     * @param status the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getCurrent(Context context, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrent(status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the current states of the parts with the given refs.
-     *
-     * @param partRefs the ITParts' external refs
-     */
-    public static void getCurrentByParts(Context context, String[] partRefs, ITApiCallback<List<ITState>> callback) {
-        getCurrentByParts(context, partRefs, null, callback);
-    }
-
-    /**
-     * Retrieves the current states around the given location.
-     *
-     * @param lat    the location latitude
-     * @param lng    the location longitude
-     * @param radius the radius in meters around the location
-     */
-    public static void getCurrentAroundLocation(Context context, double lat, double lng, double radius, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentAroundLocation(lat, lng, radius).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the current states of the parts with the given refs.
-     *
-     * @param partRefs the ITParts' external refs
-     * @param status   the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getCurrentByParts(Context context, String[] partRefs, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentByAssets("part", partRefs, status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the current states of the sites with the given refs.
-     *
-     * @param siteRefs the ITSites' external refs
-     */
-    public static void getCurrentBySites(Context context, String[] siteRefs, ITApiCallback<List<ITState>> callback) {
-        getCurrentBySites(context, siteRefs, null, callback);
-    }
-
-    /**
-     * Retrieves the current states of the sites with the given refs.
-     *
-     * @param siteRefs the ITSites' external refs
-     * @param status   the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getCurrentBySites(Context context, String[] siteRefs, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentByAssets("site", siteRefs, status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the current states of the streams with the given IDs.
-     *
-     * @param streamIds the ITStreams' IDs
-     */
-    public static void getCurrentByStreams(Context context, String[] streamIds, ITApiCallback<List<ITState>> callback) {
-        getCurrentByStreams(context, streamIds, null, callback);
-    }
-
-    /**
-     * Retrieves the current states of the streams with the given IDs.
-     *
-     * @param streamIds the ITStreams' IDS
-     * @param status    the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getCurrentByStreams(Context context, String[] streamIds, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getCurrentByStreams(streamIds, status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the history of the states during the given period, for the parts with the given refs.
-     *
-     * @param partRefs the ITParts' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     */
-    public static void getHistoryByParts(Context context, String[] partRefs, long from, long to, ITApiCallback<List<ITState>> callback) {
-        getHistoryByParts(context, partRefs, from, to, null, callback);
-    }
-
-    /**
-     * Retrieves the history of the states during the given period, for the parts with the given refs.
-     *
-     * @param partRefs the ITParts' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     * @param status   the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getHistoryByParts(Context context, String[] partRefs, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getHistoryByAssets("part", partRefs, from, to, status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the history of the states during the given period, for the sites with the given refs.
-     *
-     * @param siteRefs the ITSites' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     */
-    public static void getHistoryBySites(Context context, String[] siteRefs, long from, long to, ITApiCallback<List<ITState>> callback) {
-        getHistoryBySites(context, siteRefs, from, to, null, callback);
-    }
-
-    /**
-     * Retrieves the history of the states during the given period, for the sites with the given refs.
-     *
-     * @param siteRefs the ITSites' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     * @param status   the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getHistoryBySites(Context context, String[] siteRefs, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getHistoryByAssets("site", siteRefs, from, to, status).enqueue(new ProxyCallback<>(callback));
-    }
-
-    /**
-     * Retrieves the history of the states of during the given period, for the streams with the given IDs.
-     *
-     * @param streamIds the ITStreams' IDs
-     * @param from      the start time in ms
-     * @param to        the end time in ms
-     */
-    public static void getHistoryByStreams(Context context, String[] streamIds, long from, long to, ITApiCallback<List<ITState>> callback) {
-        getHistoryByStreams(context, streamIds, from, to, null, callback);
-    }
-
-    /**
-     * Retrieves the history of the states of during the given period, for the streams with the given IDs.
-     *
-     * @param streamIds the ITStreams' IDS
-     * @param from      the start time in ms
-     * @param to        the end time in ms
-     * @param status    the status of the states you want to retrieve if you want to filter by status
-     */
-    public static void getHistoryByStreams(Context context, String[] streamIds, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
-        getServiceInstance(context).getHistoryByStreams(streamIds, from, to, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -321,26 +153,6 @@ public class ITState implements Parcelable {
         dest.writeLong(validityExpirationDate);
         dest.writeLong(creationTime);
         dest.writeBundle(custom);
-    }
-
-    private interface Service {
-        @GET("v1/states/current/domain")
-        Call<List<ITState>> getCurrent(@Query("status") String status);
-
-        @GET("v1/states/current/position")
-        Call<List<ITState>> getCurrentAroundLocation(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") double distance);
-
-        @GET("v1/states/current/assets")
-        Call<List<ITState>> getCurrentByAssets(@Query("assetType") String assetType, @Query("assetIds") String[] assetIds, @Query("status") String status);
-
-        @GET("v1/states/current/streams")
-        Call<List<ITState>> getCurrentByStreams(@Query("streamIds") String[] assetIds, @Query("status") String status);
-
-        @GET("v1/states/history/assets")
-        Call<List<ITState>> getHistoryByAssets(@Query("assetType") String assetType, @Query("assetIds") String[] assetIds, @Query("fromTimestamp") long from, @Query("toTimestamp") long to, @Query("status") String status);
-
-        @GET("v1/states/history/streams")
-        Call<List<ITState>> getHistoryByStreams(@Query("streamIds") String[] assetIds, @Query("fromTimestamp") long from, @Query("toTimestamp") long to, @Query("status") String status);
     }
 
     public static class Deserializer implements JsonDeserializer<ITState> {
