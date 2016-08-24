@@ -2,6 +2,8 @@ package eu.intent.sdk.auth.internal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -10,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
+import java.util.concurrent.Semaphore;
 
 import eu.intent.sdk.ITApp;
 import eu.intent.sdk.api.internal.RetrofitGzipInterceptor;
@@ -50,6 +53,9 @@ public final class Oauth {
     private Context mContext;
     private Service mService;
 
+    // We need to call one refresh token request at a time, because a refresh token gets deprecated as soon as we generate a new one.
+    private Semaphore mRefreshTokenSemaphore;
+
     private Oauth(Context context) {
         mApp = ITApp.getInstance(context);
         mContext = context;
@@ -62,6 +68,7 @@ public final class Oauth {
         clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context));
         Gson gson = new GsonBuilder().registerTypeAdapter(ITUser.class, new ITUser.Deserializer()).create();
         mService = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(getBaseUrl()).client(clientBuilder.build()).build().create(Service.class);
+        mRefreshTokenSemaphore = new Semaphore(1, true);
     }
 
     /**
@@ -84,22 +91,7 @@ public final class Oauth {
         mService.requestToken(GRANT_TYPE_CODE, code, getClientId(), getClientSecret()).enqueue(new retrofit2.Callback<Info>() {
             @Override
             public void onResponse(Call<Info> call, Response<Info> response) {
-                if (response.isSuccessful()) {
-                    Info body = response.body();
-                    saveToken(body.accessToken, body.refreshToken, body.expiresIn);
-                    if (callback != null) callback.onSuccess(body);
-                } else {
-                    String errMessage;
-                    try {
-                        errMessage = response.errorBody().string();
-                    } catch (IOException e) {
-                        errMessage = response.message();
-                    }
-                    Log.e(Oauth.class.getCanonicalName(), errMessage);
-                    if (callback != null)
-                        callback.onFailure(response.code(), errMessage);
-
-                }
+                saveAccessTokenFromResponse(response, callback);
             }
 
             @Override
@@ -113,33 +105,27 @@ public final class Oauth {
     /**
      * Requests a new access token from a refresh token. The received token is saved locally to be reused when calling the API.
      */
-    public void refreshToken(final Callback callback) {
+    public void refreshToken(@Nullable final Callback callback) {
         Log.d(getClass().getCanonicalName(), "Refresh access token");
-        mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).enqueue(new retrofit2.Callback<Info>() {
-            @Override
-            public void onResponse(Call<Info> call, Response<Info> response) {
-                if (response.isSuccessful()) {
-                    Info body = response.body();
-                    saveToken(body.accessToken, body.refreshToken, body.expiresIn);
-                    if (callback != null) callback.onSuccess(body);
-                } else {
-                    try {
-                        Log.e(Oauth.class.getCanonicalName(), response.errorBody().string());
-                    } catch (IOException ignored) {
-                        Log.e(Oauth.class.getCanonicalName(), response.message());
-                    }
-                    logout();
-                    if (callback != null)
-                        callback.onFailure(response.code(), response.message());
+        try {
+            mRefreshTokenSemaphore.acquire();
+            mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).enqueue(new retrofit2.Callback<Info>() {
+                @Override
+                public void onResponse(Call<Info> call, Response<Info> response) {
+                    saveAccessTokenFromResponse(response, callback);
+                    mRefreshTokenSemaphore.release();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Info> call, Throwable t) {
-                Log.w(Oauth.class.getCanonicalName(), t);
-                if (callback != null) callback.onFailure(0, t.getLocalizedMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Info> call, Throwable t) {
+                    mRefreshTokenSemaphore.release();
+                    Log.w(Oauth.class.getCanonicalName(), t);
+                    if (callback != null) callback.onFailure(0, t.getLocalizedMessage());
+                }
+            });
+        } catch (InterruptedException ignored) {
+            // The thread has been interrupted while waiting for refreshing the token, abort.
+        }
     }
 
     /**
@@ -148,22 +134,47 @@ public final class Oauth {
      *
      * @return the new access token
      */
+    @Nullable
     public String refreshToken() throws IOException {
         Log.d(getClass().getCanonicalName(), "Refresh access token");
-        Response<Info> response = mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).execute();
+        String newAccessToken = null;
+        try {
+            mRefreshTokenSemaphore.acquire();
+            Response<Info> response = mService.refreshToken(REFRESH_GRANT_TYPE, getRefreshToken(), getClientId(), getClientSecret()).execute();
+            newAccessToken = saveAccessTokenFromResponse(response, null);
+            mRefreshTokenSemaphore.release();
+        } catch (InterruptedException ignored) {
+            // The thread has been interrupted while waiting for refreshing the token, abort (this will return null).
+        }
+        return newAccessToken;
+    }
+
+    /**
+     * Parses and saves the access token from a response body. If the response is a failure, the tokens are cleared.
+     *
+     * @param response the Response sent back by the access or refresh token request
+     * @param callback a custom Callback if you need to forward the response body
+     * @return the access token parsed from the response body, or null if the response is a failure
+     */
+    @Nullable
+    private String saveAccessTokenFromResponse(@NonNull Response<Info> response, @Nullable Callback callback) {
+        String accessToken = null;
         if (response.isSuccessful()) {
             Info body = response.body();
+            accessToken = body.accessToken;
             saveToken(body.accessToken, body.refreshToken, body.expiresIn);
-            return body.accessToken;
+            if (callback != null) callback.onSuccess(body);
         } else {
             try {
-                Log.e(getClass().getCanonicalName(), response.errorBody().string());
+                Log.e(Oauth.class.getCanonicalName(), response.errorBody().string());
             } catch (IOException ignored) {
-                Log.e(getClass().getCanonicalName(), response.message());
+                Log.e(Oauth.class.getCanonicalName(), response.message());
             }
             logout();
-            return null;
+            if (callback != null)
+                callback.onFailure(response.code(), response.message());
         }
+        return accessToken;
     }
 
     /**
