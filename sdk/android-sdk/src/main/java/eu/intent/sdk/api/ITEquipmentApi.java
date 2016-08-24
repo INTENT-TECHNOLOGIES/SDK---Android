@@ -134,6 +134,28 @@ public class ITEquipmentApi {
         mService.get(equipmentRef, false, Locale.getDefault().getLanguage()).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Retrieves the sites around the given location.
+     *
+     * @param lat                 latitude
+     * @param lng                 longitude
+     * @param maxDistanceInMeters search the sites in this maximum distance around the given location, in meters
+     */
+    public void getNearby(double lat, double lng, int maxDistanceInMeters, ITApiCallback<List<ITEquipment>> callback) {
+        mService.getNearby(lat, lng, maxDistanceInMeters).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Retrieves the IDs of the equipments around the given location.
+     *
+     * @param lat                 latitude
+     * @param lng                 longitude
+     * @param maxDistanceInMeters search the equipments within this maximum distance around the given location, in meters
+     */
+    public void getIdsNearby(double lat, double lng, int maxDistanceInMeters, ITApiCallback<List<String>> callback) {
+        mService.getIdsNearby(lat, lng, maxDistanceInMeters).enqueue(new ProxyCallback<>(callback));
+    }
+
     private interface Service {
         @GET("datahub/v1/equips")
         Call<ITEquipmentList> getByAssetId(@Query("assetType") String assetType, @Query("assetId") String assetId, @Query("type") String[] types, @Query("page") int page, @Query("countByPage") int count, @Query("lang") String lang);
@@ -143,5 +165,11 @@ public class ITEquipmentApi {
 
         @GET("datahub/v1/equips/{externalRef}")
         Call<ITEquipment> get(@Path("externalRef") String partRefOrId, @Query("byId") boolean useId, @Query("lang") String lang);
+
+        @GET("datahub/v1/equips/near")
+        Call<List<ITEquipment>> getNearby(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance);
+
+        @GET("datahub/v1/equips/near?onlyIds=true")
+        Call<List<String>> getIdsNearby(@Query("lat") double lat, @Query("lng") double lng, @Query("maxDistance") int maxDistance);
     }
 }
