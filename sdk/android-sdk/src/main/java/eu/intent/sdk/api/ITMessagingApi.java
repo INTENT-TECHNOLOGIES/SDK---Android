@@ -185,6 +185,25 @@ public class ITMessagingApi {
         mService.getUnreadMessagesCountByAsset(null, "site", siteIds, since).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Gets the number of unread messages for the given equipments.
+     *
+     * @param equipmentIds the IDs of multiple ITEquipments.
+     */
+    public void getUnreadMessagesCountByEquipment(List<String> equipmentIds, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+        getUnreadMessagesCountByEquipment(equipmentIds, 0, callback);
+    }
+
+    /**
+     * Gets the number of unread messages since the given timestamp for the given equipments.
+     *
+     * @param equipmentIds the IDs of multiple ITEquipments
+     * @param since        count the unread messages since this timestamp
+     */
+    public void getUnreadMessagesCountByEquipment(List<String> equipmentIds, long since, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+        mService.getUnreadMessagesCountByAsset(null, "equip", equipmentIds, since).enqueue(new ProxyCallback<>(callback));
+    }
+
     private interface Service {
         @GET("reports/v1/")
         Call<ITConversation> get(@Query("theme") String theme, @Query("assetType") String assetType, @Query("assetId") String assetId, @Query("since") long updatedSince);
