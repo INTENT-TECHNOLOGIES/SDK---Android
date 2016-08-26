@@ -134,6 +134,15 @@ public class ITEquipmentApi {
         mService.get(equipmentRef, false, Locale.getDefault().getLanguage()).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Retrieves the equipments of the user's domain, matching the given query.
+     *
+     * @param query a query string to filter the results
+     */
+    public void search(String query, ITApiCallback<ITEquipmentList> callback) {
+        mService.get(query, 1, 0, Locale.getDefault().getLanguage()).enqueue(new ProxyCallback<>(callback));
+    }
+
     private interface Service {
         @GET("datahub/v1/equips")
         Call<ITEquipmentList> getByAssetId(@Query("assetType") String assetType, @Query("assetId") String assetId, @Query("type") String[] types, @Query("page") int page, @Query("countByPage") int count, @Query("lang") String lang);
@@ -143,5 +152,8 @@ public class ITEquipmentApi {
 
         @GET("datahub/v1/equips/{externalRef}")
         Call<ITEquipment> get(@Path("externalRef") String partRefOrId, @Query("byId") boolean useId, @Query("lang") String lang);
+
+        @GET("datahub/v1/equips")
+        Call<ITEquipmentList> get(@Query("query") String query, @Query("page") int page, @Query("countByPage") int count, @Query("lang") String lang);
     }
 }
