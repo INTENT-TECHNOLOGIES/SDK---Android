@@ -38,52 +38,60 @@ public class ITStateApi {
     }
 
     /**
-     * Retrieves the current states of the parts with the given refs.
+     * Retrieves the current states of the parts with the given IDs.
      *
-     * @param partRefs the ITParts' external refs
+     * @param partIds the ITParts' IDs
      */
-    public void getCurrentByParts(String[] partRefs, ITApiCallback<List<ITState>> callback) {
-        getCurrentByParts(partRefs, null, callback);
+    public void getCurrentByParts(String[] partIds, ITApiCallback<List<ITState>> callback) {
+        getCurrentByParts(partIds, null, callback);
     }
 
     /**
-     * Retrieves the current states around the given location.
+     * Retrieves the current states of the parts with the given IDs.
      *
-     * @param lat    the location latitude
-     * @param lng    the location longitude
-     * @param radius the radius in meters around the location
+     * @param partIds the ITParts' IDs
+     * @param status  the status of the states you want to retrieve if you want to filter by status
      */
-    public void getCurrentAroundLocation(double lat, double lng, double radius, ITApiCallback<List<ITState>> callback) {
-        mService.getCurrentAroundLocation(lat, lng, radius).enqueue(new ProxyCallback<>(callback));
+    public void getCurrentByParts(String[] partIds, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getCurrentByAssets("part", partIds, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
-     * Retrieves the current states of the parts with the given refs.
+     * Retrieves the current states of the sites with the given IDs.
      *
-     * @param partRefs the ITParts' external refs
-     * @param status   the status of the states you want to retrieve if you want to filter by status
+     * @param siteIds the ITSites' IDs
      */
-    public void getCurrentByParts(String[] partRefs, String status, ITApiCallback<List<ITState>> callback) {
-        mService.getCurrentByAssets("part", partRefs, status).enqueue(new ProxyCallback<>(callback));
+    public void getCurrentBySites(String[] siteIds, ITApiCallback<List<ITState>> callback) {
+        getCurrentBySites(siteIds, null, callback);
     }
 
     /**
-     * Retrieves the current states of the sites with the given refs.
+     * Retrieves the current states of the sites with the given IDs.
      *
-     * @param siteRefs the ITSites' external refs
+     * @param siteIds the ITSites' IDs
+     * @param status  the status of the states you want to retrieve if you want to filter by status
      */
-    public void getCurrentBySites(String[] siteRefs, ITApiCallback<List<ITState>> callback) {
-        getCurrentBySites(siteRefs, null, callback);
+    public void getCurrentBySites(String[] siteIds, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getCurrentByAssets("site", siteIds, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
-     * Retrieves the current states of the sites with the given refs.
+     * Retrieves the current states of the equipments with the given IDs.
      *
-     * @param siteRefs the ITSites' external refs
-     * @param status   the status of the states you want to retrieve if you want to filter by status
+     * @param equipmentIds the ITEquipments' IDs
      */
-    public void getCurrentBySites(String[] siteRefs, String status, ITApiCallback<List<ITState>> callback) {
-        mService.getCurrentByAssets("site", siteRefs, status).enqueue(new ProxyCallback<>(callback));
+    public void getCurrentByEquipments(String[] equipmentIds, ITApiCallback<List<ITState>> callback) {
+        getCurrentByEquipments(equipmentIds, null, callback);
+    }
+
+    /**
+     * Retrieves the current states of the equipments with the given IDs.
+     *
+     * @param equipmentIds the ITEquipments' IDs
+     * @param status       the status of the states you want to retrieve if you want to filter by status
+     */
+    public void getCurrentByEquipments(String[] equipmentIds, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getCurrentByAssets("equip", equipmentIds, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
