@@ -148,13 +148,32 @@ public class ITMessagingApi {
     }
 
     /**
+     * Gets the number of unread messages for the given equipment and activity category.
+     *
+     * @param equipmentId         the ID of an ITEquipment
+     * @param activityCategoryIds the IDs of several ITActivityCategories
+     */
+    public void getUnreadMessagesCountByEquipmentIdAndActivityCategories(String equipmentId, List<String> activityCategoryIds, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
+        mService.getUnreadMessagesCountByTheme(activityCategoryIds, "equip", equipmentId, 0).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Gets the number of unread messages for the given site and activity category.
      *
      * @param siteId              the ID of an ITSite
      * @param activityCategoryIds the IDs of several ITActivityCategories
      */
-    public void getUnreadMessagesCountBySiteIdAndActivityCategory(String siteId, List<String> activityCategoryIds, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
+    public void getUnreadMessagesCountBySiteIdAndActivityCategories(String siteId, List<String> activityCategoryIds, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
         mService.getUnreadMessagesCountByTheme(activityCategoryIds, "site", siteId, 0).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Gets the number of unread messages for the given equipment, grouped by activity categories.
+     *
+     * @param equipmentId the ID of an ITEquipment
+     */
+    public void getUnreadMessagesCountByEquipmentIdGroupedByActivityCategory(String equipmentId, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
+        mService.getUnreadMessagesCountByTheme(null, "equip", equipmentId, 0).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -162,7 +181,7 @@ public class ITMessagingApi {
      *
      * @param siteId the ID of an ITSite
      */
-    public void getUnreadMessagesCountByActivityCategory(String siteId, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
+    public void getUnreadMessagesCountBySiteIdGroupedByActivityCategory(String siteId, ITApiCallback<ITMessagesCount.ByActivityCategory> callback) {
         mService.getUnreadMessagesCountByTheme(null, "site", siteId, 0).enqueue(new ProxyCallback<>(callback));
     }
 
@@ -171,8 +190,8 @@ public class ITMessagingApi {
      *
      * @param siteIds the IDs of multiple ITSites
      */
-    public void getUnreadMessagesCountBySite(List<String> siteIds, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
-        getUnreadMessagesCountBySite(siteIds, 0, callback);
+    public void getUnreadMessagesCountBySites(List<String> siteIds, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+        getUnreadMessagesCountBySites(siteIds, 0, callback);
     }
 
     /**
@@ -181,7 +200,7 @@ public class ITMessagingApi {
      * @param siteIds the IDs of multiple ITSites
      * @param since   count the unread messages since this timestamp
      */
-    public void getUnreadMessagesCountBySite(List<String> siteIds, long since, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+    public void getUnreadMessagesCountBySites(List<String> siteIds, long since, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
         mService.getUnreadMessagesCountByAsset(null, "site", siteIds, since).enqueue(new ProxyCallback<>(callback));
     }
 
@@ -190,8 +209,8 @@ public class ITMessagingApi {
      *
      * @param equipmentIds the IDs of multiple ITEquipments.
      */
-    public void getUnreadMessagesCountByEquipment(List<String> equipmentIds, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
-        getUnreadMessagesCountByEquipment(equipmentIds, 0, callback);
+    public void getUnreadMessagesCountByEquipments(List<String> equipmentIds, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+        getUnreadMessagesCountByEquipments(equipmentIds, 0, callback);
     }
 
     /**
@@ -200,7 +219,7 @@ public class ITMessagingApi {
      * @param equipmentIds the IDs of multiple ITEquipments
      * @param since        count the unread messages since this timestamp
      */
-    public void getUnreadMessagesCountByEquipment(List<String> equipmentIds, long since, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
+    public void getUnreadMessagesCountByEquipments(List<String> equipmentIds, long since, ITApiCallback<ITMessagesCount.ByAssetId> callback) {
         mService.getUnreadMessagesCountByAsset(null, "equip", equipmentIds, since).enqueue(new ProxyCallback<>(callback));
     }
 
