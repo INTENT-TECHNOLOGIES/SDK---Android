@@ -28,6 +28,39 @@ public class ITMessagingApi {
     }
 
     /**
+     * Gets an ITConversation for the given equipment and activity category.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     */
+    public void getByEquipmentAndActivityCategory(String equipmentId, String activityCategoryId, ITApiCallback<ITConversation> callback) {
+        getByEquipmentAndActivityCategory(equipmentId, activityCategoryId, 0, callback);
+    }
+
+    /**
+     * Gets an ITConversation for the given equipment and activity category. It will contain the messages for this conversation, that have been sent after the given timestamp.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param since              the conversation will contain the message received after this timestamp
+     */
+    public void getByEquipmentAndActivityCategory(String equipmentId, String activityCategoryId, long since, ITApiCallback<ITConversation> callback) {
+        mService.get(activityCategoryId, "equip", equipmentId, since).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Gets an ITConversation for the given equipment and activity category, paginated.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param page               the page you want to access (starting at 1)
+     * @param countByPage        the number of messages you want
+     */
+    public void getByEquipmentAndActivityCategoryPaginated(String equipmentId, String activityCategoryId, int page, int countByPage, ITApiCallback<ITConversation> callback) {
+        mService.get(activityCategoryId, "equip", equipmentId, page, countByPage).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Gets an ITConversation for the given site and activity category.
      *
      * @param siteId             the ID of an ITSite
