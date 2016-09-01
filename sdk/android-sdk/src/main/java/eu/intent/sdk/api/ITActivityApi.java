@@ -49,6 +49,24 @@ public class ITActivityApi {
     }
 
     /**
+     * Retrieves the activities of a given equipment. The callback returns the activity keys.
+     *
+     * @param equipmentRef the ITEquipment's external ref
+     */
+    public void getByEquipmentRef(String equipmentRef, ITApiCallback<ITActivityKeys> callback) {
+        mService.getByEquipment(equipmentRef, false).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Retrieves the activities of a given equipment by Intent Id. The callback returns the activity keys.
+     *
+     * @param equipmentId the ITEquipment's Intent id
+     */
+    public void getByEquipmentId(String equipmentId, ITApiCallback<ITActivityKeys> callback) {
+        mService.getByEquipment(equipmentId, true).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Retrieves the activities of a given part. The callback returns the activity keys.
      *
      * @param partRef the ITPart's external ref
@@ -90,6 +108,9 @@ public class ITActivityApi {
 
         @GET("datahub/v1/activities/{activityKey}")
         Call<ITActivity> get(@Path("activityKey") String id, @Query("lang") String lang);
+
+        @GET("datahub/v1/equips/{externalRef}/activities")
+        Call<ITActivityKeys> getByEquipment(@Path("externalRef") String equipRef, @Query("byId") boolean byId);
 
         @GET("datahub/v1/parts/{externalRef}/activities")
         Call<ITActivityKeys> getByPart(@Path("externalRef") String partRef, @Query("byId") boolean byId);
