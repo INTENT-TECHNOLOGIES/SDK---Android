@@ -31,6 +31,26 @@ public class ITStreamApi {
     }
 
     /**
+     * Retrieves the streams of a given equipment. The callback returns the stream IDs.
+     *
+     * @param equipmentId the ITEquipment's ID
+     * @param activities  if you want to filter on activity keys
+     */
+    public void getByEquipmentId(String equipmentId, String[] activities, ITApiCallback<List<String>> callback) {
+        mService.getByEquipment(equipmentId, true, activities).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Retrieves the streams of a given equipment. The callback returns the stream IDs.
+     *
+     * @param equipmentRef the ITEquipment's external ref
+     * @param activities   if you want to filter on activity keys
+     */
+    public void getByEquipmentRef(String equipmentRef, String[] activities, ITApiCallback<List<String>> callback) {
+        mService.getByEquipment(equipmentRef, false, activities).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Retrieves the streams of a given part. The callback returns the stream IDs.
      *
      * @param partId     the ITPart's ID
@@ -73,6 +93,9 @@ public class ITStreamApi {
     private interface Service {
         @GET("datahub/v1/streams/{streamId}")
         Call<ITStream> get(@Path("streamId") String streamId);
+
+        @GET("datahub/v1/equips/{externalRef}/streams")
+        Call<List<String>> getByEquipment(@Path("externalRef") String equipmentIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
 
         @GET("datahub/v1/parts/{externalRef}/streams")
         Call<List<String>> getByPart(@Path("externalRef") String partIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
