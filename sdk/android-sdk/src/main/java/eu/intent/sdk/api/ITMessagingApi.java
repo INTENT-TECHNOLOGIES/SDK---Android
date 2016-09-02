@@ -103,14 +103,37 @@ public class ITMessagingApi {
     }
 
     /**
+     * Posts a new comment message in the conversation of the given equipment and activity category.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param text               the content of the message that will be sent to the conversation
+     */
+    public void postCommentOnEquipment(String equipmentId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
+        postCommentOnEquipment(equipmentId, activityCategoryId, null, text, callback);
+    }
+
+    /**
+     * Posts a new message with a title, in the conversation of the given equipment and activity category.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param title              the title of the message
+     * @param text               the content of the message
+     */
+    public void postCommentOnEquipment(String equipmentId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
+        mService.postMessage("comment", new Service.PostBody("equip", equipmentId, activityCategoryId, title, text)).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
      * Posts a new comment message in the conversation of the given site and activity category.
      *
      * @param siteId             the ID of an ITSite
      * @param activityCategoryId the ID of an ITActivityCategory
-     * @param text               the text that will be sent to the conversation
+     * @param text               the content of the message that will be sent to the conversation
      */
-    public void postComment(String siteId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
-        postComment(siteId, activityCategoryId, null, text, callback);
+    public void postCommentOnSite(String siteId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
+        postCommentOnSite(siteId, activityCategoryId, null, text, callback);
     }
 
     /**
@@ -121,8 +144,31 @@ public class ITMessagingApi {
      * @param title              the title of the message
      * @param text               the content of the message
      */
-    public void postComment(String siteId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
+    public void postCommentOnSite(String siteId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
         mService.postMessage("comment", new Service.PostBody("site", siteId, activityCategoryId, title, text)).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Posts a new report in the conversation of the given equipment and activity category.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param text               the content of the report
+     */
+    public void postReportOnEquipment(String equipmentId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
+        postReportOnEquipment(equipmentId, activityCategoryId, null, text, callback);
+    }
+
+    /**
+     * Posts a new report with a title, in the conversation of the given equipment and activity category.
+     *
+     * @param equipmentId        the ID of an ITEquipment
+     * @param activityCategoryId the ID of an ITActivityCategory
+     * @param title              the title of the report
+     * @param text               the content of the report
+     */
+    public void postReportOnEquipment(String equipmentId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
+        mService.postMessage("report", new Service.PostBody("equip", equipmentId, activityCategoryId, title, text)).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
@@ -130,10 +176,10 @@ public class ITMessagingApi {
      *
      * @param siteId             the ID of an ITSite
      * @param activityCategoryId the ID of an ITActivityCategory
-     * @param text               the text of the report
+     * @param text               the content of the report
      */
-    public void postReport(String siteId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
-        postReport(siteId, activityCategoryId, null, text, callback);
+    public void postReportOnSite(String siteId, String activityCategoryId, String text, ITApiCallback<Void> callback) {
+        postReportOnSite(siteId, activityCategoryId, null, text, callback);
     }
 
     /**
@@ -144,7 +190,7 @@ public class ITMessagingApi {
      * @param title              the title of the report
      * @param text               the content of the report
      */
-    public void postReport(String siteId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
+    public void postReportOnSite(String siteId, String activityCategoryId, String title, String text, ITApiCallback<Void> callback) {
         mService.postMessage("report", new Service.PostBody("site", siteId, activityCategoryId, title, text)).enqueue(new ProxyCallback<>(callback));
     }
 
@@ -160,7 +206,7 @@ public class ITMessagingApi {
     }
 
     /**
-     * Updates the text of a message.
+     * Updates the content of a message.
      *
      * @param messageId the ID of the ITMessage to update
      * @param newText   the new content of the ITMessage
