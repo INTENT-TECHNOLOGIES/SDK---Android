@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import eu.intent.sdk.api.ITApiCallback;
 import eu.intent.sdk.auth.internal.Oauth;
-import eu.intent.sdk.model.ITUser;
 import eu.intent.sdk.ui.activity.ITAuthActivity;
 
 /**
@@ -14,7 +12,10 @@ import eu.intent.sdk.ui.activity.ITAuthActivity;
  *
  * @see ITAuthRequest.Builder
  */
-public class ITAuthClient {
+public final class ITAuthClient {
+    private ITAuthClient() {
+    }
+
     /**
      * Creates a login Intent to be started from your code.
      *
@@ -37,20 +38,6 @@ public class ITAuthClient {
     public static void openLoginActivity(Activity activity, int requestCode, ITAuthRequest request) {
         Intent intent = createLoginActivityIntent(activity, request);
         activity.startActivityForResult(intent, requestCode);
-    }
-
-    /**
-     * Returns the current user from the server.
-     */
-    public static void getUser(final Context context, final ITApiCallback<ITUser> callback) {
-        ITUser.getCurrentUser(context, callback);
-    }
-
-    /**
-     * Updates the current user with the given ITUser. If no user is authenticated, this method has no effect.
-     */
-    public static void updateUser(final Context context, ITUser user, final ITApiCallback<ITUser> callback) {
-        ITUser.updateCurrentUser(context, user, callback);
     }
 
     /**

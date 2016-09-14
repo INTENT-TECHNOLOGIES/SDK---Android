@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An action is a step of an ITTask. An action has a template, which defines its payload.
@@ -55,6 +56,7 @@ public class ITAction implements Parcelable {
     transient public Bundle custom = new Bundle();
 
     public ITAction() {
+        // Needed by Retrofit
     }
 
     protected ITAction(Parcel in) {
@@ -112,17 +114,18 @@ public class ITAction implements Parcelable {
         /**
          * Device output -> activity
          */
-        public transient Map<String, String> deviceBindings = new HashMap<>();
+        public transient Map<String, String> deviceBindings = new ConcurrentHashMap<>();
         /**
          * Device output -> settings (key/value)
          */
-        public transient Map<String, Settings> settings = new HashMap<>();
+        public transient Map<String, Settings> settings = new ConcurrentHashMap<>();
         /**
          * Device output -> room
          */
         public transient Map<String, String> usageRooms;
 
         public Payload() {
+            // Needed by Retrofit
         }
 
         protected Payload(Parcel in) {
@@ -203,29 +206,8 @@ public class ITAction implements Parcelable {
                     JsonObject params = jsonObject.get("params").getAsJsonObject();
                     for (Map.Entry<String, JsonElement> param : params.entrySet()) {
                         String output = param.getKey();
-                        if (param.getValue().isJsonNull()) {
-                            payload.settings.put(output, null);
-                        } else {
-                            JsonObject jsonSettings = param.getValue().getAsJsonObject();
-                            Settings settings = new Settings();
-                            for (Map.Entry<String, JsonElement> setting : jsonSettings.entrySet()) {
-                                JsonElement value = setting.getValue();
-                                if (value.isJsonNull()) {
-                                    settings.entries.put(setting.getKey(), Double.NaN);
-                                } else {
-                                    try {
-                                        settings.entries.put(setting.getKey(), value.getAsDouble());
-                                    } catch (ClassCastException | NumberFormatException e1) {
-                                        try {
-                                            settings.entries.put(setting.getKey(), Double.parseDouble(value.getAsString().replace(",", ".")));
-                                        } catch (ClassCastException | NumberFormatException e2) {
-                                            settings.entries.put(setting.getKey(), Double.NaN);
-                                        }
-                                    }
-                                }
-                            }
-                            payload.settings.put(output, settings);
-                        }
+                        JsonElement outputSettings = param.getValue();
+                        deserializeSettings(output, outputSettings, payload);
                     }
                 }
                 if (jsonObject.has("usageAddresses")) {
@@ -238,6 +220,32 @@ public class ITAction implements Parcelable {
                     }
                 }
                 return payload;
+            }
+
+            private void deserializeSettings(String output, JsonElement settingsElement, Payload payload) {
+                if (settingsElement.isJsonNull()) {
+                    payload.settings.put(output, null);
+                } else {
+                    JsonObject jsonSettings = settingsElement.getAsJsonObject();
+                    Settings settings = new Settings();
+                    for (Map.Entry<String, JsonElement> setting : jsonSettings.entrySet()) {
+                        JsonElement value = setting.getValue();
+                        if (value.isJsonNull()) {
+                            settings.entries.put(setting.getKey(), Double.NaN);
+                        } else {
+                            try {
+                                settings.entries.put(setting.getKey(), value.getAsDouble());
+                            } catch (ClassCastException | NumberFormatException e1) {
+                                try {
+                                    settings.entries.put(setting.getKey(), Double.parseDouble(value.getAsString().replace(",", ".")));
+                                } catch (ClassCastException | NumberFormatException e2) {
+                                    settings.entries.put(setting.getKey(), Double.NaN);
+                                }
+                            }
+                        }
+                    }
+                    payload.settings.put(output, settings);
+                }
             }
         }
 
@@ -252,9 +260,10 @@ public class ITAction implements Parcelable {
                 }
             };
 
-            public Map<String, Double> entries = new HashMap<>();
+            public Map<String, Double> entries = new ConcurrentHashMap<>();
 
             public Settings() {
+                // Needed by Retrofit
             }
 
             protected Settings(Parcel in) {
@@ -296,6 +305,7 @@ public class ITAction implements Parcelable {
             public String floor;
 
             public Repeater() {
+                // Needed by Retrofit
             }
 
             protected Repeater(Parcel in) {

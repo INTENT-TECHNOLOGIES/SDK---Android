@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * A device family has an ID pattern that can be used to validate or autocomplete a device ID.
  *
- * @see ITDevice
  * @see ITDeviceType
  */
 public class ITDeviceId implements Parcelable {
@@ -31,6 +30,7 @@ public class ITDeviceId implements Parcelable {
     public int variableSize = 0;
 
     public ITDeviceId() {
+        // Needed by Retrofit
     }
 
     protected ITDeviceId(Parcel in) {
@@ -44,7 +44,7 @@ public class ITDeviceId implements Parcelable {
      * Gets the brand part of the prefix, ie the text until the last colon (:). For example, "urn:intent:083_" will turn to "urn:intent:".
      */
     public String getBrandPrefix() {
-        int indexOfLastColon = prefix.lastIndexOf(":");
+        int indexOfLastColon = prefix.lastIndexOf(':');
         if (indexOfLastColon >= 0 && indexOfLastColon < prefix.length()) {
             return prefix.substring(0, indexOfLastColon + 1);
         }

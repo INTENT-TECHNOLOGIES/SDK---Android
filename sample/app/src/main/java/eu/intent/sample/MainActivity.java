@@ -15,6 +15,8 @@ import eu.intent.sdk.model.ITUser;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextView;
+    private ITUserApi mUserApi;
+    private ITPartApi mPartApi;
     private ITUser mUser;
     private ITPart mPart;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.text);
+        mUserApi = new ITUserApi(this);
+        mPartApi = new ITPartApi(this);
         loadMyData();
     }
 
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMyData() {
-        ITUser.getCurrentUser(this, new ITApiCallback<ITUser>() {
+        mUserApi.getCurrentUser(new ITApiCallback<ITUser>() {
             @Override
             public void onSuccess(ITUser result) {
                 mUser = result;
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ITPart.getMyPart(this, new ITApiCallback<ITPart>() {
+        mPartApi.getMyPart(new ITApiCallback<ITPart>() {
             @Override
             public void onSuccess(ITPart result) {
                 mPart = result;
