@@ -11,6 +11,8 @@ import eu.intent.sdk.model.ITEquipment;
 import eu.intent.sdk.model.ITEquipmentList;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 public class ITEquipmentTest {
@@ -34,5 +36,15 @@ public class ITEquipmentTest {
         assertEquals(ITEquipment.Type.COMMUNITY_BOILER, equipmentList.equipments.get(1).type);
         assertEquals(ITEquipment.Type.INDIVIDUAL_BOILER, equipmentList.equipments.get(2).type);
         assertEquals(0, equipmentList.equipments.get(2).uninstallDate);
+    }
+
+    @Test
+    public void testIncompleteEquipment() {
+        String json = TestUtils.readRawFile(InstrumentationRegistry.getContext(), eu.intent.sdktests.test.R.raw.equipment_unknown);
+        ITEquipment equipment = ITRetrofitUtils.getGson().fromJson(json, ITEquipment.class);
+        assertNotNull(equipment.address);
+        assertFalse(equipment.address.location.isValid());
+        assertEquals(ITEquipment.Scope.UNKNOWN, equipment.scope);
+        assertEquals(ITEquipment.Type.UNKNOWN, equipment.type);
     }
 }

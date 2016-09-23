@@ -4,6 +4,12 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -84,7 +90,42 @@ public class ITEquipment implements Parcelable {
     }
 
     public enum Type {
-        CMV, COMMUNITY_BOILER, ELECTRIC_SOLAR_WATER_HEATER, ELECTRIC_WATER_HEATER, FORCED_AIR_FLUE, FORCED_AIR_GAS_WATER_HEATER, FORCED_DRAFT_GAS_BOILER, GAS_CONDENSING_BOILER, GAS_SMOKE_FLUE, GAS_WATER_HEATER, HEATING_CIRCUIT, INDIVIDUAL_BOILER, LIFT, NATURAL_DRAFT_FLUE, NATURAL_DRAFT_GAS_BOILER, NATURAL_DRAFT_GAS_WATER_HEATER, PART_AIR_VENT, PART_FORCED_AIR_FAN, ROOM_SEALED_GAS_BOILER, SECURITY, SITE_FAN, SITE_GAS_FAN, SOLAR_GAS_BOILER, SUBMETER, WATERMETER, UNKNOWN
+        CMV,
+        COMMUNITY_BOILER,
+        ELECTRIC_METER,
+        ELECTRIC_SOLAR_WATER_HEATER,
+        ELECTRIC_WATER_HEATER,
+        FLOAT_WATER,
+        FORCED_AIR_FLUE,
+        FORCED_AIR_GAS_WATER_HEATER,
+        FORCED_DRAFT_GAS_BOILER,
+        GAS_CONDENSING_BOILER,
+        GAS_SMOKE_FLUE,
+        GAS_WATER_HEATER,
+        GASMETER,
+        GENERIC_PUMP,
+        HEATING_CIRCUIT,
+        INDIVIDUAL_BOILER,
+        LIFT,
+        METERING_POINT,
+        MODULE_CIC,
+        NATURAL_DRAFT_FLUE,
+        NATURAL_DRAFT_GAS_BOILER,
+        NATURAL_DRAFT_GAS_WATER_HEATER,
+        PART_AIR_VENT,
+        PART_FORCED_AIR_FAN,
+        POWER_SOLAR,
+        ROOM_SEALED_GAS_BOILER,
+        SECURITY,
+        SITE_FAN,
+        SITE_GAS_FAN,
+        SKYDOME,
+        SOLAR_GAS_BOILER,
+        SUBMETER,
+        SWITCHBOARD,
+        WATER_CIRCUIT,
+        WATERMETER,
+        UNKNOWN
     }
 
     public enum Scope {
@@ -97,5 +138,23 @@ public class ITEquipment implements Parcelable {
          */
         @SerializedName("private")PRIVATE,
         UNKNOWN
+    }
+
+    public static class Deserializer implements JsonDeserializer<ITEquipment> {
+        @Override
+        public ITEquipment deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            Gson gson = new GsonBuilder().create();
+            ITEquipment equipment = gson.fromJson(json, typeOfT);
+            if (equipment.address == null) {
+                equipment.address = new ITAddress();
+            }
+            if (equipment.scope == null) {
+                equipment.scope = Scope.UNKNOWN;
+            }
+            if (equipment.type == null) {
+                equipment.type = Type.UNKNOWN;
+            }
+            return equipment;
+        }
     }
 }
