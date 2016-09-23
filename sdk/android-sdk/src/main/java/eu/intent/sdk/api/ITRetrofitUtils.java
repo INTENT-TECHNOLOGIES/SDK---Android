@@ -25,6 +25,7 @@ import eu.intent.sdk.model.ITContact;
 import eu.intent.sdk.model.ITConversation;
 import eu.intent.sdk.model.ITData;
 import eu.intent.sdk.model.ITDeviceType;
+import eu.intent.sdk.model.ITEquipment;
 import eu.intent.sdk.model.ITGreenGesture;
 import eu.intent.sdk.model.ITLocation;
 import eu.intent.sdk.model.ITMessage;
@@ -138,6 +139,7 @@ public final class ITRetrofitUtils {
                         .registerTypeAdapter(ITConversation.class, new ITConversation.Deserializer())
                         .registerTypeAdapter(ITData.class, new ITData.Deserializer())
                         .registerTypeAdapter(ITDeviceType.class, new ITDeviceType.Deserializer())
+                        .registerTypeAdapter(ITEquipment.class, new ITEquipment.Deserializer())
                         .registerTypeAdapter(ITGreenGesture.class, new ITGreenGesture.Deserializer())
                         .registerTypeAdapter(ITLocation.class, new ITLocation.Deserializer())
                         .registerTypeAdapter(ITMessage.class, new ITMessage.Deserializer())
