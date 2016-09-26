@@ -177,9 +177,10 @@ public class ITTask implements Parcelable {
                 return new Data[size];
             }
         };
-        public List<String> activities;
-        public String deviceId;
-        public String deviceType;
+        public List<String> activities = new ArrayList<>();
+        public String deviceId = "";
+        public String deviceType = "";
+        public String oldDeviceId = "";
 
         public Data() {
             // Needed by Retrofit
@@ -189,6 +190,7 @@ public class ITTask implements Parcelable {
             activities = in.createStringArrayList();
             deviceId = in.readString();
             deviceType = in.readString();
+            oldDeviceId = in.readString();
         }
 
         @Override
@@ -201,6 +203,7 @@ public class ITTask implements Parcelable {
             dest.writeStringList(activities);
             dest.writeString(deviceId);
             dest.writeString(deviceType);
+            dest.writeString(oldDeviceId);
         }
     }
 
@@ -246,6 +249,8 @@ public class ITTask implements Parcelable {
         private void deserializeInfo(@NonNull ITTask task, @NonNull JsonObject info) {
             task.comment = ITJsonUtils.getJsonAsString(info, "comment", "");
             task.data.deviceType = ITJsonUtils.getJsonAsString(info, "deviceType", "");
+            task.data.deviceId = ITJsonUtils.getJsonAsString(info, "deviceId", "");
+            task.data.oldDeviceId = ITJsonUtils.getJsonAsString(info, "oldDeviceId", "");
             task.data.activities = new ArrayList<>();
             if (info.has("activities")) {
                 for (JsonElement activity : info.get("activities").getAsJsonArray()) {
