@@ -22,6 +22,8 @@ public class ITEquipmentTest {
         ITEquipmentList equipmentList = ITRetrofitUtils.getGson().fromJson(json, ITEquipmentList.class);
         assertEquals(3, equipmentList.totalCount);
         assertEquals(3, equipmentList.equipments.size());
+        assertEquals(0.8337478999999348, equipmentList.equipments.get(0).address.location.lng);
+        assertEquals(49.5809623, equipmentList.equipments.get(0).address.location.lat);
         assertEquals("ELM Leblanc", equipmentList.equipments.get(2).brand);
         assertEquals("VMC-099-00012", equipmentList.equipments.get(0).externalRef);
         assertEquals("89dbf4a0-69dd-4091-b777-dc0ff19eb8f8", equipmentList.equipments.get(0).id);

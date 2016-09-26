@@ -143,7 +143,9 @@ public class ITEquipment implements Parcelable {
     public static class Deserializer implements JsonDeserializer<ITEquipment> {
         @Override
         public ITEquipment deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(ITLocation.class, new ITLocation.Deserializer())
+                    .create();
             ITEquipment equipment = gson.fromJson(json, typeOfT);
             if (equipment.address == null) {
                 equipment.address = new ITAddress();
