@@ -39,6 +39,8 @@ public class ITTask implements Parcelable {
         }
     };
 
+    private static final String COMMON_PORTION = "commonPortion";
+
     public List<ITAction> actions = new ArrayList<>();
     @SerializedName("owner")
     public String client;
@@ -239,7 +241,7 @@ public class ITTask implements Parcelable {
             task.address = gson.fromJson(asset.get("address"), ITAddress.class);
             task.assetId = ITJsonUtils.getJsonAsString(asset, "assetId", "");
             task.assetType = ITAssetType.fromString(ITJsonUtils.getJsonAsString(asset, "assetType", ITAssetType.SITE.name()));
-            task.commonPart = !asset.has("portion") || TextUtils.isEmpty(asset.get("portion").getAsString()) || TextUtils.equals(asset.get("portion").getAsString(), "commonPortion");
+            task.commonPart = TextUtils.equals(ITJsonUtils.getJsonAsString(asset, "portion", COMMON_PORTION), COMMON_PORTION);
             task.door = ITJsonUtils.getJsonAsString(asset, "door", "");
             task.floor = ITJsonUtils.getJsonAsString(asset, "level", "");
             task.keywords = ITJsonUtils.getJsonAsString(asset, "keywords", "").split(" ");
