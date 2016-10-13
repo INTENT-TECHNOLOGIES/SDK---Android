@@ -1,13 +1,17 @@
 package eu.intent.sdk.api;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +43,7 @@ import eu.intent.sdk.model.ITTagList;
 import eu.intent.sdk.model.ITTask;
 import eu.intent.sdk.model.ITUser;
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -52,6 +57,8 @@ public final class ITRetrofitUtils {
     private static GsonBuilder sGsonBuilder;
     private static Gson sGson;
     private static Map<Type, Object> sCustomTypeAdapters;
+    private static List<Interceptor> sCustomInterceptors;
+    private static List<Interceptor> sCustomNetworkInterceptors;
 
     private ITRetrofitUtils() {
     }
@@ -69,7 +76,17 @@ public final class ITRetrofitUtils {
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 clientBuilder.addInterceptor(loggingInterceptor);
+                if (sCustomInterceptors != null) {
+                    for (Interceptor interceptor : sCustomInterceptors) {
+                        clientBuilder.addInterceptor(interceptor);
+                    }
+                }
                 clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context));
+                if (sCustomNetworkInterceptors != null) {
+                    for (Interceptor interceptor : sCustomNetworkInterceptors) {
+                        clientBuilder.addNetworkInterceptor(interceptor);
+                    }
+                }
                 clientBuilder.authenticator(new RetrofitAuthenticator(context));
                 clientBuilder.cache(new Cache(context.getCacheDir(), 1024 * 1024 * 10));
                 clientBuilder.connectTimeout(5, TimeUnit.SECONDS);
@@ -78,6 +95,42 @@ public final class ITRetrofitUtils {
             }
         }
         return sRetrofit;
+    }
+
+    /**
+     * You can add custom interceptors to the OkHttpClient.
+     * This creates a new instance of Retrofit as we can't modify an existing instance, so you should call this method sparingly.
+     */
+    public static void addInterceptors(@NonNull Interceptor... interceptors) {
+        synchronized (ITRetrofitUtils.class) {
+            if (sCustomInterceptors == null) {
+                sCustomInterceptors = new ArrayList<>();
+            }
+        }
+        sCustomInterceptors.addAll(Arrays.asList(interceptors));
+        // Clear the Retrofit instance, we'll need it to be re-created
+        synchronized (ITRetrofitUtils.class) {
+            sGson = null;
+            sRetrofit = null;
+        }
+    }
+
+    /**
+     * You can add custom network interceptors to the OkHttpClient.
+     * This creates a new instance of Retrofit as we can't modify an existing instance, so you should call this method sparingly.
+     */
+    public static void addNetworkInterceptors(@NonNull Interceptor... interceptors) {
+        synchronized (ITRetrofitUtils.class) {
+            if (sCustomNetworkInterceptors == null) {
+                sCustomNetworkInterceptors = new ArrayList<>();
+            }
+        }
+        sCustomNetworkInterceptors.addAll(Arrays.asList(interceptors));
+        // Clear the Retrofit instance, we'll need it to be re-created
+        synchronized (ITRetrofitUtils.class) {
+            sGson = null;
+            sRetrofit = null;
+        }
     }
 
     /**
