@@ -71,6 +71,7 @@ public class ITTask implements Parcelable {
     transient public String floor;
     transient public String[] keywords;
     transient public String siteId;
+    transient public String siteName;
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
@@ -106,6 +107,7 @@ public class ITTask implements Parcelable {
         floor = in.readString();
         keywords = in.createStringArray();
         siteId = in.readString();
+        siteName = in.readString();
         custom = in.readBundle();
     }
 
@@ -163,6 +165,7 @@ public class ITTask implements Parcelable {
         dest.writeString(floor);
         dest.writeStringArray(keywords);
         dest.writeString(siteId);
+        dest.writeString(siteName);
         dest.writeBundle(custom);
     }
 
@@ -246,6 +249,7 @@ public class ITTask implements Parcelable {
             task.floor = ITJsonUtils.getJsonAsString(asset, "level", "");
             task.keywords = ITJsonUtils.getJsonAsString(asset, "keywords", "").split(" ");
             task.siteId = ITJsonUtils.getJsonAsString(asset, "siteId", "");
+            task.siteName = ITJsonUtils.getJsonAsString(asset, "siteName", "");
         }
 
         private void deserializeInfo(@NonNull ITTask task, @NonNull JsonObject info) {
