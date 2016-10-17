@@ -58,9 +58,9 @@ public class ITState implements Parcelable {
     public long validityDuration;
     public long validityExpirationDate;
     /**
-     * When the state was created. Typically, data reception date
+     * When the state was created. Typically, data creation date
      */
-    @SerializedName("receptionDate")
+    @SerializedName("creationDate")
     public long creationTime;
 
     transient public ITStateParams params;
