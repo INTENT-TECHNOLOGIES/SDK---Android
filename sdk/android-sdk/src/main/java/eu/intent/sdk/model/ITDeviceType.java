@@ -132,8 +132,10 @@ public class ITDeviceType implements Parcelable {
             }.getType());
             if (jsonObject.has("vendor")) {
                 JsonObject vendor = jsonObject.getAsJsonObject("vendor");
-                deviceType.number = vendor.get("productNumber").isJsonNull() ? "" : vendor.get("productNumber").getAsString();
-                deviceType.vendor = vendor.get("alias").getAsString();
+                JsonElement productNumber = vendor.get("productNumber");
+                JsonElement alias = vendor.get("alias");
+                deviceType.number = productNumber == null || productNumber.isJsonNull() ? "" : productNumber.getAsString();
+                deviceType.vendor = alias == null || alias.isJsonNull() ? "" : alias.getAsString();
                 if (vendor.has("idFormat")) {
                     deviceType.idPattern = gson.fromJson(vendor.get("idFormat"), ITDeviceId.class);
                 }
