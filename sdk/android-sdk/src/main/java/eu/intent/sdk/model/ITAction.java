@@ -112,9 +112,9 @@ public class ITAction implements Parcelable {
         public List<Repeater> repeaters = new ArrayList<>();
 
         /**
-         * Device output -> activity
+         * Device output -> activity. Activity can be null.
          */
-        public transient Map<String, String> deviceBindings = new ConcurrentHashMap<>();
+        public transient Map<String, String> deviceBindings = new HashMap<>();
         /**
          * Device output -> settings (key/value)
          */
@@ -260,7 +260,10 @@ public class ITAction implements Parcelable {
                 }
             };
 
-            public Map<String, Double> entries = new ConcurrentHashMap<>();
+            /**
+             * Key -> Value. Value can be null.
+             */
+            public Map<String, Double> entries = new HashMap<>();
 
             public Settings() {
                 // Needed by Retrofit

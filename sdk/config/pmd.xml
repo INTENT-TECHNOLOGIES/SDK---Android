@@ -57,6 +57,8 @@
         <exclude name="NullAssignment" />
         <exclude name="OnlyOneReturn" />
         <exclude name="DefaultPackage" />
+        <!-- ConcurrentHashMap does not allow null values, sometimes we need it -->
+        <exclude name="UseConcurrentHashMap" />
         <!-- We need to pass a lot of parameters to the API with Retrofit -->
         <exclude name="UseObjectForClearerAPI" />
     </rule>
