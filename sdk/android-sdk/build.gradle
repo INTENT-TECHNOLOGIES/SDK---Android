@@ -36,6 +36,8 @@ android {
     }
     lintOptions {
         abortOnError true
+        // We try to use the latest API and dependencies, but allow to build with older versions
+        disable 'GradleDependency','OldTargetApi'
         // Retrofit needs packages that are not declared
         disable 'InvalidPackage'
         // Model classes have a 'custom' Bundle property, where the developer can store whatever he wants
