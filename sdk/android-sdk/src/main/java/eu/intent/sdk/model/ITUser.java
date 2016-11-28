@@ -36,6 +36,8 @@ public class ITUser implements Parcelable {
 
     public String domain;
     public String email;
+    @SerializedName("entityFile")
+    public String entityIconUrl;
     @SerializedName("firstname")
     public String firstName;
     public String id;
@@ -61,6 +63,7 @@ public class ITUser implements Parcelable {
     protected ITUser(Parcel in) {
         domain = in.readString();
         email = in.readString();
+        entityIconUrl = in.readString();
         firstName = in.readString();
         id = in.readString();
         lastName = in.readString();
@@ -120,6 +123,7 @@ public class ITUser implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(domain);
         dest.writeString(email);
+        dest.writeString(entityIconUrl);
         dest.writeString(firstName);
         dest.writeString(id);
         dest.writeString(lastName);
