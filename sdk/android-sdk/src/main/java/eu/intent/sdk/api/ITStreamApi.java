@@ -5,9 +5,12 @@ import android.content.Context;
 import java.util.List;
 
 import eu.intent.sdk.api.internal.ProxyCallback;
+import eu.intent.sdk.model.ITAssetType;
 import eu.intent.sdk.model.ITStream;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -90,6 +93,15 @@ public class ITStreamApi {
         mService.getBySite(siteRef, false, activities).enqueue(new ProxyCallback<>(callback));
     }
 
+    /**
+     * Retrieves the streams matching the given criteria.
+     *
+     * @param criteria the search criteria
+     */
+    public void search(SearchCriteria criteria, ITApiCallback<List<ITStream>> callback) {
+        mService.search(criteria).enqueue(new ProxyCallback<>(callback));
+    }
+
     private interface Service {
         @GET("datahub/v1/streams/{streamId}")
         Call<ITStream> get(@Path("streamId") String streamId);
@@ -102,5 +114,20 @@ public class ITStreamApi {
 
         @GET("datahub/v1/sites/{externalRef}/streams")
         Call<List<String>> getBySite(@Path("externalRef") String siteIdOrRef, @Query("byId") boolean useIdInsteadOfRef, @Query("activityKey") String... activities);
+
+        @POST("v2/streams/search")
+        Call<List<ITStream>> search(@Body SearchCriteria criteria);
+    }
+
+    public static class SearchCriteria {
+        public String assetId;
+        public String assetType;
+        public String[] assetTags;
+
+        public SearchCriteria(ITAssetType assetType, String assetId, String... assetTags) {
+            this.assetType = assetType.toString();
+            this.assetId = assetId;
+            this.assetTags = assetTags;
+        }
     }
 }

@@ -10,14 +10,27 @@ import java.util.Locale;
 public enum ITAssetType {
     EQUIPMENT, PART, SITE, UNKNOWN;
 
+    private static final String EQUIPMENT_LABEL = "equip";
+
     public static ITAssetType fromString(String name) {
         try {
             return ITAssetType.valueOf(name.toUpperCase(Locale.US));
         } catch (IllegalArgumentException e) {
-            if (TextUtils.equals(name, "equip")) {
+            if (TextUtils.equals(name, EQUIPMENT_LABEL)) {
                 return EQUIPMENT;
             }
             return UNKNOWN;
         }
+    }
+
+    @Override
+    public String toString() {
+        String s;
+        if (this == EQUIPMENT) {
+            s = EQUIPMENT_LABEL;
+        } else {
+            s = name().toLowerCase();
+        }
+        return s;
     }
 }
