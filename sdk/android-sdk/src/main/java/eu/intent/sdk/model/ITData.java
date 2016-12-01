@@ -14,6 +14,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Locale;
 
+import eu.intent.sdk.util.ITParcelableUtils;
+
 /**
  * This class represents a piece of data, at a given date, with a given value. In a few cases there may be a valueMin and valueMax instead of value.
  */
@@ -36,6 +38,30 @@ public class ITData implements Parcelable {
     transient public double valueMin = Double.NaN;
     transient public double valueMax = Double.NaN;
 
+    // If I am a ticket
+    @SerializedName("callDate")
+    public long ticketCallDate;
+    @SerializedName("category")
+    public String ticketCategory;
+    @SerializedName("code")
+    public String ticketCode;
+    @SerializedName("comment")
+    public String ticketComment;
+    @SerializedName("customerBasedDate")
+    public boolean ticketCustomerBasedDate;
+    @SerializedName("endDate")
+    public long ticketEndDate;
+    @SerializedName("nature")
+    public String ticketNature;
+    @SerializedName("plannedDate")
+    public long ticketPlannedDate;
+    @SerializedName("startDate")
+    public long ticketStartDate;
+    @SerializedName("state")
+    public String ticketStatus;
+    @SerializedName("technicianName")
+    public String ticketTechnicianName;
+
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
      * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
@@ -48,9 +74,22 @@ public class ITData implements Parcelable {
 
     protected ITData(Parcel in) {
         timestamp = in.readLong();
-        value = in.readDouble();
         int tmpTrustLevel = in.readInt();
         trustLevel = tmpTrustLevel == -1 ? null : TrustLevel.values()[tmpTrustLevel];
+        value = in.readDouble();
+        valueMin = in.readDouble();
+        valueMax = in.readDouble();
+        ticketCallDate = in.readLong();
+        ticketCategory = in.readString();
+        ticketCode = in.readString();
+        ticketComment = in.readString();
+        ticketCustomerBasedDate = ITParcelableUtils.readBoolean(in);
+        ticketEndDate = in.readLong();
+        ticketNature = in.readString();
+        ticketPlannedDate = in.readLong();
+        ticketStartDate = in.readLong();
+        ticketStatus = in.readString();
+        ticketTechnicianName = in.readString();
         custom = in.readBundle();
     }
 
@@ -62,8 +101,21 @@ public class ITData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(timestamp);
-        dest.writeDouble(value);
         dest.writeInt(trustLevel == null ? -1 : trustLevel.ordinal());
+        dest.writeDouble(value);
+        dest.writeDouble(valueMin);
+        dest.writeDouble(valueMax);
+        dest.writeLong(ticketCallDate);
+        dest.writeString(ticketCategory);
+        dest.writeString(ticketCode);
+        dest.writeString(ticketComment);
+        ITParcelableUtils.writeBoolean(dest, ticketCustomerBasedDate);
+        dest.writeLong(ticketEndDate);
+        dest.writeString(ticketNature);
+        dest.writeLong(ticketPlannedDate);
+        dest.writeLong(ticketStartDate);
+        dest.writeString(ticketStatus);
+        dest.writeString(ticketTechnicianName);
         dest.writeBundle(custom);
     }
 
@@ -75,22 +127,27 @@ public class ITData implements Parcelable {
         /**
          * Relative to something that is not normal
          */
+        @SerializedName("alert")
         ALERT,
         /**
          * The average of several values on a period of time
          */
+        @SerializedName("average")
         AVERAGE,
         /**
          * The difference between two values on a period of time
          */
+        @SerializedName("delta")
         DELTA,
         /**
          * A snapshot of the data at a given time
          */
+        @SerializedName("snapshot")
         SNAPSHOT,
         /**
          * A technical intervention
          */
+        @SerializedName("ticket")
         TICKET,
         UNKNOWN;
 
@@ -116,13 +173,15 @@ public class ITData implements Parcelable {
             Gson gson = new Gson();
             ITData data = gson.fromJson(json, typeOfT);
             JsonObject jsonObject = json.getAsJsonObject();
-            JsonElement jsonValue = jsonObject.get("value");
-            if (jsonValue.isJsonObject()) {
-                JsonObject value = jsonObject.getAsJsonObject("value");
-                data.valueMin = value.get("min").getAsDouble();
-                data.valueMax = value.get("max").getAsDouble();
-            } else if (jsonValue.isJsonPrimitive()) {
-                data.value = jsonValue.getAsDouble();
+            if (jsonObject.has("value")) {
+                JsonElement jsonValue = jsonObject.get("value");
+                if (jsonValue.isJsonObject()) {
+                    JsonObject value = jsonObject.getAsJsonObject("value");
+                    data.valueMin = value.get("min").getAsDouble();
+                    data.valueMax = value.get("max").getAsDouble();
+                } else if (jsonValue.isJsonPrimitive()) {
+                    data.value = jsonValue.getAsDouble();
+                }
             }
             return data;
         }
