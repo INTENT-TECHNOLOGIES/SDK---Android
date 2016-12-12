@@ -26,6 +26,7 @@ public class ITDataTest {
         }.getType();
         List<ITDataResult> dataResults = ITRetrofitUtils.getGson().fromJson(json, listType);
         assertEquals(1, dataResults.size());
+        assertEquals(ITData.Type.SNAPSHOT, dataResults.get(0).type);
         assertEquals(3, dataResults.get(0).data.size());
         assertEquals(1458061814574L, dataResults.get(0).data.get(0).timestamp);
         assertEquals(1458661878227L, dataResults.get(0).data.get(1).timestamp);
@@ -42,5 +43,28 @@ public class ITDataTest {
         assertEquals(ITData.TrustLevel.TRUSTED_MANUAL, dataResults.get(0).data.get(0).trustLevel);
         assertEquals(ITData.TrustLevel.TRUSTED_MANUAL, dataResults.get(0).data.get(1).trustLevel);
         assertEquals(ITData.TrustLevel.TRUSTED_SENSOR, dataResults.get(0).data.get(2).trustLevel);
+    }
+
+    @Test
+    public void jsonToTicketDataResultList() {
+        String json = TestUtils.readRawFile(InstrumentationRegistry.getContext(), eu.intent.sdktests.test.R.raw.ticket_data_results);
+        Type listType = new TypeToken<List<ITDataResult>>() {
+        }.getType();
+        List<ITDataResult> dataResults = ITRetrofitUtils.getGson().fromJson(json, listType);
+        assertEquals(2, dataResults.size());
+        assertEquals(ITData.Type.TICKET, dataResults.get(0).type);
+        assertEquals(ITData.Type.TICKET, dataResults.get(1).type);
+        assertEquals(14, dataResults.get(0).data.size());
+        assertEquals("Electricity", dataResults.get(0).data.get(0).ticketCategory);
+        assertEquals("07527471", dataResults.get(0).data.get(0).ticketCode);
+        assertEquals("contrôle cellule hs prévoir retour pour remplacement réf flash 04504", dataResults.get(0).data.get(0).ticketComment);
+        assertEquals("Operation", dataResults.get(0).data.get(0).ticketNature);
+        assertEquals("TemporaryRepair", dataResults.get(0).data.get(0).ticketStatus);
+        assertEquals("Nathan", dataResults.get(0).data.get(0).ticketTechnicianName);
+        assertEquals(1479894000000L, dataResults.get(0).data.get(0).ticketCallDate);
+        assertEquals(1480078200000L, dataResults.get(0).data.get(0).ticketStartDate);
+        assertEquals(1480078800000L, dataResults.get(0).data.get(0).ticketEndDate);
+        assertEquals(1480078800000L, dataResults.get(0).data.get(0).ticketPlannedDate);
+        assertEquals(true, dataResults.get(0).data.get(0).ticketCustomerBasedDate);
     }
 }
