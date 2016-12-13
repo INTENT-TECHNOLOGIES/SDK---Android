@@ -406,6 +406,24 @@
     },
     "mustBeActivated": false,
     "mustBeConnected": false,
-    "fullLabel": "nkesigfox_airflowsensor"
+    "fullLabel": "nkesigfox_airflowsensor",
+    "scanTags": [
+      {
+        "type": "nfc"
+      },
+      {
+        "type": "qrcode",
+        "decoder": {
+          "type": "url",
+          "data": "http://fakeapi.org/qrcode/{content}"
+        }
+      },
+      {
+        "type": "unknown",
+        "decoder": {
+          "type": "unknown"
+        }
+      }
+    ]
   }
 ]
