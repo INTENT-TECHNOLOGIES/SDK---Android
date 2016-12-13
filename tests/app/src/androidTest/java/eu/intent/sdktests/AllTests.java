@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
         ITContactTest.class,
         ITConversationTest.class,
         ITDataTest.class,
-        ITDeviceTest.class,
+        ITDeviceTypeTest.class,
         ITEquipmentTest.class,
         ITGreenGestureTest.class,
         ITLocationTest.class,
