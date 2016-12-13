@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
         ITDataTest.class,
         ITDeviceTypeTest.class,
         ITEquipmentTest.class,
+        ITGenericApiTest.class,
         ITGreenGestureTest.class,
         ITLocationTest.class,
         ITMessageTest.class,
