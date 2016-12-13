@@ -3,6 +3,8 @@ package eu.intent.sdk.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -42,6 +44,7 @@ public class ITDeviceType implements Parcelable {
     @SerializedName("label")
     public String name;
     public List<ITDeviceOutput> outputs = new ArrayList<>();
+    public List<ScanTag> scanTags = new ArrayList<>();
     @SerializedName("plugged")
     public boolean wired;
 
@@ -65,6 +68,7 @@ public class ITDeviceType implements Parcelable {
         fullName = in.readString();
         name = in.readString();
         outputs = in.createTypedArrayList(ITDeviceOutput.CREATOR);
+        scanTags = in.createTypedArrayList(ScanTag.CREATOR);
         wired = in.readByte() > 0;
         idPattern = in.readParcelable(ITDeviceId.class.getClassLoader());
         Bundle labelsBundle = in.readBundle();
@@ -98,6 +102,31 @@ public class ITDeviceType implements Parcelable {
         }
     }
 
+    /**
+     * @return a ScanTag of the given type if this device type is equipped, null otherwise.
+     * If there are several ScanTags matching the given type, one of them is returned randomly.
+     */
+    @Nullable
+    public ScanTag getScanTag(String tagType) {
+        ScanTag result = null;
+        if (scanTags != null) {
+            for (ScanTag scanTag : scanTags) {
+                if (TextUtils.equals(scanTag.type, tagType)) {
+                    result = scanTag;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @return true if this device type is equipped with the given tag type, false otherwise
+     */
+    public boolean hasScanTag(String tagType) {
+        return getScanTag(tagType) != null;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -109,6 +138,7 @@ public class ITDeviceType implements Parcelable {
         dest.writeString(fullName);
         dest.writeString(name);
         dest.writeTypedList(outputs);
+        dest.writeTypedList(scanTags);
         dest.writeByte((byte) (wired ? 1 : 0));
         dest.writeParcelable(idPattern, flags);
         Bundle labelsBundle = new Bundle();
@@ -141,6 +171,128 @@ public class ITDeviceType implements Parcelable {
                 }
             }
             return deviceType;
+        }
+    }
+
+    /**
+     * A device can be equipped with NFC, QRcode, barcode,...
+     */
+    public static class ScanTag implements Parcelable {
+        /**
+         * The tag is a QRcode.
+         */
+        public static final String TYPE_QRCODE = "qrcode";
+        /**
+         * The tag is NFC.
+         */
+        public static final String TYPE_NFC = "nfc";
+
+        public static final Creator<ScanTag> CREATOR = new Creator<ScanTag>() {
+            @Override
+            public ScanTag createFromParcel(Parcel source) {
+                return new ScanTag(source);
+            }
+
+            @Override
+            public ScanTag[] newArray(int size) {
+                return new ScanTag[size];
+            }
+        };
+
+        @Nullable
+        public Decoder decoder;
+        @Nullable
+        public String type;
+
+        public ScanTag() {
+            // Needed by Retrofit
+        }
+
+        protected ScanTag(Parcel in) {
+            decoder = in.readParcelable(Decoder.class.getClassLoader());
+            type = in.readString();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeParcelable(decoder, flags);
+            dest.writeString(type);
+        }
+
+        /**
+         * The method used to decode a tag. If no type is provided, the tag contains the value to use.
+         * The data property contains any additional information that can be util to decode the tag.
+         */
+        public static class Decoder implements Parcelable {
+            /**
+             * The value is encoded with a custom algorithm.
+             * Call getDecodeUrl() to get the complete URL to decode the tag content.
+             */
+            public static final String TYPE_URL = "url";
+
+            public static final Creator<Decoder> CREATOR = new Creator<Decoder>() {
+                @Override
+                public Decoder createFromParcel(Parcel source) {
+                    return new Decoder(source);
+                }
+
+                @Override
+                public Decoder[] newArray(int size) {
+                    return new Decoder[size];
+                }
+            };
+
+            private static final String URL_TAG_CONTENT_PLACEHOLDER = "{content}";
+
+            @Nullable
+            public String data;
+            @Nullable
+            public String type;
+
+            public Decoder() {
+                // Needed by Retrofit
+            }
+
+            protected Decoder(Parcel in) {
+                data = in.readString();
+                type = in.readString();
+            }
+
+            /**
+             * Appends the given tag content to the decoder URL, only if the decoder type is TYPE_URL.
+             * Otherwise return an empty string.
+             *
+             * @param tagContent the raw content of the tag
+             * @return the full URL to call to decode the tag
+             */
+            @NonNull
+            public String getDecodeUrl(String tagContent) {
+                String url = "";
+                if (TextUtils.equals(type, TYPE_URL) && !TextUtils.isEmpty(data)) {
+                    if (TextUtils.isEmpty(tagContent)) {
+                        url = data;
+                    } else {
+                        url = data.replace(URL_TAG_CONTENT_PLACEHOLDER, tagContent);
+                    }
+                }
+                return url;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(data);
+                dest.writeString(type);
+            }
         }
     }
 }
