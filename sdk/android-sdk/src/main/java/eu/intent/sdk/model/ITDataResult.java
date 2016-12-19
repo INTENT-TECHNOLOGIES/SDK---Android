@@ -87,6 +87,9 @@ public class ITDataResult implements Parcelable {
             result.fromDomain = headers.get("fromDomain").getAsString();
             result.issuerDomain = headers.get("issuerDomain").getAsString();
             result.sponsor = headers.get("sponsor").getAsString();
+            if (result.type == null) {
+                result.type = ITData.Type.UNKNOWN;
+            }
             return result;
         }
     }
