@@ -26,6 +26,7 @@ public class ITDataTest {
         }.getType();
         List<ITDataResult> dataResults = ITRetrofitUtils.getGson().fromJson(json, listType);
         assertEquals(1, dataResults.size());
+        assertEquals(ITData.Type.SNAPSHOT, dataResults.get(0).type);
         assertEquals(3, dataResults.get(0).data.size());
         assertEquals(1458061814574L, dataResults.get(0).data.get(0).timestamp);
         assertEquals(1458661878227L, dataResults.get(0).data.get(1).timestamp);
