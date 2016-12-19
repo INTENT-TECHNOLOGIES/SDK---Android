@@ -48,9 +48,11 @@ public class ITData implements Parcelable {
 
     protected ITData(Parcel in) {
         timestamp = in.readLong();
-        value = in.readDouble();
         int tmpTrustLevel = in.readInt();
         trustLevel = tmpTrustLevel == -1 ? null : TrustLevel.values()[tmpTrustLevel];
+        value = in.readDouble();
+        valueMin = in.readDouble();
+        valueMax = in.readDouble();
         custom = in.readBundle();
     }
 
@@ -62,8 +64,10 @@ public class ITData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(timestamp);
-        dest.writeDouble(value);
         dest.writeInt(trustLevel == null ? -1 : trustLevel.ordinal());
+        dest.writeDouble(value);
+        dest.writeDouble(valueMin);
+        dest.writeDouble(valueMax);
         dest.writeBundle(custom);
     }
 
@@ -75,22 +79,27 @@ public class ITData implements Parcelable {
         /**
          * Relative to something that is not normal
          */
+        @SerializedName("alert")
         ALERT,
         /**
          * The average of several values on a period of time
          */
+        @SerializedName("average")
         AVERAGE,
         /**
          * The difference between two values on a period of time
          */
+        @SerializedName("delta")
         DELTA,
         /**
          * A snapshot of the data at a given time
          */
+        @SerializedName("snapshot")
         SNAPSHOT,
         /**
          * A technical intervention
          */
+        @SerializedName("ticket")
         TICKET,
         UNKNOWN;
 
@@ -116,13 +125,15 @@ public class ITData implements Parcelable {
             Gson gson = new Gson();
             ITData data = gson.fromJson(json, typeOfT);
             JsonObject jsonObject = json.getAsJsonObject();
-            JsonElement jsonValue = jsonObject.get("value");
-            if (jsonValue.isJsonObject()) {
-                JsonObject value = jsonObject.getAsJsonObject("value");
-                data.valueMin = value.get("min").getAsDouble();
-                data.valueMax = value.get("max").getAsDouble();
-            } else if (jsonValue.isJsonPrimitive()) {
-                data.value = jsonValue.getAsDouble();
+            if (jsonObject.has("value")) {
+                JsonElement jsonValue = jsonObject.get("value");
+                if (jsonValue.isJsonObject()) {
+                    JsonObject value = jsonObject.getAsJsonObject("value");
+                    data.valueMin = value.get("min").getAsDouble();
+                    data.valueMax = value.get("max").getAsDouble();
+                } else if (jsonValue.isJsonPrimitive()) {
+                    data.value = jsonValue.getAsDouble();
+                }
             }
             return data;
         }
