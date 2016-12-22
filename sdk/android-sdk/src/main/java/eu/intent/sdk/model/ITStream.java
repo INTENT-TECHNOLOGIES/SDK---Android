@@ -15,8 +15,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A stream is the combination of an activity and a part or a site.
@@ -39,7 +39,7 @@ public class ITStream implements Parcelable {
     public ITData lastValue;
     public String owner;
 
-    transient public Map<String, String> tags = new ConcurrentHashMap<>();
+    transient public Map<String, String> tags = new HashMap<>();
 
     /**
      * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
