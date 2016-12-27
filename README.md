@@ -12,7 +12,7 @@ Add the SDK to the dependencies of your Gradle module:
 
 ```
 dependencies {
-    compile 'eu.intent:android-sdk:1.2'
+    compile 'eu.intent:android-sdk:1.2.1'
 }
 ```
 
