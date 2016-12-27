@@ -50,7 +50,6 @@ public final class Oauth {
     private static Oauth sInstance;
 
     private ITApp mApp;
-    private Context mContext;
     private Service mService;
 
     // We need to call one refresh token request at a time, because a refresh token gets deprecated as soon as we generate a new one.
@@ -58,7 +57,6 @@ public final class Oauth {
 
     private Oauth(Context context) {
         mApp = ITApp.getInstance(context);
-        mContext = context;
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
         // TODO: Remove logs before releasing
@@ -189,7 +187,7 @@ public final class Oauth {
      * Returns true if there is a currently valid (not expired) access token stored from requestToken().
      */
     public boolean hasValidAccessToken() {
-        SharedPreferences prefs = mContext.getSharedPreferences(PREF_FILE_NAME, 0);
+        SharedPreferences prefs = mApp.getSharedPreferences(PREF_FILE_NAME, 0);
         String token = prefs.getString(PREF_ACCESS_TOKEN, "");
         long expiry = prefs.getLong(PREF_ACCESS_TOKEN_EXPIRY, 0);
         return !TextUtils.isEmpty(token) && expiry > System.currentTimeMillis();
@@ -199,14 +197,14 @@ public final class Oauth {
      * Returns the last access token, or an empty string if no access token was found. Please note that the returned token may have expired.
      */
     public String getAccessToken() {
-        return mContext.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_ACCESS_TOKEN, "");
+        return mApp.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_ACCESS_TOKEN, "");
     }
 
     /**
      * Returns the last refresh token, or an empty string if no refresh token was found. Please note that the returned token may have expired.
      */
     public String getRefreshToken() {
-        return mContext.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_REFRESH_TOKEN, "");
+        return mApp.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_REFRESH_TOKEN, "");
     }
 
     private void saveToken(String accessToken, String refreshToken, long expiresIn) {
@@ -221,7 +219,7 @@ public final class Oauth {
             Log.d(getClass().getCanonicalName(), "Saved refresh token");
         }
         long expiry = System.currentTimeMillis() + (expiresIn - 60) * 1000;   // Remove 1 minute to be sure
-        mContext.getSharedPreferences(PREF_FILE_NAME, 0).edit()
+        mApp.getSharedPreferences(PREF_FILE_NAME, 0).edit()
                 .putString(PREF_ACCESS_TOKEN, accessToken)
                 .putString(PREF_REFRESH_TOKEN, refreshToken)
                 .putLong(PREF_ACCESS_TOKEN_EXPIRY, expiry)
