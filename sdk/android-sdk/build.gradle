@@ -10,7 +10,7 @@ ext {
 
     libraryName = "Intent Android SDK"
     libraryDescription = "An SDK to use the Intent API in your Android apps."
-    libraryVersion = "1.2"
+    libraryVersion = "1.2.1"
 
     developerId = "Intent Technologies"
     developerName = "Intent Technologies"
