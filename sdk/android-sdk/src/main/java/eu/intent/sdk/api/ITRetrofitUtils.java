@@ -41,6 +41,8 @@ import eu.intent.sdk.model.ITStream;
 import eu.intent.sdk.model.ITTag;
 import eu.intent.sdk.model.ITTagList;
 import eu.intent.sdk.model.ITTask;
+import eu.intent.sdk.model.ITTicket;
+import eu.intent.sdk.model.ITTicketLog;
 import eu.intent.sdk.model.ITUser;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -205,6 +207,8 @@ public final class ITRetrofitUtils {
                         .registerTypeAdapter(ITTag.class, new ITTag.Deserializer())
                         .registerTypeAdapter(ITTagList.class, new ITTagList.Deserializer())
                         .registerTypeAdapter(ITTask.class, new ITTask.Deserializer())
+                        .registerTypeAdapter(ITTicket.class, new ITTicket.Deserializer())
+                        .registerTypeAdapter(ITTicketLog.class, new ITTicketLog.Deserializer())
                         .registerTypeAdapter(ITUser.class, new ITUser.Deserializer());
                 // Register any custom type adapter
                 if (sCustomTypeAdapters != null) {
