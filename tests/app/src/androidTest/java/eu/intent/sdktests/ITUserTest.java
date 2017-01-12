@@ -81,4 +81,21 @@ public class ITUserTest {
         user.domain = "test.homes.intent";
         assertEquals(true, user.isHomeAccount());
     }
+
+    @Test
+    public void testGetParentDomain() {
+        ITUser user = new ITUser();
+        user.domain = null;
+        assertEquals(null, user.getParentDomain());
+        user.domain = "";
+        assertEquals("", user.getParentDomain());
+        user.domain = "abc.intent";
+        assertEquals("abc.intent", user.getParentDomain());
+        user.domain = "123.homes.abc.intent";
+        assertEquals("abc.intent", user.getParentDomain());
+        user.domain = ".homes.abc.intent";
+        assertEquals("abc.intent", user.getParentDomain());
+        user.domain = "123.homes.";
+        assertEquals("123.homes.", user.getParentDomain());
+    }
 }
