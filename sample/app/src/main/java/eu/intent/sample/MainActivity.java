@@ -2,6 +2,7 @@ package eu.intent.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import eu.intent.sdk.api.ITApiCallback;
+import eu.intent.sdk.api.ITPartApi;
+import eu.intent.sdk.api.ITUserApi;
 import eu.intent.sdk.auth.ITAuthClient;
 import eu.intent.sdk.model.ITPart;
 import eu.intent.sdk.model.ITUser;
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int httpCode, String message) {
+            public void onFailure(int httpCode, @NonNull String message, @NonNull String errorBody) {
                 // D'oh! :(
             }
         });
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int httpCode, String message) {
+            public void onFailure(int httpCode, @NonNull String message, @NonNull String errorBody) {
                 // D'oh! :(
             }
         });
