@@ -3,6 +3,7 @@ package eu.intent.sdk.model;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -112,6 +113,25 @@ public class ITUser implements Parcelable {
      */
     public boolean isHomeAccount() {
         return domain != null && domain.contains(".homes.");
+    }
+
+    /**
+     * Returns the parent domain if this is a "home" account, otherwise returns this.domain (may be null)
+     */
+    @Nullable
+    public String getParentDomain() {
+        String parentDomain;
+        if (isHomeAccount() && !TextUtils.isEmpty(domain)) {
+            String[] domainParts = domain.split(".homes.");
+            if (domainParts.length == 2) {
+                parentDomain = domainParts[1];
+            } else {
+                parentDomain = domain;
+            }
+        } else {
+            parentDomain = domain;
+        }
+        return parentDomain;
     }
 
     @Override
