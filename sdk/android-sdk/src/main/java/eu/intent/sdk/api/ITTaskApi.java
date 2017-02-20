@@ -173,7 +173,7 @@ public class ITTaskApi {
                             ITAction.Payload.Settings settings = entry.getValue();
                             // Replace any NaN value by null (NaN is not supported by JsonWriter)
                             for (Map.Entry<String, Double> setting : settings.entries.entrySet()) {
-                                if (Double.isNaN(setting.getValue())) {
+                                if (setting.getValue() == null || Double.isNaN(setting.getValue())) {
                                     settings.entries.put(setting.getKey(), null);
                                 }
                             }
