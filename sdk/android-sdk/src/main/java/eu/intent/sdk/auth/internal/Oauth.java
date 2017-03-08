@@ -18,6 +18,7 @@ import eu.intent.sdk.ITApp;
 import eu.intent.sdk.api.internal.RetrofitGzipInterceptor;
 import eu.intent.sdk.api.internal.RetrofitHeadersInterceptor;
 import eu.intent.sdk.model.ITUser;
+import eu.intent.sdk.util.ITConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -49,21 +50,24 @@ public final class Oauth {
 
     private static Oauth sInstance;
 
-    private ITApp mApp;
+    private SharedPreferences mPrefs;
+    private ITConfig mConfig;
     private Service mService;
 
     // We need to call one refresh token request at a time, because a refresh token gets deprecated as soon as we generate a new one.
     private Semaphore mRefreshTokenSemaphore;
 
     private Oauth(Context context) {
-        mApp = ITApp.getInstance(context);
+        ITApp app = ITApp.getInstance(context);
+        mPrefs = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        mConfig = app == null ? new ITConfig(context, 0) : app.getConfig();
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
         clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
         // TODO: Remove logs before releasing
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
-        clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context));
+        clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(this));
         Gson gson = new GsonBuilder().registerTypeAdapter(ITUser.class, new ITUser.Deserializer()).create();
         mService = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(getBaseUrl()).client(clientBuilder.build()).build().create(Service.class);
         mRefreshTokenSemaphore = new Semaphore(1, true);
@@ -187,9 +191,8 @@ public final class Oauth {
      * Returns true if there is a currently valid (not expired) access token stored from requestToken().
      */
     public boolean hasValidAccessToken() {
-        SharedPreferences prefs = mApp.getSharedPreferences(PREF_FILE_NAME, 0);
-        String token = prefs.getString(PREF_ACCESS_TOKEN, "");
-        long expiry = prefs.getLong(PREF_ACCESS_TOKEN_EXPIRY, 0);
+        String token = mPrefs.getString(PREF_ACCESS_TOKEN, "");
+        long expiry = mPrefs.getLong(PREF_ACCESS_TOKEN_EXPIRY, 0);
         return !TextUtils.isEmpty(token) && expiry > System.currentTimeMillis();
     }
 
@@ -197,14 +200,14 @@ public final class Oauth {
      * Returns the last access token, or an empty string if no access token was found. Please note that the returned token may have expired.
      */
     public String getAccessToken() {
-        return mApp.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_ACCESS_TOKEN, "");
+        return mPrefs.getString(PREF_ACCESS_TOKEN, "");
     }
 
     /**
      * Returns the last refresh token, or an empty string if no refresh token was found. Please note that the returned token may have expired.
      */
     public String getRefreshToken() {
-        return mApp.getSharedPreferences(PREF_FILE_NAME, 0).getString(PREF_REFRESH_TOKEN, "");
+        return mPrefs.getString(PREF_REFRESH_TOKEN, "");
     }
 
     private void saveToken(String accessToken, String refreshToken, long expiresIn) {
@@ -219,7 +222,7 @@ public final class Oauth {
             Log.d(getClass().getCanonicalName(), "Saved refresh token");
         }
         long expiry = System.currentTimeMillis() + (expiresIn - 60) * 1000;   // Remove 1 minute to be sure
-        mApp.getSharedPreferences(PREF_FILE_NAME, 0).edit()
+        mPrefs.edit()
                 .putString(PREF_ACCESS_TOKEN, accessToken)
                 .putString(PREF_REFRESH_TOKEN, refreshToken)
                 .putLong(PREF_ACCESS_TOKEN_EXPIRY, expiry)
@@ -230,10 +233,7 @@ public final class Oauth {
      * Returns the default base URL. The base URL can be forced to a value stored in the configuration file.
      */
     public String getBaseUrl() {
-        String baseUrl = null;
-        if (mApp != null) {
-            baseUrl = mApp.getConfig().getString(CONFIG_BASE_URL);
-        }
+        String baseUrl = mConfig.getString(CONFIG_BASE_URL);
         if (TextUtils.isEmpty(baseUrl)) {
             baseUrl = DEFAULT_BASE_URL;
         }
@@ -244,10 +244,7 @@ public final class Oauth {
      * Returns the redirect URL for code grant type. The redirect URL can be forced to a value stored in the configuration file.
      */
     public String getRedirectUrl() {
-        String redirectUrl = null;
-        if (mApp != null) {
-            redirectUrl = mApp.getConfig().getString(CONFIG_REDIRECT_URL);
-        }
+        String redirectUrl = mConfig.getString(CONFIG_REDIRECT_URL);
         if (TextUtils.isEmpty(redirectUrl)) {
             redirectUrl = DEFAULT_REDIRECT_URL;
         }
@@ -258,14 +255,14 @@ public final class Oauth {
      * Retrieves the client ID from the configuration file.
      */
     public String getClientId() {
-        return mApp.getConfig().getString(CONFIG_CLIENT_ID);
+        return mConfig.getString(CONFIG_CLIENT_ID);
     }
 
     /**
      * Retrieves the client secret from the configuration file.
      */
     private String getClientSecret() {
-        return mApp.getConfig().getString(CONFIG_CLIENT_SECRET);
+        return mConfig.getString(CONFIG_CLIENT_SECRET);
     }
 
     /**

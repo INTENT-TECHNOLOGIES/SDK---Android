@@ -21,6 +21,7 @@ import eu.intent.sdk.api.internal.RetrofitAuthenticator;
 import eu.intent.sdk.api.internal.RetrofitCacheInterceptor;
 import eu.intent.sdk.api.internal.RetrofitGzipInterceptor;
 import eu.intent.sdk.api.internal.RetrofitHeadersInterceptor;
+import eu.intent.sdk.auth.internal.Oauth;
 import eu.intent.sdk.model.ITAction;
 import eu.intent.sdk.model.ITActivity;
 import eu.intent.sdk.model.ITClassifiedAd;
@@ -71,6 +72,7 @@ public final class ITRetrofitUtils {
     public static Retrofit getRetrofitInstance(Context context) {
         synchronized (ITRetrofitUtils.class) {
             if (sRetrofit == null) {
+                Oauth oauth = Oauth.getInstance(context);
                 OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
                 clientBuilder.addInterceptor(new RetrofitCacheInterceptor(context));
                 clientBuilder.addInterceptor(new RetrofitGzipInterceptor());
@@ -83,13 +85,13 @@ public final class ITRetrofitUtils {
                         clientBuilder.addInterceptor(interceptor);
                     }
                 }
-                clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context));
+                clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(oauth));
                 if (sCustomNetworkInterceptors != null) {
                     for (Interceptor interceptor : sCustomNetworkInterceptors) {
                         clientBuilder.addNetworkInterceptor(interceptor);
                     }
                 }
-                clientBuilder.authenticator(new RetrofitAuthenticator(context));
+                clientBuilder.authenticator(new RetrofitAuthenticator(context, oauth));
                 clientBuilder.cache(new Cache(context.getCacheDir(), 1024 * 1024 * 10));
                 clientBuilder.connectTimeout(5, TimeUnit.SECONDS);
                 clientBuilder.readTimeout(10, TimeUnit.SECONDS);
