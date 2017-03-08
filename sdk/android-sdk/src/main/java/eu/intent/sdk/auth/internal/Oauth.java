@@ -67,7 +67,7 @@ public final class Oauth {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
-        clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(this));
+        clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context, this));
         Gson gson = new GsonBuilder().registerTypeAdapter(ITUser.class, new ITUser.Deserializer()).create();
         mService = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(getBaseUrl()).client(clientBuilder.build()).build().create(Service.class);
         mRefreshTokenSemaphore = new Semaphore(1, true);

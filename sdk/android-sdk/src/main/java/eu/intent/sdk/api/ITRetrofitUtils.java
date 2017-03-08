@@ -85,7 +85,7 @@ public final class ITRetrofitUtils {
                         clientBuilder.addInterceptor(interceptor);
                     }
                 }
-                clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(oauth));
+                clientBuilder.addNetworkInterceptor(new RetrofitHeadersInterceptor(context, oauth));
                 if (sCustomNetworkInterceptors != null) {
                     for (Interceptor interceptor : sCustomNetworkInterceptors) {
                         clientBuilder.addNetworkInterceptor(interceptor);
