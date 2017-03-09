@@ -102,7 +102,7 @@ public class ITTicketApi {
                 return this;
             }
 
-            public Builder from(long timestamp) {
+            public Builder fromDate(long timestamp) {
                 mFrom = timestamp;
                 return this;
             }
@@ -117,7 +117,7 @@ public class ITTicketApi {
                 return this;
             }
 
-            public Builder to(long timestamp) {
+            public Builder toDate(long timestamp) {
                 mTo = timestamp;
                 return this;
             }
