@@ -41,14 +41,8 @@ public class ITStream implements Parcelable {
 
     transient public Map<String, String> tags = new HashMap<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITStream() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITStream(Parcel in) {
@@ -61,7 +55,6 @@ public class ITStream implements Parcelable {
         for (String tag : tagsBundle.keySet()) {
             tags.put(tag, tagsBundle.getString(tag));
         }
-        custom = in.readBundle();
     }
 
     @Override
@@ -81,7 +74,6 @@ public class ITStream implements Parcelable {
             tagsBundle.putString(tag.getKey(), tag.getValue());
         }
         dest.writeBundle(tagsBundle);
-        dest.writeBundle(custom);
     }
 
     public static class Deserializer implements JsonDeserializer<ITStream> {

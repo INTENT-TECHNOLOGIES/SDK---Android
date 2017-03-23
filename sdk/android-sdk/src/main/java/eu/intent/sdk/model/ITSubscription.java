@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -39,12 +38,6 @@ public class ITSubscription implements Parcelable {
      */
     public String[] sms;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITSubscription() {
         emails = new String[0];
         push = new PushToken[0];
@@ -57,7 +50,6 @@ public class ITSubscription implements Parcelable {
         emails = in.createStringArray();
         push = in.createTypedArray(PushToken.CREATOR);
         sms = in.createStringArray();
-        custom = in.readBundle();
     }
 
     @Override
@@ -71,7 +63,6 @@ public class ITSubscription implements Parcelable {
         dest.writeStringArray(emails);
         dest.writeTypedArray(push, flags);
         dest.writeStringArray(sms);
-        dest.writeBundle(custom);
     }
 
     public enum Category implements Parcelable {

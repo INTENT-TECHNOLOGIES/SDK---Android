@@ -66,14 +66,8 @@ public class ITState implements Parcelable {
     transient public ITStateParams params;
     transient public Map<String, String> texts = new ConcurrentHashMap<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITState() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITState(Parcel in) {
@@ -103,7 +97,6 @@ public class ITState implements Parcelable {
         validityDuration = in.readLong();
         validityExpirationDate = in.readLong();
         creationTime = in.readLong();
-        custom = in.readBundle();
     }
 
     /**
@@ -152,7 +145,6 @@ public class ITState implements Parcelable {
         dest.writeLong(validityDuration);
         dest.writeLong(validityExpirationDate);
         dest.writeLong(creationTime);
-        dest.writeBundle(custom);
     }
 
     public static class Deserializer implements JsonDeserializer<ITState> {

@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -35,14 +34,8 @@ public class ITPart implements Parcelable {
     public String siteId;
     public List<ITUser> users = new ArrayList<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITPart() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITPart(Parcel in) {
@@ -58,7 +51,6 @@ public class ITPart implements Parcelable {
         siteId = in.readString();
         users = new ArrayList<>();
         in.readList(users, ITUser.class.getClassLoader());
-        custom = in.readBundle();
     }
 
     @Override
@@ -78,7 +70,6 @@ public class ITPart implements Parcelable {
         dest.writeInt(portion == null ? -1 : portion.ordinal());
         dest.writeString(siteId);
         dest.writeList(users);
-        dest.writeBundle(custom);
     }
 
     public enum ITPortion {

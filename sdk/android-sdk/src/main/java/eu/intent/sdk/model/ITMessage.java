@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -63,14 +62,8 @@ public class ITMessage implements Parcelable {
      */
     public ITState state;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    public Bundle custom = new Bundle();
-
     public ITMessage() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITMessage(Parcel in) {
@@ -84,7 +77,6 @@ public class ITMessage implements Parcelable {
         this.lastUpdate = in.readLong();
         this.creatorName = in.readString();
         this.creatorDomain = in.readString();
-        custom = in.readBundle();
         int tmpReportingState = in.readInt();
         this.reportingState = tmpReportingState == -1 ? null : ReportingState.values()[tmpReportingState];
         this.reportingStateHistory = new ArrayList<>();
@@ -108,7 +100,6 @@ public class ITMessage implements Parcelable {
         dest.writeLong(this.lastUpdate);
         dest.writeString(this.creatorName);
         dest.writeString(this.creatorDomain);
-        dest.writeBundle(custom);
         dest.writeInt(this.reportingState == null ? -1 : this.reportingState.ordinal());
         dest.writeList(this.reportingStateHistory);
         dest.writeParcelable(this.state, flags);

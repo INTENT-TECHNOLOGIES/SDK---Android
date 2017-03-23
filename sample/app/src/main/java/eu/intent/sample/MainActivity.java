@@ -2,34 +2,37 @@ package eu.intent.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import eu.intent.sdk.api.ITAccountApi;
 import eu.intent.sdk.api.ITApiCallback;
-import eu.intent.sdk.api.ITPartApi;
-import eu.intent.sdk.api.ITUserApi;
-import eu.intent.sdk.auth.ITAuthClient;
-import eu.intent.sdk.model.ITPart;
+import eu.intent.sdk.api.ITApiError;
 import eu.intent.sdk.model.ITUser;
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextView;
-    private ITUserApi mUserApi;
-    private ITPartApi mPartApi;
+    private ITAccountApi mAccountApi;
     private ITUser mUser;
-    private ITPart mPart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTextView = (TextView) findViewById(R.id.text);
-        mUserApi = new ITUserApi(this);
-        mPartApi = new ITPartApi(this);
+
+        Retrofit retrofit = App.INSTANCE.getRetrofit();
+        mAccountApi = retrofit.create(ITAccountApi.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadMyData();
     }
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.logout) {
-            ITAuthClient.logout(this);
+            App.INSTANCE.getSessionManager().logout();
             startActivity(new Intent(this, StartupActivity.class));
             finish();
         }
@@ -50,35 +53,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMyData() {
-        mUserApi.getCurrentUser(new ITApiCallback<ITUser>() {
+        mAccountApi.me().enqueue(new ITApiCallback<ITUser>() {
             @Override
-            public void onSuccess(ITUser result) {
-                mUser = result;
+            public void onSuccess(Call<ITUser> call, ITUser user) {
+                mUser = user;
                 updateTextView();
             }
 
             @Override
-            public void onFailure(int httpCode, @NonNull String message, @NonNull String errorBody) {
-                // D'oh! :(
-            }
-        });
-
-        mPartApi.getMyPart(new ITApiCallback<ITPart>() {
-            @Override
-            public void onSuccess(ITPart result) {
-                mPart = result;
-                updateTextView();
-            }
-
-            @Override
-            public void onFailure(int httpCode, @NonNull String message, @NonNull String errorBody) {
+            public void onFailure(Call<ITUser> call, ITApiError apiError) {
                 // D'oh! :(
             }
         });
     }
 
     private void updateTextView() {
-        String text = mUser.getFullName() + "\n" + mPart.address.city + " " + mPart.address.country;
+        String text = getString(R.string.user_info, mUser.getFullName());
         mTextView.setText(text);
     }
 }

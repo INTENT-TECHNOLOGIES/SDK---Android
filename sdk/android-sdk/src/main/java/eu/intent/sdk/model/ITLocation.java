@@ -1,7 +1,6 @@
 package eu.intent.sdk.model;
 
 import android.location.Location;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -32,14 +31,8 @@ public class ITLocation implements Parcelable {
     transient public double lat;
     transient public double lng;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITLocation() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     public ITLocation(double lat, double lng) {
@@ -57,7 +50,6 @@ public class ITLocation implements Parcelable {
     protected ITLocation(Parcel in) {
         lat = in.readDouble();
         lng = in.readDouble();
-        custom = in.readBundle();
     }
 
     /**
@@ -87,7 +79,6 @@ public class ITLocation implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeDouble(lat);
         dest.writeDouble(lng);
-        dest.writeBundle(custom);
     }
 
     @Override

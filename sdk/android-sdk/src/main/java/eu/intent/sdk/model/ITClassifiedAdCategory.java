@@ -36,14 +36,8 @@ public class ITClassifiedAdCategory implements Parcelable {
 
     transient public Map<String, String> labels = new ConcurrentHashMap<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITClassifiedAdCategory() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITClassifiedAdCategory(Parcel in) {
@@ -52,7 +46,6 @@ public class ITClassifiedAdCategory implements Parcelable {
         for (String label : labelsBundle.keySet()) {
             labels.put(label, labelsBundle.getString(label));
         }
-        custom = in.readBundle();
     }
 
     /**
@@ -76,7 +69,6 @@ public class ITClassifiedAdCategory implements Parcelable {
             labelsBundle.putString(label.getKey(), label.getValue());
         }
         dest.writeBundle(labelsBundle);
-        dest.writeBundle(custom);
     }
 
     @Override

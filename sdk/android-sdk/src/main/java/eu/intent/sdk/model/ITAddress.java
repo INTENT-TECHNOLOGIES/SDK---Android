@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,14 +27,8 @@ public class ITAddress implements Parcelable {
     public String way;
     public String zip;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITAddress() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITAddress(Parcel in) {
@@ -46,7 +39,6 @@ public class ITAddress implements Parcelable {
         num = in.readString();
         way = in.readString();
         zip = in.readString();
-        custom = in.readBundle();
     }
 
     @Override
@@ -63,6 +55,5 @@ public class ITAddress implements Parcelable {
         dest.writeString(num);
         dest.writeString(way);
         dest.writeString(zip);
-        dest.writeBundle(custom);
     }
 }

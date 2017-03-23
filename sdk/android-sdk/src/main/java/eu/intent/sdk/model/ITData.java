@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -36,14 +35,8 @@ public class ITData implements Parcelable {
     transient public double valueMin = Double.NaN;
     transient public double valueMax = Double.NaN;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITData() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITData(Parcel in) {
@@ -53,7 +46,6 @@ public class ITData implements Parcelable {
         value = in.readDouble();
         valueMin = in.readDouble();
         valueMax = in.readDouble();
-        custom = in.readBundle();
     }
 
     @Override
@@ -68,7 +60,6 @@ public class ITData implements Parcelable {
         dest.writeDouble(value);
         dest.writeDouble(valueMin);
         dest.writeDouble(valueMax);
-        dest.writeBundle(custom);
     }
 
     public enum Granularity {

@@ -3,6 +3,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.noveogroup.android.check'
 apply plugin: 'idea'
+apply plugin: 'kotlin-android'
 
 ext {
     groupId = "eu.intent"
@@ -10,7 +11,7 @@ ext {
 
     libraryName = "Intent Android SDK"
     libraryDescription = "An SDK to use the Intent API in your Android apps."
-    libraryVersion = "1.4"
+    libraryVersion = "2.0"
 
     developerId = "Intent Technologies"
     developerName = "Intent Technologies"
@@ -37,15 +38,11 @@ android {
     lintOptions {
         abortOnError true
         // We try to use the latest API and dependencies, but allow to build with older versions
-        disable 'GradleDependency','OldTargetApi'
+        disable 'GradleDependency', 'OldTargetApi'
         // Retrofit needs packages that are not declared
         disable 'InvalidPackage'
-        // Model classes have a 'custom' Bundle property, where the developer can store whatever he wants
-        disable 'ParcelClassLoader'
         // The Activities in this library are not declared in AndroidManifest.xml, the client applications will declare them in their own AndroidManifest.xml
         disable 'Registered'
-        // Some strings are not used in this library but may be used in the client applications
-        disable 'UnusedResources'
     }
 }
 
@@ -61,11 +58,14 @@ idea {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.3.2"
 }
 
 task sourcesJar(type: Jar) {
@@ -131,4 +131,9 @@ bintray {
         desc = libraryDescription
         publish = true
     }
+}
+buildscript {
+}
+repositories {
+    mavenCentral()
 }

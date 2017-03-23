@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -41,14 +40,9 @@ public class ITConversation implements Parcelable {
     public long lastRead;
     public String creatorDomain;
     public String creatorName;
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    public Bundle custom = new Bundle();
 
     public ITConversation() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITConversation(Parcel in) {
@@ -64,7 +58,6 @@ public class ITConversation implements Parcelable {
         lastRead = in.readLong();
         creatorDomain = in.readString();
         creatorName = in.readString();
-        custom = in.readBundle();
     }
 
     @Override
@@ -84,7 +77,6 @@ public class ITConversation implements Parcelable {
         dest.writeLong(this.lastRead);
         dest.writeString(this.creatorDomain);
         dest.writeString(this.creatorName);
-        dest.writeBundle(custom);
     }
 
     public static class Deserializer implements JsonDeserializer<ITConversation> {

@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -51,14 +50,8 @@ public class ITUser implements Parcelable {
     transient public List<String> entityRoles = new ArrayList<>();
     transient public List<String> userRoles = new ArrayList<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITUser() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITUser(Parcel in) {
@@ -73,7 +66,6 @@ public class ITUser implements Parcelable {
         username = in.readString();
         entityRoles = in.createStringArrayList();
         userRoles = in.createStringArrayList();
-        custom = in.readBundle();
     }
 
     /**
@@ -152,7 +144,6 @@ public class ITUser implements Parcelable {
         dest.writeString(username);
         dest.writeStringList(entityRoles);
         dest.writeStringList(userRoles);
-        dest.writeBundle(custom);
     }
 
     public static class Deserializer implements JsonDeserializer<ITUser> {

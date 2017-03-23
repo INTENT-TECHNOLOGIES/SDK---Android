@@ -18,39 +18,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Messages, open reports and non default states count by activityCategory id
- * Messages count includes report and states messages count
+ * A message count includes alerts (non default states), open reports, and comments (messages).
  */
 public class ITMessagesCount {
 
     /**
-     * Messages, open reports and non default states count by activityCategory id
-     * Messages count includes report and states messages count
+     * Messages grouped by theme.
      */
-    public static class ByActivityCategory implements Parcelable {
-        public static final Parcelable.Creator<ByActivityCategory> CREATOR = new Parcelable.Creator<ByActivityCategory>() {
-            public ByActivityCategory createFromParcel(Parcel source) {
-                return new ByActivityCategory(source);
+    public static class ByTheme implements Parcelable {
+        public static final Parcelable.Creator<ByTheme> CREATOR = new Parcelable.Creator<ByTheme>() {
+            public ByTheme createFromParcel(Parcel source) {
+                return new ByTheme(source);
             }
 
-            public ByActivityCategory[] newArray(int size) {
-                return new ByActivityCategory[size];
+            public ByTheme[] newArray(int size) {
+                return new ByTheme[size];
             }
         };
         /**
-         * activityCategoryId <=> counts
+         * theme <=> counts
          */
-        public HashMap<String, Item> countsByActivityCategory = new HashMap<>();
+        public HashMap<String, Item> countsByTheme = new HashMap<>();
 
 
-        public ByActivityCategory() {
-            // Needed by Retrofit
+        public ByTheme() {
+            // Needed by Gson
         }
 
-        protected ByActivityCategory(Parcel in) {
+        protected ByTheme(Parcel in) {
             Bundle messagesCountsBundle = in.readBundle();
             for (String assetId : messagesCountsBundle.keySet()) {
-                countsByActivityCategory.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
+                countsByTheme.put(assetId, messagesCountsBundle.<Item>getParcelable(assetId));
             }
         }
 
@@ -62,17 +60,17 @@ public class ITMessagesCount {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             Bundle messagesCountsBundle = new Bundle();
-            for (Map.Entry<String, Item> messageCount : countsByActivityCategory.entrySet()) {
+            for (Map.Entry<String, Item> messageCount : countsByTheme.entrySet()) {
                 messagesCountsBundle.putParcelable(messageCount.getKey(), messageCount.getValue());
             }
             dest.writeBundle(messagesCountsBundle);
         }
 
-        public static class Deserializer implements JsonDeserializer<ByActivityCategory> {
+        public static class Deserializer implements JsonDeserializer<ByTheme> {
 
             @Override
-            public ByActivityCategory deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                ByActivityCategory messagesCounts = new ByActivityCategory();
+            public ByTheme deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                ByTheme messagesCounts = new ByTheme();
                 JsonArray messageCountsArray = json.getAsJsonArray();
 
                 Gson gson = new Gson();
@@ -82,7 +80,7 @@ public class ITMessagesCount {
                     String activityCategory = item.get("theme").getAsString();
                     Item countItem = gson.fromJson(item, Item.class);
 
-                    messagesCounts.countsByActivityCategory.put(activityCategory, countItem);
+                    messagesCounts.countsByTheme.put(activityCategory, countItem);
                 }
 
                 return messagesCounts;
@@ -91,8 +89,7 @@ public class ITMessagesCount {
     }
 
     /**
-     * Messages, open reports and non default states count by asset id
-     * Messages count includes report and states messages count
+     * Messages grouped by asset.
      */
     public static class ByAssetId implements Parcelable {
         public static final Parcelable.Creator<ByAssetId> CREATOR = new Parcelable.Creator<ByAssetId>() {
@@ -111,7 +108,7 @@ public class ITMessagesCount {
 
 
         public ByAssetId() {
-            // Needed by Retrofit
+            // Needed by Gson
         }
 
         protected ByAssetId(Parcel in) {
@@ -182,7 +179,7 @@ public class ITMessagesCount {
         public int nonDefaultStateCount = -1;
 
         public Item() {
-            // Needed by Retrofit
+            // Needed by Gson
         }
 
         protected Item(Parcel in) {

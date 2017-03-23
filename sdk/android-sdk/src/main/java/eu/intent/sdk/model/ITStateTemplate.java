@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -43,14 +42,8 @@ public class ITStateTemplate implements Parcelable {
 
     transient public String[] activities;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITStateTemplate() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITStateTemplate(Parcel in) {
@@ -59,7 +52,6 @@ public class ITStateTemplate implements Parcelable {
         label = in.readString();
         statusDefault = in.readString();
         statusEnum = in.createStringArray();
-        custom = in.readBundle();
     }
 
     @Override
@@ -74,7 +66,6 @@ public class ITStateTemplate implements Parcelable {
         dest.writeString(label);
         dest.writeString(statusDefault);
         dest.writeStringArray(statusEnum);
-        dest.writeBundle(custom);
     }
 
     public static class Deserializer implements JsonDeserializer<ITStateTemplate> {

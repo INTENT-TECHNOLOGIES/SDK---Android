@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Intent Sample</string>
+    <string name="user_info">Welcome %s</string>
     <string name="logout">Logout</string>
 </resources>

@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,12 +27,6 @@ public class ITContact implements Parcelable {
 
     transient public Visibility visibility;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITContact() {
         // Needed by Retrofit
     }
@@ -43,7 +36,6 @@ public class ITContact implements Parcelable {
         number = in.readString();
         int tmpVisibility = in.readInt();
         visibility = tmpVisibility == -1 ? null : Visibility.values()[tmpVisibility];
-        custom = in.readBundle();
     }
 
     @Override
@@ -56,7 +48,6 @@ public class ITContact implements Parcelable {
         dest.writeString(name);
         dest.writeString(number);
         dest.writeInt(visibility == null ? -1 : visibility.ordinal());
-        dest.writeBundle(custom);
     }
 
     public enum Visibility {

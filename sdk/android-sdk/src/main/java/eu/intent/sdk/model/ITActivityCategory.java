@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,14 +24,8 @@ public class ITActivityCategory implements Parcelable {
     public String label;
     public String[] activities;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! It is not saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITActivityCategory() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITActivityCategory(Parcel in) {

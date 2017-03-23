@@ -16,10 +16,15 @@ public final class ITJsonUtils {
     }
 
     @NonNull
-    public static String getJsonAsString(@NonNull JsonObject json, @NonNull String key, @NonNull String defaultValue) {
+    public static String getJsonAsString(@NonNull JsonObject jsonObject, @NonNull String jsonKey, @NonNull String defaultValue) {
         String result = defaultValue;
-        if (json.has(key) && !json.get(key).isJsonNull()) {
-            result = json.get(key).getAsString();
+        JsonElement jsonString = jsonObject.get(jsonKey);
+        if (jsonString != null && !jsonString.isJsonNull() && jsonString.isJsonPrimitive()) {
+            try {
+                result = jsonString.getAsString();
+            } catch (ClassCastException ignored) {
+                // result will be the default value
+            }
         }
         return result;
     }

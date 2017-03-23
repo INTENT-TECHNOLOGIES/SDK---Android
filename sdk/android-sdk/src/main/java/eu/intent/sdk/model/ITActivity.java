@@ -41,14 +41,8 @@ public class ITActivity implements Parcelable {
 
     transient public Map<String, String> tags = new ConcurrentHashMap<>();
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! It is not saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITActivity() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITActivity(Parcel in) {

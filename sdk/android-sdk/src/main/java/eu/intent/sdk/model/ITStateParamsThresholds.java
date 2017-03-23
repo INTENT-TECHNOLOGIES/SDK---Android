@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -31,14 +30,8 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
     @SerializedName("timetables")
     public Threshold[] thresholds;
 
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
-
     public ITStateParamsThresholds() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITStateParamsThresholds(Parcel in) {
@@ -51,7 +44,6 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
         } else {
             thresholds = new Threshold[0];
         }
-        custom = in.readBundle();
     }
 
     @Override
@@ -62,7 +54,6 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelableArray(thresholds, flags);
-        dest.writeBundle(custom);
     }
 
     /**
@@ -97,7 +88,7 @@ public class ITStateParamsThresholds implements ITStateParams, Parcelable {
         public int dayOfWeek = -1;  // 0 to 6, 0 is Sunday (add 1 for Java)
 
         public Threshold() {
-            // Needed by Retrofit
+            // Needed by Gson
         }
 
         protected Threshold(Parcel in) {

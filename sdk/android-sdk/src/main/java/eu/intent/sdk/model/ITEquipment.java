@@ -1,6 +1,5 @@
 package eu.intent.sdk.model;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -41,14 +40,9 @@ public class ITEquipment implements Parcelable {
     public Type type = Type.UNKNOWN;
     @SerializedName("removalDate")
     public long uninstallDate;
-    /**
-     * You can put whatever you want in this bundle, for example add properties to this object in order to use it in an adapter.
-     * WARNING! Custom classes will not be saved when generating a Parcelable from this object.
-     */
-    transient public Bundle custom = new Bundle();
 
     public ITEquipment() {
-        // Needed by Retrofit
+        // Needed by Gson
     }
 
     protected ITEquipment(Parcel in) {
@@ -65,7 +59,6 @@ public class ITEquipment implements Parcelable {
         int typeOrdinal = in.readInt();
         type = typeOrdinal == -1 ? Type.UNKNOWN : Type.values()[typeOrdinal];
         uninstallDate = in.readLong();
-        custom = in.readBundle();
     }
 
     @Override
@@ -86,7 +79,6 @@ public class ITEquipment implements Parcelable {
         dest.writeLong(serviceDate);
         dest.writeInt(type == null ? -1 : type.ordinal());
         dest.writeLong(uninstallDate);
-        dest.writeBundle(custom);
     }
 
     public enum Type {
