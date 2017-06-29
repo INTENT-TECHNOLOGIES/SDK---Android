@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="it_error">HTTP %1$d: %2$s</string>
     <string name="it_error_internal">Error del sistema: %s</string>
