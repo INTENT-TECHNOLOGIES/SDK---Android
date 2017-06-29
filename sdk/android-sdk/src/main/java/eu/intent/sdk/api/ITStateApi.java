@@ -114,49 +114,72 @@ public class ITStateApi {
     }
 
     /**
-     * Retrieves the history of the states during the given period, for the parts with the given refs.
+     * Retrieves the history of the states during the given period, for the parts with the given IDs.
      *
-     * @param partRefs the ITParts' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
+     * @param partIds the ITParts' external IDs
+     * @param from    the start time in ms
+     * @param to      the end time in ms
      */
-    public void getHistoryByParts(String[] partRefs, long from, long to, ITApiCallback<List<ITState>> callback) {
-        getHistoryByParts(partRefs, from, to, null, callback);
+    public void getHistoryByParts(String[] partIds, long from, long to, ITApiCallback<List<ITState>> callback) {
+        getHistoryByParts(partIds, from, to, null, callback);
     }
 
     /**
-     * Retrieves the history of the states during the given period, for the parts with the given refs.
+     * Retrieves the history of the states during the given period, for the parts with the given IDs.
      *
-     * @param partRefs the ITParts' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     * @param status   the status of the states you want to retrieve if you want to filter by status
+     * @param partIds the ITParts' external IDs
+     * @param from    the start time in ms
+     * @param to      the end time in ms
+     * @param status  the status of the states you want to retrieve if you want to filter by status
      */
-    public void getHistoryByParts(String[] partRefs, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
-        mService.getHistoryByAssets("part", partRefs, from, to, status).enqueue(new ProxyCallback<>(callback));
+    public void getHistoryByParts(String[] partIds, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getHistoryByAssets("part", partIds, from, to, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
-     * Retrieves the history of the states during the given period, for the sites with the given refs.
+     * Retrieves the history of the states during the given period, for the sites with the given IDs.
      *
-     * @param siteRefs the ITSites' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
+     * @param siteIds the ITSites' external IDs
+     * @param from    the start time in ms
+     * @param to      the end time in ms
      */
-    public void getHistoryBySites(String[] siteRefs, long from, long to, ITApiCallback<List<ITState>> callback) {
-        getHistoryBySites(siteRefs, from, to, null, callback);
+    public void getHistoryBySites(String[] siteIds, long from, long to, ITApiCallback<List<ITState>> callback) {
+        getHistoryBySites(siteIds, from, to, null, callback);
     }
 
     /**
-     * Retrieves the history of the states during the given period, for the sites with the given refs.
+     * Retrieves the history of the states during the given period, for the sites with the given IDs.
      *
-     * @param siteRefs the ITSites' external refs
-     * @param from     the start time in ms
-     * @param to       the end time in ms
-     * @param status   the status of the states you want to retrieve if you want to filter by status
+     * @param siteIds the ITSites' external IDs
+     * @param from    the start time in ms
+     * @param to      the end time in ms
+     * @param status  the status of the states you want to retrieve if you want to filter by status
      */
-    public void getHistoryBySites(String[] siteRefs, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
-        mService.getHistoryByAssets("site", siteRefs, from, to, status).enqueue(new ProxyCallback<>(callback));
+    public void getHistoryBySites(String[] siteIds, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getHistoryByAssets("site", siteIds, from, to, status).enqueue(new ProxyCallback<>(callback));
+    }
+
+    /**
+     * Retrieves the history of the states during the given period, for the equipments with the given IDs.
+     *
+     * @param equipmentIds the ITEquipments' external IDs
+     * @param from         the start time in ms
+     * @param to           the end time in ms
+     */
+    public void getHistoryByEquipments(String[] equipmentIds, long from, long to, ITApiCallback<List<ITState>> callback) {
+        getHistoryByEquipments(equipmentIds, from, to, null, callback);
+    }
+
+    /**
+     * Retrieves the history of the states during the given period, for the equipments with the given IDs.
+     *
+     * @param equipmentIds the ITEquipments' external IDs
+     * @param from         the start time in ms
+     * @param to           the end time in ms
+     * @param status       the status of the states you want to retrieve if you want to filter by status
+     */
+    public void getHistoryByEquipments(String[] equipmentIds, long from, long to, String status, ITApiCallback<List<ITState>> callback) {
+        mService.getHistoryByAssets("equip", equipmentIds, from, to, status).enqueue(new ProxyCallback<>(callback));
     }
 
     /**
